@@ -1,0 +1,31 @@
+import { createApp } from './app.js';
+import { env } from './config/env.js';
+
+const app = createApp();
+
+const server = app.listen(env.PORT, () => {
+  console.log('----------------------------------------------------');
+  console.log(`🚀 Portfolio Backend running in [${env.NODE_ENV}] mode`);
+  console.log(`📡 Server URL:    http://localhost:${env.PORT}`);
+  console.log(`🩺 Health check:  http://localhost:${env.PORT}/api/health`);
+  console.log(`🔒 Allowed CORS:  ${env.CLIENT_URL}`);
+  console.log('----------------------------------------------------');
+});
+
+// Graceful shutdown handling
+const handleShutdown = (signal: string) => {
+  console.log(`\nReceived ${signal}. Gracefully terminating server...`);
+  server.close(() => {
+    console.log('HTTP server closed cleanly.');
+    process.exit(0);
+  });
+
+  // Force close if graceful shutdown takes too long
+  setTimeout(() => {
+    console.error('Forcefully terminating process after timeout.');
+    process.exit(1);
+  }, 5000).unref();
+};
+
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+process.on('SIGINT', () => handleShutdown('SIGINT'));
