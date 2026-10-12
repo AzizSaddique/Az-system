@@ -13,6 +13,11 @@ export interface Project {
   highlights: string[];
   architectureDetails?: string[];
   supervisor?: string;
+  institution?: string;
+  achievement?: string;
+  hardwarePhotos?: { url: string; caption: string; tag: string }[];
+  appScreenshots?: { url: string; caption: string; screen: string }[];
+  awardPhotos?: { url: string; caption: string }[];
   demoUrl?: string;
   repoUrl?: string;
 }
@@ -23,20 +28,23 @@ export const PORTFOLIO_DATA = {
     title: "Full-Stack & Embedded Systems Engineer",
     degree: "BS Computer Science",
     institution: "University of Gujrat",
-    location: "Gujrat, Punjab, Pakistan",
+    location: "Narowal, Punjab, Pakistan",
     email: "azizsaddiquesaddique@gmail.com",
     github: "https://github.com/AzizSaddique",
-    linkedin: "https://linkedin.com/in/aziz-saddique",
+    linkedin: "https://linkedin.com/in/muhammad-aziz-saddique-5a8626298",
     fypSupervisor: "Dr. Umer Shoaib",
     fypAward: "2nd Position — University of Gujrat FYP Competition 2026",
-    
+
     // Local public paths (guaranteed reliable load in Vite dev & build)
     heroPortrait: "/images/heroPortrait.jpg",
     avatarSmall: "/images/avatarSmall.jpg",
-    ecoPlugifyRender: "/images/ecoPlugifyRender.jpg",
-    ecoPlugifyHardwareViews: "/images/ecoPlugifyHardwareViews.jpg",
-    ecoPlugifySpecSheet: "/images/ecoPlugifySpecSheet.jpg",
-    certificateImage: "/images/certificateImage.jpg",
+    ecoPlugifyRender: "/images/ecoplugify/hardware-prototype.jpg",
+    ecoPlugifyHardwarePhoto: "/images/ecoplugify/hardware-prototype.jpg",
+    ecoPlugifyHardwareViews: "/images/ecoplugify/hardware-prototype.jpg",
+    ecoPlugifySpecSheet: "/images/ecoplugify/hardware-prototype.jpg",
+    ecoPlugifyAwardCeremony: "/images/ecoplugify/award-ceremony.jpg",
+    ecoPlugifyAwardEnvelope: "/images/ecoplugify/award-envelope.jpg",
+    certificateImage: "/images/ecoplugify/award-ceremony.jpg",
     stageImage: "/images/stageImage.jpg",
     campusImage: "/images/campusImage.jpg",
     workspaceImage: "/images/workspaceImage.jpg",
@@ -46,10 +54,10 @@ export const PORTFOLIO_DATA = {
     remoteUrls: {
       heroPortrait: "https://lh3.googleusercontent.com/aida-public/AB6AXuChMwrN09hsNSpwNlXkt9ueK6BSE1LSzEy-979WnOsOZozkFkomqRPEIRf-AqDt5vZsAYRHXAShSgOQntTrEkjJkgS23XDMWSzEj5w2NIIorjIGd0Gjjqd02IDeM2femIXQFm8I3tRbH2QH6R2S-y1uOyWi3HsFNOd_xzUAavyT8Bsak0B3V_X7sc3j2eQD1b-3fpHXojR439tSHXUhnfY44A5PZxvouoIxuxYFzy8939FIqGakw4NkLl1JJSTtfSD0",
       avatarSmall: "https://lh3.googleusercontent.com/aida/AEtjO1UnWuBIeTdNuzFH5y5TdjKhJkElUFwfS1N5IUQnh9yOAiSw9uZ-nDYEHNosCKXQX8GwziOuFoocHAP2ctdfourDdcgqW8Ieoazrl-q5pZSf02EFhkhjX7JixkBYbLUlARWtpfMTDshsHWA9xX4_JFOmqve1floT2lqRlNJePvnGVyUqRvvS1lBsHnxyMBYYzzphmunHfogxckWK9sdwZnLJ4oUixESy5CC7aW2lM4MpNQqCwkW0wH3l8OJ-nSHa0xhm7JO9It44",
-      ecoPlugifyRender: "https://lh3.googleusercontent.com/aida-public/AB6AXuCnAdvlldSd16_baeQPO26-Iu_8qPNujQ-lbhHUFHRV2BdOuyq-YFs2pAEkG54Ij-cA5b_XqfCCIr9oU_Q2ZrkxITSyJEDoYM9Kzvq-X1BqPF69bXIcI7NEnzTOwoLF3nTX06vVIkoWmO7MxaG5ZgTiRR01GYhfMaMDqCQmZxVcYVhBbfWA8g_K72sDgzWoiUmfNybIdxiartdSX7mAg9x92JmL1eJBCtWEYA7A_gQmQ1Udy9QC6RA",
-      ecoPlugifyHardwareViews: "https://lh3.googleusercontent.com/aida-public/AB6AXuCNXKAtAbdg8r3LtMkjum_T2D2rrd-Lfk52j_i1wkLchx77n9gR9x2yuRdkC-EeykMvpKaEodHQ958Y1eK92p33G73tZwXp2wnq7TvnLPIx9Ij3oi0rcn5bqZrAEIIk9N6A3hHmiRSt0dDyaxgo4zgklqs-eA6TeoXK3-eUtmMEvpvCjoa8xYKsprbpPk5e9iTBDmXr2hcEiez1olKUlqTTDa5XRX7vRwnlT_SaM0jpJuWYq8h8SmKe58fbgF6rv5vb",
-      ecoPlugifySpecSheet: "https://lh3.googleusercontent.com/aida/AEtjO1VMd5oYlZq14W9X7FomD0mR-9rG0WbEwTks46G4sZ8F3nQn3b-W4-qg2l0XJzYk5Ym1Q3xZ0V2q9jC5eD0qP8bN2w",
-      certificateImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCjqIbnH1U_ECBJsc_Q0HIoQyN-AhhBHFoorlZnE9ArWUUn8zewuaM_V4FOwZWCf8Jy4gDLY1hyXl3wgUnymGgEiaX3HqrDw4jJK_-wjCRyEGfDX0sGQI8Bqekr5u9no24XWOcFW42wWC-B_9AS2WOr8ii6p0lpC5PshaUqJYsLDiH-1lOI6gGg9S0CzdNriwjN1V1GVEdqPYppFTbgkZHpkpUwz1Oyvw88EpdgYZx88nh1aw8LaaqX8JleTYZ3Mjgl",
+      ecoPlugifyRender: "/images/ecoplugify/hardware-prototype.jpg",
+      ecoPlugifyHardwareViews: "/images/ecoplugify/hardware-prototype.jpg",
+      ecoPlugifySpecSheet: "/images/ecoplugify/hardware-prototype.jpg",
+      certificateImage: "/images/ecoplugify/award-ceremony.jpg",
       stageImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuAh19RhSPT1MMY7MfpsYwfgAV0qZ-GgRfe8HFzEXA0dIcEd7RwAenSOBBWvYqeXRCIYCUk4HhR3UYu6zTgyVpJbgIfr9Vr9P-_7JxoYBK7kRfas7d8YcAqRQctpLfccbWHEcjv1AgmJOBrL28dnAi7QcspgKiT8biPYkOG0fx689hqCqmOyD_cMMm3k5Grw16Iqk64w8jEzqLEyd4KKH2blVFcoR4la23W_Td0hrG_l2pe3vvr6uklWbLo1XHr_IhU9",
       campusImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuAoW6mzYYyb8wNrjtaZ1P3fk-0PpvDbrFLuo6aMjfG1M1f6_XCDzXvk4CyZRlbvfU3BDTJqjKgQFpMZmTQdH5P2j-TdJv2hsOYM5yAXKbvCHu16z1Oq_InlE5EjIF3e1DLjYpyFfhxTsU-tIP-YoACFbygIPHguKL2aBbfeR9FmbDgEst7zKPKaxCFaddGFVTBU3GlsVNcUeW2f8dnDrLz1xqFaOwDetHEg_yMA7PV6nIjPM_W7oLPVphu0w5Hy9hBh",
       workspaceImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuDHnPzNiii3Imk60m04CgfZHdEo3uOC_8nnNjOgQnpym2ASMHSDZeKUgR2rIDgLO-FZd_xYugjeVJuDMQAq3wF8hXCxUKs4G2YvFyEHT5bcmnYQ8U35T4RbOfwcJgA6S9sK4yjWdzUqvNPtLOZgwplOcYqWomKL91d41T9JVs90QYnVoAhIgNuI5m5UVluNC-fXivIlvlkSC1ERmXObz8gI_OvT2eogh3my4UmNgxbWOH2NMdKIGfc",
@@ -60,32 +68,97 @@ export const PORTFOLIO_DATA = {
   projects: [
     {
       id: "ecoplugify",
-      title: "EcoPlugify — Smart AI Energy Monitoring & Control",
-      subtitle: "Flagship Engineering Showcase",
-      category: "FLAGSHIP ENGINEERING SHOWCASE",
+      title: "EcoPlugify — Smart Energy Monitoring & Control System Using IoT",
+      subtitle: "Final Year Engineering Prototype • 2nd Position UOG 2026",
+      category: "FINAL YEAR ENGINEERING PROJECT",
       badge: "2nd Position — University of Gujrat FYP Competition 2026",
       period: "2026",
       supervisor: "Dr. Umer Shoaib",
-      summary: "An end-to-end IoT and edge computing system designed to combat energy wastage. Combines custom-engineered hardware telemetry with sub-second MQTT communication and a cross-platform mobile management client.",
-      fullDescription: "EcoPlugify is an end-to-end intelligent energy telemetry socket designed and prototyped from scratch at the Department of Computer Science, University of Gujrat, under the supervision of Dr. Umer Shoaib. It integrates custom 60x60mm hardware casing design, onboard ESP32 microcontroller, PZEM-004T current/voltage transducers, high-power relay switching, and an ultralight MQTT bridge transmitting real-time consumption data to cloud dashboards and mobile applications.",
-      imageUrl: "/images/ecoPlugifyRender.jpg",
-      tags: ["ESP32 MCU", "React Native", "Node.js / Express", "MQTT Broker", "MongoDB", "PZEM-004T"],
+      institution: "Department of Computer Science, University of Gujrat (Hafiz Hayat Campus)",
+      achievement: "2nd Position, Final Year Project Competition 2026 (Cash Prize & Certificate Awarded)",
+      summary: "A physical IoT smart plug prototype paired with a React Native mobile application and Node.js backend. Features remote appliance switching, AC electrical telemetry, BLE onboarding, and tariff-based cost calculation.",
+      fullDescription: "EcoPlugify is an IoT-based smart energy monitoring and control system developed and prototyped as a final-year project at the Department of Computer Science, University of Gujrat (Hafiz Hayat Campus), under the academic supervision of Dr. Umer Shoaib. The project tackles domestic energy wastage through an end-to-end architecture: an ESP32 microcontroller with a high-voltage AC relay switching circuit, AC-to-DC internal power regulation, AC electrical telemetry sensing (evaluating HLW8012 pulse-frequency transducers and PZEM-004T transducers during development), an MQTT pub/sub telemetry bridge, a Node.js/MongoDB backend, and a custom React Native CLI mobile application with Bluetooth Low Energy (BLE) provisioning.",
+      imageUrl: "/images/ecoplugify/hardware-prototype.jpg",
+      tags: ["ESP32 Microcontroller", "C++ Firmware", "React Native CLI", "MQTT Broker", "Node.js / Express", "MongoDB", "AC Relay Circuit", "BLE Provisioning"],
       metrics: [
-        { label: "SAMPLING", value: "< 100ms" },
-        { label: "MAX LOAD", value: "16A / 3.6kW" },
-        { label: "WIRELESS", value: "Wi-Fi 2.4GHz" },
-        { label: "PATENT PENDING", value: "PK-2026" }
+        { label: "PROJECT TYPE", value: "FYP Prototype" },
+        { label: "CONTROLLER", value: "ESP32 (C++)" },
+        { label: "MOBILE CLIENT", value: "React Native CLI" },
+        { label: "TELEMETRY", value: "MQTT / TLS" }
       ],
       highlights: [
-        "Precision AC Load Measurement: Real-time voltage, current, and true active power readings via hardware isolated PZEM-004T module.",
-        "Ultra-Low Latency Telemetry: MQTT Pub/Sub architecture transmitting metrics to cloud clusters within 85ms for rapid graph updates.",
-        "Automated Overload Cutoff: Autonomous on-device relay trip triggers safeguard sensitive appliances against voltage spikes."
+        "Bench-Tested Hardware Prototype: Constructed around an ESP32 NodeMCU, Songle AC relay module, transistor driver circuit (BC547/2N2222), MOV surge suppression, and acrylic-shielded switchboard plate.",
+        "Custom React Native Mobile App: Built with React Native CLI (package com.ecoplugify) and NativeWind for manual appliance on/off toggling, live power display, and PKR cost estimation.",
+        "BLE Provisioning Workflow: Embedded Bluetooth Low Energy discovery flow allowing users to scan nearby plugs and safely dispatch local Wi-Fi SSID and password to the ESP32.",
+        "MQTT Telemetry & Scheduling: Standardized pub/sub topics (data, relay, schedule, status) over Wi-Fi, supporting scheduled on/off automations and live parameter updates.",
+        "Academic Competition Honor: Won 2nd Position at the University of Gujrat Final Year Project Competition 2026, evaluated by faculty and jury panels."
       ],
       architectureDetails: [
-        "Microcontroller: ESP32 Dual-Core @ 240MHz running custom C++ firmware.",
-        "Energy Sensing: PZEM-004T V3.0 UART TTL power transducer module.",
-        "Relay Control: 16A / 250VAC isolated heavy-duty relay channel with overcurrent trip.",
-        "Communication: Sub-second MQTT Pub/Sub + WebSockets for real-time telemetry."
+        "Microcontroller: ESP32 dual-core SoC running custom C++ firmware with Wi-Fi and BLE stacks.",
+        "Actuation Stage: High-voltage AC relay driven via transistor switching circuit with flyback diode protection.",
+        "Power & Protection: AC-to-DC step-down converter (Hi-Link module) with MOV transient suppression and fuse protection.",
+        "Energy Sensing: Sensor research evaluating AC parameter acquisition (HLW8012 frequency pulse-timing and PZEM-004T module).",
+        "Communication Bridge: MQTT telemetry protocol (HiveMQ Cloud broker evaluated on TLS port 8883) with topic routing.",
+        "Backend & Mobile: Node.js/Express REST and MQTT services with MongoDB, paired with a React Native CLI Android application."
+      ],
+      hardwarePhotos: [
+        {
+          url: "/images/ecoplugify/hardware-prototype.jpg",
+          caption: "Benchtop hardware prototype: ESP32 NodeMCU, Songle AC relay module, MOV transient suppression disc, terminal wiring, and acrylic-shielded switchboard faceplate.",
+          tag: "HARDWARE PROTOTYPE"
+        }
+      ],
+      appScreenshots: [
+        {
+          url: "/images/ecoplugify/app-dashboard.png",
+          screen: "Device Dashboard",
+          caption: "Live device dashboard showing linked plug (plug1), real-time power (0W), daily energy total (0.0 Wh), calculated cost in PKR (Rs 0), and instant relay toggle."
+        },
+        {
+          url: "/images/ecoplugify/app-ble-setup.png",
+          screen: "BLE Provisioning",
+          caption: "Bluetooth Low Energy setup wizard guiding user to discover and connect to unassigned EcoPlugify hardware."
+        },
+        {
+          url: "/images/ecoplugify/app-wifi-provision.png",
+          screen: "Wi-Fi Provisioning",
+          caption: "Wi-Fi network scanner and credential dispatch screen sending home Wi-Fi SSID and password to the ESP32 over BLE."
+        },
+        {
+          url: "/images/ecoplugify/app-schedule.png",
+          screen: "Backend Automations",
+          caption: "Automation scheduler displaying synchronized timed on/off events for connected smart plugs."
+        },
+        {
+          url: "/images/ecoplugify/app-analytics.png",
+          screen: "Power Draw Gauge",
+          caption: "Real-time circular power meter (Watts) and energy/cost summaries calculated from telemetry data."
+        },
+        {
+          url: "/images/ecoplugify/app-ai-history.png",
+          screen: "Appliance Telemetry",
+          caption: "Telemetry view for real-time device readings and classification insights."
+        },
+        {
+          url: "/images/ecoplugify/app-login.png",
+          screen: "App Authentication",
+          caption: "Branded mobile login screen built with React Native CLI (package com.ecoplugify) and NativeWind."
+        },
+        {
+          url: "/images/ecoplugify/app-profile.png",
+          screen: "Profile & Navigation",
+          caption: "User profile drawer and account management options."
+        }
+      ],
+      awardPhotos: [
+        {
+          url: "/images/ecoplugify/award-ceremony.jpg",
+          caption: "Award Ceremony: Department of Computer Science, University of Gujrat FYP Competition 2026 (2nd Position Winner) with supervisor Dr. Umer Shoaib and faculty."
+        },
+        {
+          url: "/images/ecoplugify/award-envelope.jpg",
+          caption: "Official University of Gujrat 2nd Position FYP-2026 distinction envelope at Hafiz Hayat Campus."
+        }
       ]
     },
     {

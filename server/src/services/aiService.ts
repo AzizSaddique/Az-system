@@ -92,7 +92,8 @@ export class AiService {
     }
 
     const client = this.getClient();
-    const model = env.GEMINI_MODEL || 'gemini-2.5-flash';
+    // Read the single verified model directly from GEMINI_MODEL in server/.env
+    const model = env.GEMINI_MODEL || 'models/gemini-3.5-flash';
 
     // Construct conversation payload.
     // Client-provided history is treated strictly as untrusted dialogue turns.
@@ -160,7 +161,7 @@ export class AiService {
 
       if (isQuotaError) {
         throw new AiServiceError(
-          'AI Assistant upstream transmission limit reached. Please wait a moment before sending another query.',
+          'Transmission limit reached: The AI assistant is temporarily unavailable due to high request traffic. Please wait a moment before sending another query, or reach out directly via the contact form.',
           429
         );
       }
@@ -181,6 +182,7 @@ export class AiService {
         500
       );
     }
+
   }
 }
 

@@ -41,7 +41,11 @@ const envSchema = z.object({
   GEMINI_MODEL: z
     .string()
     .optional()
-    .default('gemini-3.8-flash'),
+    .default('models/gemini-3.5-flash'),
+  TURNSTILE_SECRET_KEY: z
+    .string()
+    .optional()
+    .default(''),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

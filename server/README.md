@@ -46,6 +46,7 @@ server/
     │   └── chat.ts           # AI Assistant chat route (POST /api/chat)
     ├── services/
     │   ├── emailService.ts   # Resend email notification service
+    │   ├── turnstileService.ts # Cloudflare Turnstile token verification
     │   ├── aiKnowledge.ts    # Verified portfolio facts & grounding instructions
     │   └── aiService.ts      # Gemini client wrapper & error mapping
     ├── validators/
@@ -140,7 +141,8 @@ Run these scripts from within the `server/` directory:
     "scope": "fullstack",
     "message": "Technical inquiry text up to 800 characters...",
     "nda": true,
-    "_honeypot": ""
+    "_honeypot": "",
+    "turnstileToken": "0.valid_cf_turnstile_token..."
   }
   ```
 - **Allowed Scopes**: `fullstack`, `iot`, `career`, `robotics`, `general`
@@ -161,8 +163,9 @@ Run these scripts from within the `server/` directory:
     }
   }
   ```
-- **Spam / Honeypot Defense**:
-  If the hidden `_honeypot` field contains any text (bot trap), the server silently responds with HTTP 200 without dispatching an email.
+- **Spam & Bot Defense**:
+  - **Cloudflare Turnstile**: Requires valid single-use managed token verified server-side against Cloudflare Siteverify before emails are sent. Missing, expired, duplicate, or invalid tokens are rejected with HTTP 400.
+  - **Honeypot Trap**: If the hidden `_honeypot` field contains any text (bot trap), the server silently responds with HTTP 200 without dispatching an email.
 
 ### 3. AI Portfolio Assistant
 - **Route**: `POST /api/chat`

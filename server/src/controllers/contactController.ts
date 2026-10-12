@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { contactSchema } from '../validators/contactValidator.js';
 import { EmailService } from '../services/emailService.js';
+import { TurnstileService } from '../services/turnstileService.js';
 
 export const handleContactSubmission = async (req: Request, res: Response) => {
   // 1. Zod Input Validation
@@ -36,7 +37,35 @@ export const handleContactSubmission = async (req: Request, res: Response) => {
     });
   }
 
-  // 3. Dispatch Notification via EmailService
+  // 3. Cloudflare Turnstile Server-Side Verification
+  const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip;
+  const turnstileResult = await TurnstileService.verifyToken(data.turnstileToken, clientIp);
+
+  if (!turnstileResult.success) {
+    if (turnstileResult.isUnconfigured) {
+      return res.status(503).json({
+        status: 'error',
+        message: 'Security verification is temporarily unconfigured. Please email directly at azizsaddiquesaddique@gmail.com.',
+      });
+    }
+
+    if (turnstileResult.isGatewayError) {
+      return res.status(502).json({
+        status: 'error',
+        message: 'Security verification gateway is unreachable. Please try again shortly or email directly at azizsaddiquesaddique@gmail.com.',
+      });
+    }
+
+    return res.status(400).json({
+      status: 'error',
+      message: 'Security verification failed. Please complete the verification challenge again.',
+      errors: {
+        turnstileToken: [turnstileResult.error || 'Verification challenge failed or expired.'],
+      },
+    });
+  }
+
+  // 4. Dispatch Notification via EmailService (only reached after Turnstile succeeds)
   const sendResult = await EmailService.sendContactNotification(data);
 
   if (!sendResult.success) {

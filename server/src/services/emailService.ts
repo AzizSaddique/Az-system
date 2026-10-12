@@ -31,6 +31,21 @@ const getResendClient = (): Resend => {
 };
 
 export class EmailService {
+  private static mockSender: ((data: ContactInput) => Promise<EmailSendResult>) | null = null;
+  private static sendCallCount: number = 0;
+
+  public static getSendCallCount(): number {
+    return this.sendCallCount;
+  }
+
+  public static resetSendCallCount(): void {
+    this.sendCallCount = 0;
+  }
+
+  public static setMockSender(sender: ((data: ContactInput) => Promise<EmailSendResult>) | null): void {
+    this.mockSender = sender;
+  }
+
   /**
    * Generates a plain-text version of the contact notification email.
    */
@@ -150,6 +165,12 @@ export class EmailService {
    * Dispatches the contact notification email via the official Resend SDK.
    */
   public static async sendContactNotification(data: ContactInput): Promise<EmailSendResult> {
+    this.sendCallCount++;
+
+    if (this.mockSender) {
+      return await this.mockSender(data);
+    }
+
     const timestamp = new Date().toISOString();
     const plainText = this.generatePlainText(data, timestamp);
     const html = this.generateHtml(data, timestamp);

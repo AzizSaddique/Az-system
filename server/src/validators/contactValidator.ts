@@ -35,6 +35,11 @@ export const contactSchema = z.object({
   _honeypot: z
     .string()
     .optional(),
+  turnstileToken: z
+    .string({ required_error: 'Security verification token is required' })
+    .trim()
+    .min(1, 'Security verification token cannot be empty')
+    .max(2048, 'Security verification token is malformed'),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

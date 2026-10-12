@@ -11,6 +11,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Cloudflare Turnstile Explicit API (explicit rendering only with documented onload callback) -->
+    <script>
+      window.__turnstileLoaded = false;
+      window.onloadTurnstileCallback = function () {
+        window.__turnstileLoaded = true;
+        window.dispatchEvent(new Event('turnstile-loaded'));
+      };
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async defer></script>
   </head>
   <body class="bg-[#0b141c] text-[#dae4ef] font-sans antialiased selection:bg-[#aae02e] selection:text-[#0b141c] min-h-screen">
     <div id="root"></div>

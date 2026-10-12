@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { AlertCircle } from 'lucide-react';
 import {
   OpenInNew,
@@ -16,7 +16,9 @@ import {
   ShieldWithHeart,
   Speed
 } from '../components/Icons';
+import { TurnstileWidget, TurnstileWidgetRef } from '../components/TurnstileWidget';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { ScrollReveal } from '../components/ScrollReveal';
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -36,6 +38,16 @@ export const ContactPage: React.FC = () => {
   const [charCount, setCharCount] = useState(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [channelCopied, setChannelCopied] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
+
+  const isFormValid = Boolean(
+    formData.name.trim() &&
+    formData.email.trim() &&
+    formData.message.trim() &&
+    formData.message.length <= 800 &&
+    turnstileToken
+  );
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
@@ -43,9 +55,22 @@ export const ContactPage: React.FC = () => {
     setCharCount(text.length);
   };
 
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    setTurnstileToken(token);
+    setFieldErrors((prev) => (prev ? { ...prev, turnstileToken: [] } : null));
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken('');
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken('');
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (status === 'submitting') return;
+    if (status === 'submitting' || !isFormValid) return;
 
     // Reset previous feedback
     setErrorMessage(null);
@@ -65,6 +90,7 @@ export const ContactPage: React.FC = () => {
           message: formData.message.trim(),
           nda: Boolean(formData.nda),
           _honeypot: formData._honeypot || undefined,
+          turnstileToken,
         }),
       });
 
@@ -82,26 +108,39 @@ export const ContactPage: React.FC = () => {
           _honeypot: '',
         });
         setCharCount(0);
-      } else if (response.status === 400) {
-        setStatus('error');
-        if (data?.errors) {
-          setFieldErrors(data.errors);
-          const firstErrorMsg = Object.values(data.errors).flat()[0] as string;
-          setErrorMessage(firstErrorMsg || data.message || 'Validation failed. Please review the highlighted fields.');
-        } else {
-          setErrorMessage(data?.message || 'Invalid submission payload.');
-        }
-      } else if (response.status === 429) {
-        setStatus('error');
-        setErrorMessage('Rate limit reached: Too many transmissions from your connection. Please wait 15 minutes before submitting again.');
-      } else if (response.status === 503) {
-        setStatus('error');
-        setErrorMessage(data?.message || 'Email dispatch service is currently unconfigured or unavailable. Please reach out directly at azizsaddiquesaddique@gmail.com.');
+        setTurnstileToken('');
+        turnstileRef.current?.reset();
       } else {
-        setStatus('error');
-        setErrorMessage(data?.message || 'Transmission failed at server gateway. Please try again or reach out directly at azizsaddiquesaddique@gmail.com.');
+        // Invalidate single-use token on any error and prompt re-verification
+        setTurnstileToken('');
+        turnstileRef.current?.reset();
+
+        if (response.status === 400) {
+          setStatus('error');
+          if (data?.errors) {
+            setFieldErrors(data.errors);
+            const firstErrorMsg = Object.values(data.errors).flat()[0] as string;
+            setErrorMessage(firstErrorMsg || data.message || 'Validation failed. Please review the highlighted fields.');
+          } else {
+            setErrorMessage(data?.message || 'Invalid submission payload.');
+          }
+        } else if (response.status === 429) {
+          setStatus('error');
+          setErrorMessage('Rate limit reached: Too many transmissions from your connection. Please wait 15 minutes before submitting again.');
+        } else if (response.status === 502) {
+          setStatus('error');
+          setErrorMessage(data?.message || 'Security verification gateway failed. Please refresh the challenge or email directly at azizsaddiquesaddique@gmail.com.');
+        } else if (response.status === 503) {
+          setStatus('error');
+          setErrorMessage(data?.message || 'Email dispatch or security service is currently unconfigured or unavailable. Please reach out directly at azizsaddiquesaddique@gmail.com.');
+        } else {
+          setStatus('error');
+          setErrorMessage(data?.message || 'Transmission failed at server gateway. Please try again or reach out directly at azizsaddiquesaddique@gmail.com.');
+        }
       }
     } catch {
+      setTurnstileToken('');
+      turnstileRef.current?.reset();
       setStatus('error');
       setErrorMessage('Network communication error: Unable to connect to backend server. Please verify your connection or email directly at azizsaddiquesaddique@gmail.com.');
     }
@@ -137,10 +176,10 @@ export const ContactPage: React.FC = () => {
 
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-start">
-          
+
           {/* LEFT COLUMN */}
           <div className="lg:col-span-6 flex flex-col gap-space-lg sm:gap-space-xl">
-            
+
             {/* Header */}
             <div className="flex flex-col gap-space-sm sm:gap-space-md">
               <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-sm bg-surface-container-low max-w-fit">
@@ -165,6 +204,10 @@ export const ContactPage: React.FC = () => {
                     alt="Muhammad Aziz Saddique"
                     className="w-full h-full object-cover"
                     src={PORTFOLIO_DATA.personalInfo.avatarSmall}
+                    loading="lazy"
+                    decoding="async"
+                    width={56}
+                    height={56}
                   />
                   <div className="absolute inset-0 bg-secondary/10 mix-blend-color" />
                 </div>
@@ -212,7 +255,7 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <div>
                   <span className="block font-mono-label text-mono-label text-outline-variant uppercase">LinkedIn</span>
-                  <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">in/aziz-saddique</span>
+                  <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">in/Muhammad Aziz Saddique</span>
                 </div>
               </a>
 
@@ -312,7 +355,7 @@ export const ContactPage: React.FC = () => {
           {/* RIGHT COLUMN: Contact Form & Terminal Box */}
           <div className="lg:col-span-6 flex flex-col gap-space-md">
             <div className="p-4 sm:p-space-lg md:p-space-xl rounded-xl bg-surface-container-low backdrop-blur-xl shadow-xl flex flex-col gap-space-md sm:gap-space-lg">
-              
+
               {/* Terminal Header */}
               <div className="flex flex-wrap items-center justify-between gap-2 pb-space-sm border-b border-surface-container-highest">
                 <div className="flex items-center gap-2">
@@ -339,7 +382,7 @@ export const ContactPage: React.FC = () => {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="flex flex-col gap-space-md">
-                
+
                 {/* Honeypot Spam Trap (Hidden from users) */}
                 <input
                   type="text"
@@ -356,7 +399,7 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-col gap-space-xs">
                   <div className="flex items-center justify-between">
                     <label className="font-mono-label text-mono-label text-on-surface font-medium uppercase tracking-wider" htmlFor="name">
-                      IDENTIFIER // FULL NAME <span className="text-secondary">*</span>
+                      FULL NAME <span className="text-secondary">*</span>
                     </label>
                     <span className="font-mono-label text-mono-label text-outline">REQ_STRING</span>
                   </div>
@@ -373,9 +416,8 @@ export const ContactPage: React.FC = () => {
                         if (fieldErrors?.name) setFieldErrors({ ...fieldErrors, name: [] });
                       }}
                       placeholder="e.g. Dr. Alex Mercer / Hiring Lead"
-                      className={`w-full pl-10 pr-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none transition-colors ${
-                        fieldErrors?.name?.length ? 'border border-error' : ''
-                      }`}
+                      className={`w-full pl-10 pr-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none transition-colors ${fieldErrors?.name?.length ? 'border border-error' : ''
+                        }`}
                     />
                   </div>
                   {fieldErrors?.name?.length ? (
@@ -387,7 +429,7 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-col gap-space-xs">
                   <div className="flex items-center justify-between">
                     <label className="font-mono-label text-mono-label text-on-surface font-medium uppercase tracking-wider" htmlFor="email">
-                      RETURN ADDRESS // EMAIL <span className="text-secondary">*</span>
+                      EMAIL <span className="text-secondary">*</span>
                     </label>
                     <span className="font-mono-label text-mono-label text-outline">RFC_5322</span>
                   </div>
@@ -404,9 +446,8 @@ export const ContactPage: React.FC = () => {
                         if (fieldErrors?.email) setFieldErrors({ ...fieldErrors, email: [] });
                       }}
                       placeholder="name@organization.com"
-                      className={`w-full pl-10 pr-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none transition-colors ${
-                        fieldErrors?.email?.length ? 'border border-error' : ''
-                      }`}
+                      className={`w-full pl-10 pr-4 py-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none transition-colors ${fieldErrors?.email?.length ? 'border border-error' : ''
+                        }`}
                     />
                   </div>
                   {fieldErrors?.email?.length ? (
@@ -418,7 +459,7 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-col gap-space-xs">
                   <div className="flex items-center justify-between">
                     <label className="font-mono-label text-mono-label text-on-surface font-medium uppercase tracking-wider" htmlFor="scope">
-                      PROJECT SCOPE // TOPIC <span className="text-secondary">*</span>
+                      PROJECT SCOPE <span className="text-secondary">*</span>
                     </label>
                     <span className="font-mono-label text-mono-label text-outline">SELECT_CATEGORY</span>
                   </div>
@@ -445,7 +486,7 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-col gap-space-xs">
                   <div className="flex items-center justify-between">
                     <label className="font-mono-label text-mono-label text-on-surface font-medium uppercase tracking-wider" htmlFor="message">
-                      TRANSMISSION PAYLOAD // MESSAGE <span className="text-secondary">*</span>
+                      MESSAGE <span className="text-secondary">*</span>
                     </label>
                     <span className="font-mono-label text-mono-label text-outline">
                       {charCount} / 800 CHARS
@@ -460,9 +501,8 @@ export const ContactPage: React.FC = () => {
                     value={formData.message}
                     onChange={handleMessageChange}
                     placeholder="Detail technical requirements, timeline, project architecture, or role specifics..."
-                    className={`w-full p-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none resize-none transition-colors ${
-                      fieldErrors?.message?.length ? 'border border-error' : ''
-                    }`}
+                    className={`w-full p-3 rounded-lg bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-body-regular focus:bg-surface-container-high focus:outline-none resize-none transition-colors ${fieldErrors?.message?.length ? 'border border-error' : ''
+                      }`}
                   />
                   {fieldErrors?.message?.length ? (
                     <span className="text-xs text-error font-mono-label">{fieldErrors.message[0]}</span>
@@ -484,21 +524,45 @@ export const ContactPage: React.FC = () => {
                   </label>
                 </div>
 
+                {/* Cloudflare Turnstile Security Protection */}
+                <TurnstileWidget
+                  ref={turnstileRef}
+                  onSuccess={handleTurnstileSuccess}
+                  onExpire={handleTurnstileExpire}
+                  onError={handleTurnstileError}
+                  hasError={Boolean(fieldErrors?.turnstileToken?.length)}
+                />
+                {fieldErrors?.turnstileToken?.length ? (
+                  <span className="text-xs text-error font-mono-label -mt-2">
+                    {fieldErrors.turnstileToken[0]}
+                  </span>
+                ) : null}
+
                 {/* Submit button */}
                 <button
                   id="submit-btn"
                   type="submit"
-                  disabled={status === 'submitting'}
-                  className={`w-full py-4 rounded-xl font-mono-code text-mono-code font-bold uppercase tracking-wider flex items-center justify-center gap-space-sm transition-all shadow-md active:scale-[0.99] cursor-pointer ${
-                    status === 'submitting'
-                      ? 'bg-secondary/70 text-on-secondary cursor-not-allowed'
-                      : 'bg-secondary hover:bg-secondary-fixed text-on-secondary'
-                  }`}
+                  disabled={!isFormValid || status === 'submitting'}
+                  aria-disabled={!isFormValid || status === 'submitting'}
+                  className={`w-full py-4 rounded-xl font-mono-code text-mono-code font-bold uppercase tracking-wider flex items-center justify-center gap-space-sm transition-all shadow-md active:scale-[0.99] ${!isFormValid || status === 'submitting'
+                    ? 'bg-secondary/40 text-on-secondary/60 cursor-not-allowed'
+                    : 'bg-secondary hover:bg-secondary-fixed text-on-secondary cursor-pointer'
+                    }`}
                 >
                   {status === 'submitting' ? (
                     <>
                       <span className="w-4 h-4 border-2 border-on-secondary border-t-transparent rounded-full animate-spin" />
                       <span>DISPATCHING TRANSMISSION...</span>
+                    </>
+                  ) : !turnstileToken ? (
+                    <>
+                      <span>SECURITY VERIFICATION PENDING</span>
+                      <LockIcon className="w-4 h-4 text-on-secondary/60" />
+                    </>
+                  ) : !isFormValid ? (
+                    <>
+                      <span>COMPLETE REQUIRED FIELDS</span>
+                      <AlertCircle className="w-4 h-4 text-on-secondary/60" />
                     </>
                   ) : (
                     <>
@@ -566,47 +630,49 @@ export const ContactPage: React.FC = () => {
         </div>
 
         {/* BOTTOM SECTION */}
-        <div className="mt-space-xl p-4 sm:p-space-lg md:p-space-xl rounded-xl bg-surface-container-low backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
-          <div className="flex flex-col gap-space-xs max-w-xl">
-            <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label text-secondary">
-              <span className="tracking-widest">ZERO FORM LATENCY</span>
+        <ScrollReveal>
+          <div className="mt-space-xl p-4 sm:p-space-lg md:p-space-xl rounded-xl bg-surface-container-low backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
+            <div className="flex flex-col gap-space-xs max-w-xl">
+              <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label text-secondary">
+                <span className="tracking-widest">ZERO FORM LATENCY</span>
+              </div>
+              <h2 className="font-heading-lg text-xl sm:text-heading-lg text-on-surface font-bold">
+                Prefer a Direct Conversation?
+              </h2>
+              <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                Bypass form submission and start a direct channel on your preferred platform or copy the contact string directly to your clipboard.
+              </p>
             </div>
-            <h2 className="font-heading-lg text-xl sm:text-heading-lg text-on-surface font-bold">
-              Prefer a Direct Conversation?
-            </h2>
-            <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-              Bypass form submission and start a direct channel on your preferred platform or copy the contact string directly to your clipboard.
-            </p>
-          </div>
 
-          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-space-sm sm:gap-space-md w-full md:w-auto">
-            <button
-              onClick={() => copyEmailToClipboard(PORTFOLIO_DATA.personalInfo.email, setCopiedEmail)}
-              className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
-            >
-              <MailIcon className="w-4 h-4" />
-              <span>{copiedEmail ? 'Copied Email!' : 'Copy Email'}</span>
-            </button>
-            <a
-              href={PORTFOLIO_DATA.personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
-            >
-              <OpenInNew className="w-4 h-4" />
-              <span>GitHub</span>
-            </a>
-            <a
-              href={PORTFOLIO_DATA.personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-xs sm:text-mono-code font-semibold flex items-center justify-center gap-space-xs transition-all shadow-sm cursor-pointer"
-            >
-              <Send className="w-4 h-4" />
-              <span>LinkedIn InMail</span>
-            </a>
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-space-sm sm:gap-space-md w-full md:w-auto">
+              <button
+                onClick={() => copyEmailToClipboard(PORTFOLIO_DATA.personalInfo.email, setCopiedEmail)}
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
+              >
+                <MailIcon className="w-4 h-4" />
+                <span>{copiedEmail ? 'Copied Email!' : 'Copy Email'}</span>
+              </button>
+              <a
+                href={PORTFOLIO_DATA.personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
+              >
+                <OpenInNew className="w-4 h-4" />
+                <span>GitHub</span>
+              </a>
+              <a
+                href={PORTFOLIO_DATA.personalInfo.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-xs sm:text-mono-code font-semibold flex items-center justify-center gap-space-xs transition-all shadow-sm cursor-pointer"
+              >
+                <Send className="w-4 h-4" />
+                <span>LinkedIn InMail</span>
+              </a>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </div>

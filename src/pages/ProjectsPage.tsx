@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Stars,
@@ -16,7 +16,13 @@ import {
 } from '../components/Icons';
 import ecoVideo from '../assets/ecovideo.mp4';
 import { PORTFOLIO_DATA, Project } from '../data/portfolioData';
-import { CaseStudyModal } from '../components/CaseStudyModal';
+import { ScrollReveal } from '../components/ScrollReveal';
+
+const CaseStudyModal = lazy(() =>
+  import('../components/CaseStudyModal').then((module) => ({
+    default: module.CaseStudyModal,
+  }))
+);
 
 export const ProjectsPage: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -87,51 +93,56 @@ export const ProjectsPage: React.FC = () => {
       </section>
 
       {/* 2. FLAGSHIP PROJECT: ECOPLUGIFY */}
-      <section className="py-space-md w-full" id="flagship">
-        <div className="flex flex-col gap-space-md mb-space-lg">
-          <div className="flex flex-wrap items-center justify-between gap-space-sm">
-            <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label text-secondary uppercase tracking-widest">
-              <Stars className="text-[16px]" />
-              <span>FLAGSHIP ENGINEERING SHOWCASE</span>
-            </div>
-            <div className="px-3 sm:px-space-md py-1 rounded-full bg-secondary/10 text-secondary font-mono-label text-[10px] sm:text-mono-label font-bold flex items-center gap-space-xs shadow-sm">
-              <EmojiEvents className="text-[16px]" />
-              <span>2nd Position — University of Gujrat FYP Competition 2026</span>
-            </div>
-          </div>
-          <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">
-            EcoPlugify — Smart AI Energy Monitoring &amp; Control
-          </h2>
-          <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant max-w-2xl">
-            An end-to-end IoT and edge computing system designed to combat energy wastage. Combines custom-engineered hardware telemetry with sub-second MQTT communication and a cross-platform mobile management client.
-          </p>
-        </div>
-
-        {/* Main Flagship Showcase Card */}
-        <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
-          <div className="lg:col-span-6 flex flex-col gap-space-md">
-            <div className="rounded-xl overflow-hidden bg-surface-container-lowest shadow-inner relative group">
-              <img
-                alt="EcoPlugify Smart Plug Device Render"
-                className="w-full h-64 sm:h-80 object-contain p-space-sm group-hover:scale-105 transition-transform duration-500"
-                src={PORTFOLIO_DATA.personalInfo.ecoPlugifyRender}
-              />
-              <div className="absolute top-space-sm left-space-sm bg-surface-container-highest/90 px-space-xs py-0.5 rounded font-mono-label text-[10px] sm:text-mono-label text-secondary max-w-[calc(100%-2rem)] truncate">
-                HARDWARE SPEC // EP-01 (16A / 3680W)
+      <ScrollReveal>
+        <section className="py-space-md w-full" id="flagship">
+          <div className="flex flex-col gap-space-md mb-space-lg">
+            <div className="flex flex-wrap items-center justify-between gap-space-sm">
+              <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label text-secondary uppercase tracking-widest">
+                <Stars className="text-[16px]" />
+                <span>FLAGSHIP ENGINEERING SHOWCASE</span>
+              </div>
+              <div className="px-3 sm:px-space-md py-1 rounded-full bg-secondary/10 text-secondary font-mono-label text-[10px] sm:text-mono-label font-bold flex items-center gap-space-xs shadow-sm">
+                <EmojiEvents className="text-[16px]" />
+                <span>2nd Position — University of Gujrat FYP Competition 2026</span>
               </div>
             </div>
+            <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">
+              EcoPlugify — Smart Energy Monitoring &amp; Control System
+            </h2>
+            <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant max-w-2xl">
+              An IoT smart plug engineering prototype paired with a React Native mobile application and Node.js backend. Features remote appliance switching, AC electrical telemetry, BLE onboarding, and tariff-based cost calculation.
+            </p>
+          </div>
+
+          {/* Main Flagship Showcase Card */}
+          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+            <div className="lg:col-span-6 flex flex-col gap-space-md">
+              <div className="rounded-xl overflow-hidden bg-surface-container-lowest shadow-inner relative group border border-outline-variant/20">
+                <img
+                  alt="EcoPlugify Physical Hardware Prototype Bench"
+                  className="w-full h-64 sm:h-80 object-contain p-space-sm group-hover:scale-105 transition-transform duration-500"
+                  src="/images/ecoplugify/hardware-prototype.jpg"
+                  loading="lazy"
+                  decoding="async"
+                  width={600}
+                  height={400}
+                />
+                <div className="absolute top-space-sm left-space-sm bg-surface-container-highest/90 px-space-xs py-0.5 rounded font-mono-label text-[10px] sm:text-mono-label text-secondary max-w-[calc(100%-2rem)] truncate">
+                  HARDWARE PROTOTYPE // UOG FYP 2026
+                </div>
+              </div>
             <div className="grid grid-cols-3 gap-1 sm:gap-space-xs text-center font-mono-code text-mono-code">
               <div className="bg-surface-container-low p-space-xs rounded-lg">
-                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">SAMPLING</div>
-                <div className="text-on-surface font-bold text-xs sm:text-mono-code">&lt; 100ms</div>
+                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">CONTROLLER</div>
+                <div className="text-on-surface font-bold text-xs sm:text-mono-code">ESP32 Wi-Fi</div>
               </div>
               <div className="bg-surface-container-low p-space-xs rounded-lg">
-                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">MAX LOAD</div>
-                <div className="text-secondary font-bold text-xs sm:text-mono-code">16A / 3.6kW</div>
+                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">ACTUATION</div>
+                <div className="text-secondary font-bold text-xs sm:text-mono-code">Relay Switch</div>
               </div>
               <div className="bg-surface-container-low p-space-xs rounded-lg">
-                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">WIRELESS</div>
-                <div className="text-on-surface font-bold text-xs sm:text-mono-code">Wi-Fi 2.4GHz</div>
+                <div className="text-on-surface-variant text-[10px] sm:text-[11px]">PROTOCOL</div>
+                <div className="text-on-surface font-bold text-xs sm:text-mono-code">MQTT / TLS</div>
               </div>
             </div>
           </div>
@@ -141,26 +152,27 @@ export const ProjectsPage: React.FC = () => {
               <span className="font-mono-label text-mono-label text-outline uppercase">CORE ARCHITECTURAL STACK</span>
               <div className="flex flex-wrap gap-1.5 sm:gap-space-xs">
                 <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-secondary">ESP32 MCU</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">React Native</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">Node.js / Express</span>
+                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">C++ Firmware</span>
+                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">React Native CLI</span>
                 <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MQTT Broker</span>
+                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">Node.js / Express</span>
                 <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MongoDB</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">PZEM-004T</span>
+                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">BLE Provisioning</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-space-sm text-sm sm:text-body-regular text-on-surface-variant">
               <div className="flex items-start gap-space-sm">
                 <Bolt className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">Precision AC Load Measurement:</strong> Real-time voltage, current, and true active power readings via hardware isolated PZEM-004T module.</span>
+                <span><strong className="text-on-surface">AC Electrical Telemetry:</strong> Real-time voltage, current, and active power measurement research on connected loads.</span>
               </div>
               <div className="flex items-start gap-space-sm">
                 <SyncAlt className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">Ultra-Low Latency Telemetry:</strong> MQTT Pub/Sub architecture transmitting metrics to cloud clusters within 85ms for rapid graph updates.</span>
+                <span><strong className="text-on-surface">MQTT Telemetry Pipeline:</strong> Standardized pub/sub message pipeline (data, relay, schedule, status) over local Wi-Fi.</span>
               </div>
               <div className="flex items-start gap-space-sm">
                 <ShieldWithHeart className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">Automated Overload Cutoff:</strong> Autonomous on-device relay trip triggers safeguard sensitive appliances against voltage spikes.</span>
+                <span><strong className="text-on-surface">Mobile Control &amp; Provisioning:</strong> React Native CLI mobile client with Bluetooth Low Energy setup, live power meter, and PKR cost calculations.</span>
               </div>
             </div>
 
@@ -172,15 +184,17 @@ export const ProjectsPage: React.FC = () => {
                 <span>Explore Case Study</span>
                 <ArrowForward className="text-[16px]" />
               </button>
-              <span className="font-mono-label text-[11px] sm:text-mono-label text-outline">PATENT PENDING // PK-2026</span>
+              <span className="font-mono-label text-[11px] sm:text-mono-label text-outline">HONORS // 2ND POSITION UOG FYP 2026</span>
             </div>
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* 3. ECOSYSTEM REPOSITORY: OTHER NOTABLE PROJECTS */}
-      <section className="py-space-xl w-full">
-        <div className="flex flex-col gap-space-xs mb-space-lg">
+      <ScrollReveal>
+        <section className="py-space-xl w-full">
+          <div className="flex flex-col gap-space-xs mb-space-lg">
           <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">ECOSYSTEM REPOSITORY</span>
           <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">Engineered Systems &amp; Prototypes</h2>
         </div>
@@ -264,43 +278,50 @@ export const ProjectsPage: React.FC = () => {
 
         </div>
       </section>
+      </ScrollReveal>
 
       {/* 4. CONTACT / CALL TO ACTION */}
-      <section className="py-space-xl mb-12 w-full">
-        <div className="bg-surface-container-lowest rounded-2xl p-5 sm:p-space-lg lg:p-space-xl shadow-xl flex flex-col items-center text-center gap-space-md relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-secondary/5 via-transparent to-transparent pointer-events-none" />
-          <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface max-w-2xl">
-            Interested in Technical Collaboration or System Architecture?
-          </h2>
-          <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant max-w-xl">
-            Whether you need custom hardware integration, full-stack web platforms, or embedded telemetry solutions, let’s talk.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-space-md pt-space-sm w-full">
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto px-space-xl py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold hover:bg-secondary-fixed transition-transform active:scale-95 flex items-center justify-center gap-space-xs shadow-md min-h-[44px]"
-            >
-              <Mail className="text-[18px]" />
-              <span>Get In Touch</span>
-            </Link>
-            <a
-              href={PORTFOLIO_DATA.personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center justify-center gap-space-xs min-h-[44px]"
-            >
-              <Terminal className="text-[18px]" />
-              <span>View GitHub</span>
-            </a>
+      <ScrollReveal>
+        <section className="py-space-xl mb-12 w-full">
+          <div className="bg-surface-container-lowest rounded-2xl p-5 sm:p-space-lg lg:p-space-xl shadow-xl flex flex-col items-center text-center gap-space-md relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-secondary/5 via-transparent to-transparent pointer-events-none" />
+            <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface max-w-2xl">
+              Interested in Technical Collaboration or System Architecture?
+            </h2>
+            <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant max-w-xl">
+              Whether you need custom hardware integration, full-stack web platforms, or embedded telemetry solutions, let’s talk.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-space-md pt-space-sm w-full">
+              <Link
+                to="/contact"
+                className="w-full sm:w-auto px-space-xl py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold hover:bg-secondary-fixed transition-transform active:scale-95 flex items-center justify-center gap-space-xs shadow-md min-h-[44px]"
+              >
+                <Mail className="text-[18px]" />
+                <span>Get In Touch</span>
+              </Link>
+              <a
+                href={PORTFOLIO_DATA.personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center justify-center gap-space-xs min-h-[44px]"
+              >
+                <Terminal className="text-[18px]" />
+                <span>View GitHub</span>
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Case Study Modal */}
-      <CaseStudyModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      <Suspense fallback={null}>
+        {selectedProject && (
+          <CaseStudyModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </Suspense>
     </div>
   );
 };
