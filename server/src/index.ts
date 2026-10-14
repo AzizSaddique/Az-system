@@ -2,15 +2,16 @@ import app, { createApp } from './app.js';
 import { env } from './config/env.js';
 
 
-// Start standalone HTTP server when executed directly (local dev / production VM)
-// In Vercel serverless functions, Vercel invokes the exported default app without needing a port listener
+// Start standalone HTTP server when executed directly (Render / local dev)
+const port = Number(process.env.PORT) || 3000;
+
 if (!process.env.VERCEL) {
-  const server = app.listen(env.PORT, () => {
+  const server = app.listen(port, () => {
     console.log('----------------------------------------------------');
     console.log(`🚀 Portfolio Backend running in [${env.NODE_ENV}] mode`);
-    console.log(`📡 Server URL:    http://localhost:${env.PORT}`);
-    console.log(`🩺 Health check:  http://localhost:${env.PORT}/api/health`);
-    console.log(`🔒 Allowed CORS:  ${env.CLIENT_URL}`);
+    console.log(`📡 Server URL:    http://localhost:${port}`);
+    console.log(`🩺 Health check:  http://localhost:${port}/api/health`);
+    console.log(`🔒 Allowed CORS:  ${process.env.FRONTEND_URL || env.CLIENT_URL}`);
     console.log('----------------------------------------------------');
   });
 

@@ -36,7 +36,10 @@ const envSchema = z.object({
   CLIENT_URL: z
     .string()
     .optional()
-    .transform((val) => (val && val.trim() !== '' ? val : 'http://localhost:3000')),
+    .transform((val) => {
+      const candidate = process.env.FRONTEND_URL || val;
+      return candidate && candidate.trim() !== '' ? candidate : 'http://localhost:3000';
+    }),
   RESEND_API_KEY: z
     .string()
     .optional()

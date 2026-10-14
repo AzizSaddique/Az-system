@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "commonjs",
-  "main": "dist/app.js",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
@@ -23,9 +26,9 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.13.9",
     "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
+    "typescript": "5.9.3"
   }
 }
