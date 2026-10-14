@@ -1,7 +1,6 @@
-import { createApp } from './app.js';
+import app, { createApp } from './app.js';
 import { env } from './config/env.js';
 
-const app = createApp();
 
 // Start standalone HTTP server when executed directly (local dev / production VM)
 // In Vercel serverless functions, Vercel invokes the exported default app without needing a port listener
@@ -36,9 +35,3 @@ if (!process.env.VERCEL) {
 export { createApp };
 export default app;
 
-// Ensure full compatibility with CommonJS consumers and Vercel Lambda wrapper
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = app;
-  module.exports.default = app;
-  module.exports.createApp = createApp;
-}

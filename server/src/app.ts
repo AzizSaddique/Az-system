@@ -41,9 +41,3 @@ const app = createApp();
 
 export default app;
 
-// Ensure full compatibility with CommonJS consumers, Vercel Lambda wrapper, and tests
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = app;
-  module.exports.default = app;
-  module.exports.createApp = createApp;
-}
