@@ -10,6 +10,7 @@ import {
   Clock
 } from 'lucide-react';
 import { MarkdownMessage } from './MarkdownMessage';
+import { API_URL } from '../config/api';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -92,7 +93,7 @@ export const AiChatWidget: React.FC = () => {
           text: m.text.slice(0, 1000)
         }));
 
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

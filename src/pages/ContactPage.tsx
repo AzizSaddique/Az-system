@@ -19,6 +19,7 @@ import {
 import { TurnstileWidget, TurnstileWidgetRef } from '../components/TurnstileWidget';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { API_URL } from '../config/api';
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -78,7 +79,7 @@ export const ContactPage: React.FC = () => {
     setStatus('submitting');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
