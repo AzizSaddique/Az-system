@@ -1,5 +1,6 @@
 import app, { createApp } from './app.js';
 import { env } from './config/env.js';
+import { allowedOrigins } from './middleware/cors.js';
 
 
 // Start standalone HTTP server when executed directly (Render / local dev)
@@ -11,7 +12,7 @@ if (!process.env.VERCEL) {
     console.log(`🚀 Portfolio Backend running in [${env.NODE_ENV}] mode`);
     console.log(`📡 Server URL:    http://localhost:${port}`);
     console.log(`🩺 Health check:  http://localhost:${port}/api/health`);
-    console.log(`🔒 Allowed CORS:  ${process.env.FRONTEND_URL || env.CLIENT_URL}`);
+    console.log(`🔒 Allowed CORS:  ${allowedOrigins.join(', ')} (+ Vercel preview regex)`);
     console.log('----------------------------------------------------');
   });
 

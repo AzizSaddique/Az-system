@@ -23,6 +23,9 @@ export const createApp = (): Express => {
   app.use(express.json({ limit: '10kb' }));
 
   // 5. API Routes
+  app.get('/', (_req, res) => {
+    res.json({ status: 'ok' });
+  });
   app.use('/api/health', healthRouter);
   app.use('/api/contact', contactRateLimiter, contactRouter);
   app.use('/api/chat', chatRateLimiter, chatRouter);
