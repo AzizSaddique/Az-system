@@ -1,6 +1,7 @@
 import app, { createApp } from './app.js';
 import { env } from './config/env.js';
 import { allowedOrigins } from './middleware/cors.js';
+import { aiService } from './services/aiService.js';
 
 
 // Start standalone HTTP server when executed directly (Render / local dev)
@@ -13,6 +14,7 @@ if (!process.env.VERCEL) {
     console.log(`📡 Server URL:    http://localhost:${port}`);
     console.log(`🩺 Health check:  http://localhost:${port}/api/health`);
     console.log(`🔒 Allowed CORS:  ${allowedOrigins.join(', ')} (+ Vercel preview regex)`);
+    console.log(`🤖 Gemini Key:    ${aiService.isConfigured()}`);
     console.log('----------------------------------------------------');
   });
 

@@ -14,6 +14,18 @@ dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 dotenv.config();
 
+const cleanString = (raw: string | undefined): string => {
+  if (!raw) return '';
+  let cleaned = raw.trim();
+  if (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    cleaned = cleaned.slice(1, -1).trim();
+  }
+  return cleaned;
+};
+
 const envSchema = z.object({
   PORT: z
     .string()

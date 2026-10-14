@@ -25,8 +25,9 @@ export const handleChatSubmission = async (req: Request, res: Response) => {
 
   const { message, history } = validationResult.data;
 
-  // 2. Check configuration state early
+  // 2. Check configuration state early (503 only when truly unconfigured)
   if (!aiService.isConfigured()) {
+    console.error('[ChatController] Gemini API key is missing or unconfigured');
     return res.status(503).json({
       status: 'error',
       message:
@@ -43,6 +44,9 @@ export const handleChatSubmission = async (req: Request, res: Response) => {
       reply,
     });
   } catch (err: unknown) {
+    // Log the real underlying error with console.error
+    console.error('[ChatController] Gemini invocation error:', err);
+
     if (err instanceof AiServiceError) {
       return res.status(err.statusCode).json({
         status: 'error',
@@ -50,9 +54,9 @@ export const handleChatSubmission = async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(500).json({
+    return res.status(502).json({
       status: 'error',
-      message: 'An unexpected error occurred while processing your request. Please try again later.',
+      message: 'The AI service encountered an upstream provider error. Please try again later or use the contact form.',
     });
   }
 };

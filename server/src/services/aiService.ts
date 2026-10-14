@@ -92,8 +92,7 @@ export class AiService {
     }
 
     const client = this.getClient();
-    // Read the single verified model directly from GEMINI_MODEL in server/.env
-    const model = env.GEMINI_MODEL || 'models/gemini-3.5-flash';
+    const model = env.GEMINI_MODEL || 'gemini-flash-latest';
 
     // Construct conversation payload.
     // Client-provided history is treated strictly as untrusted dialogue turns.
@@ -128,7 +127,7 @@ export class AiService {
       const replyText = response.text?.trim();
 
       if (!replyText) {
-        throw new AiServiceError('The AI model generated an empty response. Please try asking again.', 500);
+        throw new AiServiceError('The AI model generated an empty response. Please try asking again.', 502);
       }
 
       const durationMs = Date.now() - startTime;
@@ -141,45 +140,13 @@ export class AiService {
       }
 
       const errorMsg = err instanceof Error ? err.message : String(err);
-      const isQuotaError =
-        errorMsg.includes('429') ||
-        errorMsg.includes('RESOURCE_EXHAUSTED') ||
-        errorMsg.toLowerCase().includes('quota') ||
-        errorMsg.toLowerCase().includes('rate limit');
+      // Log the real underlying error reason
+      console.error(`[AiService] Gemini API failure: ${errorMsg}`);
 
-      const isInvalidArg =
-        errorMsg.includes('400') ||
-        errorMsg.includes('INVALID_ARGUMENT');
-
-      const isUpstreamUnavailable =
-        errorMsg.includes('503') ||
-        errorMsg.includes('UNAVAILABLE') ||
-        errorMsg.toLowerCase().includes('high demand');
-
-      // Do not log secrets, complete prompts, or sensitive message history
-      console.error(`[AiService] Gemini API failure: ${errorMsg.slice(0, 200)}`);
-
-      if (isQuotaError) {
-        throw new AiServiceError(
-          'Transmission limit reached: The AI assistant is temporarily unavailable due to high request traffic. Please wait a moment before sending another query, or reach out directly via the contact form.',
-          429
-        );
-      }
-
-      if (isInvalidArg) {
-        throw new AiServiceError('Invalid request format received by AI provider.', 400);
-      }
-
-      if (isUpstreamUnavailable) {
-        throw new AiServiceError(
-          'The AI model is temporarily experiencing high demand upstream on Google servers. Please try again in a few moments or use the contact form.',
-          503
-        );
-      }
-
+      // Return 502 for Gemini API failures (invalid key, quota, model not found, etc.)
       throw new AiServiceError(
-        'The AI service encountered an error while processing your request. Please try again later or use the contact form.',
-        500
+        'The AI service is temporarily unavailable due to an upstream provider issue. Please try again later or use the contact form.',
+        502
       );
     }
 

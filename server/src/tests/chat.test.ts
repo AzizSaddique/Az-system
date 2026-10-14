@@ -165,7 +165,7 @@ async function runTests() {
     assert(Boolean(typedParams?.config?.systemInstruction?.includes('Muhammad Aziz Saddique')), 'System instruction includes verified portfolio facts');
     assert(typedParams?.contents?.length === 3, 'Conversation history + new prompt are passed in contents');
 
-    // 2d: Upstream 429 Quota Error Handling
+    // 2d: Gemini API Quota Failure Handling
     const mockQuotaErrorClient: AiClientInterface = {
       models: {
         generateContent: async () => {
@@ -181,10 +181,10 @@ async function runTests() {
       body: JSON.stringify({ message: 'What are your skills?' }),
     });
     const quotaJson = await quotaRes.json();
-    assert(quotaRes.status === 429, 'When Gemini throws quota exhaustion, server returns HTTP 429');
-    assert(quotaJson.message.includes('limit reached'), 'HTTP 429 response gives safe user-friendly notice');
+    assert(quotaRes.status === 502, 'When Gemini throws quota exhaustion, server returns HTTP 502');
+    assert(quotaJson.message.includes('upstream provider issue') || quotaJson.message.includes('unavailable'), 'HTTP 502 response gives safe user-friendly notice');
 
-    // 2e: Generic Upstream 500 Error Handling
+    // 2e: Generic Upstream Error Handling
     const mockGenericErrorClient: AiClientInterface = {
       models: {
         generateContent: async () => {
@@ -200,17 +200,17 @@ async function runTests() {
       body: JSON.stringify({ message: 'Tell me more' }),
     });
     const genericErrorJson = await genericErrorRes.json();
-    assert(genericErrorRes.status === 500, 'When Gemini throws unexpected error, server returns HTTP 500');
+    assert(genericErrorRes.status === 502, 'When Gemini throws unexpected error, server returns HTTP 502');
     assert(
       !genericErrorJson.message.includes('Internal socket breakdown'),
       'Internal stack traces and error details are NOT leaked to the client'
     );
 
-    // 2f: Upstream 503 High Demand Error Handling
+    // 2f: Upstream 503 / High Demand / Model Error Handling
     const mockDemandClient: AiClientInterface = {
       models: {
         generateContent: async () => {
-          throw new Error('503 UNAVAILABLE: This model is currently experiencing high demand. Spikes in demand are usually temporary.');
+          throw new Error('503 UNAVAILABLE: This model is currently experiencing high demand.');
         },
       },
     };
@@ -222,8 +222,8 @@ async function runTests() {
       body: JSON.stringify({ message: 'Are you available?' }),
     });
     const demandJson = await demandRes.json();
-    assert(demandRes.status === 503, 'When Gemini upstream returns 503 high demand, server returns HTTP 503');
-    assert(demandJson.message.includes('high demand'), 'HTTP 503 response gives accurate upstream high demand explanation');
+    assert(demandRes.status === 502, 'When Gemini upstream returns 503 high demand, server returns HTTP 502');
+    assert(demandJson.message.includes('upstream provider issue') || demandJson.message.includes('unavailable'), 'HTTP 502 response gives safe upstream notice');
 
   } finally {
     // Reset client to null for clean slate
