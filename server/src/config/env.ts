@@ -81,7 +81,7 @@ const envSchema = z.object({
     .optional()
     .transform((val) => {
       const candidate = cleanString(process.env.GEMINI_MODEL || val);
-      return candidate || 'gemini-flash-latest';
+      return candidate || 'gemini-3.5-flash-lite';
     }),
   TURNSTILE_SECRET_KEY: z
     .string()

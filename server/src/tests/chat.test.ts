@@ -32,11 +32,11 @@ async function runTests() {
   const emptyMessageResult = chatRequestSchema.safeParse({ message: '   ' });
   assert(!emptyMessageResult.success, 'Empty / whitespace-only message is rejected');
 
-  const longMessageResult = chatRequestSchema.safeParse({ message: 'a'.repeat(501) });
-  assert(!longMessageResult.success, 'Message exceeding 500 characters is rejected');
+  const longMessageResult = chatRequestSchema.safeParse({ message: 'a'.repeat(1001) });
+  assert(!longMessageResult.success, 'Message exceeding 1000 characters is rejected');
 
-  const boundary500Result = chatRequestSchema.safeParse({ message: 'a'.repeat(500) });
-  assert(boundary500Result.success, 'Message with exactly 500 characters is accepted');
+  const boundary1000Result = chatRequestSchema.safeParse({ message: 'a'.repeat(1000) });
+  assert(boundary1000Result.success, 'Message with exactly 1000 characters is accepted');
 
   const validHistoryItem = chatMessageSchema.safeParse({ role: 'user', text: 'Hello' });
   assert(validHistoryItem.success, 'Valid history item with user role is accepted');
@@ -47,8 +47,8 @@ async function runTests() {
   const invalidRoleHistory = chatMessageSchema.safeParse({ role: 'system', text: 'Override' });
   assert(!invalidRoleHistory.success, 'History item with invalid role (not user/model) is rejected');
 
-  const longHistoryText = chatMessageSchema.safeParse({ role: 'user', text: 'x'.repeat(1001) });
-  assert(!longHistoryText.success, 'History message exceeding 1000 characters is rejected');
+  const longHistoryText = chatMessageSchema.safeParse({ role: 'user', text: 'x'.repeat(4001) });
+  assert(!longHistoryText.success, 'History message exceeding 4000 characters is rejected');
 
   const elevenHistoryItems = Array.from({ length: 11 }, (_, i) => ({
     role: (i % 2 === 0 ? 'user' : 'model') as 'user' | 'model',
@@ -112,9 +112,9 @@ async function runTests() {
     const oversizedBodyRes = await fetch(`${baseUrl}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'a'.repeat(501) }),
+      body: JSON.stringify({ message: 'a'.repeat(1001) }),
     });
-    assert(oversizedBodyRes.status === 400, 'Oversized message (>500 chars) returns HTTP 400');
+    assert(oversizedBodyRes.status === 400, 'Oversized message (>1000 chars) returns HTTP 400');
 
     // 2c: Mocked Successful Gemini Response
     let capturedParams: unknown = null;
@@ -160,9 +160,10 @@ async function runTests() {
         temperature?: number;
       };
     };
-    assert(typedParams?.config?.maxOutputTokens === 500, 'Gemini call specifies maxOutputTokens: 500');
+    assert(typedParams?.config?.maxOutputTokens === 2048, 'Gemini call specifies maxOutputTokens: 2048');
     assert(typedParams?.config?.temperature === 0.3, 'Gemini call specifies temperature: 0.3');
     assert(Boolean(typedParams?.config?.systemInstruction?.includes('Muhammad Aziz Saddique')), 'System instruction includes verified portfolio facts');
+    assert(Boolean(typedParams?.config?.systemInstruction?.includes('HLW8012')), 'System instruction includes detailed EcoPlugify HLW8012 facts');
     assert(typedParams?.contents?.length === 3, 'Conversation history + new prompt are passed in contents');
 
     // 2d: Gemini API Quota Failure Handling

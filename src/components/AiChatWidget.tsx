@@ -71,7 +71,7 @@ export const AiChatWidget: React.FC = () => {
 
   const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputMessage).trim();
-    if (!text || isLoading || text.length > 500) return;
+    if (!text || isLoading || text.length > 1000) return;
 
     setErrorNotice(null);
     setInputMessage('');
@@ -90,7 +90,7 @@ export const AiChatWidget: React.FC = () => {
         .slice(-10) // cap to last 10
         .map((m) => ({
           role: (m.role === 'assistant' ? 'model' : 'user') as 'model' | 'user',
-          text: m.text.slice(0, 1000)
+          text: m.text.slice(0, 4000)
         }));
 
       const response = await fetch(`${API_URL}/api/chat`, {
@@ -286,7 +286,7 @@ export const AiChatWidget: React.FC = () => {
                 ref={inputRef}
                 rows={2}
                 value={inputMessage}
-                maxLength={500}
+                maxLength={1000}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask about EcoPlugify, ROS 2, or skills... (Enter to send)"
@@ -297,8 +297,8 @@ export const AiChatWidget: React.FC = () => {
 
               <div className="flex items-center justify-between mt-1.5 px-1">
                 <div className="flex items-center gap-1.5 text-[9px] font-mono-code text-outline">
-                  <span className={inputMessage.length > 450 ? 'text-error font-bold' : ''}>
-                    {inputMessage.length}/500
+                  <span className={inputMessage.length > 900 ? 'text-error font-bold' : ''}>
+                    {inputMessage.length}/1000
                   </span>
                   <span>•</span>
                   <span>Shift+Enter for newline</span>

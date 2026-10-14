@@ -101,7 +101,7 @@ export const EcoplugifyAppAnnouncement: React.FC = () => {
           {/* Right Column: Visual Telemetry Mobile Interface Preview */}
           <div className="lg:col-span-5 flex justify-center mt-4 lg:mt-0">
             {/* Phone Mockup Frame */}
-            <div className="relative w-full max-w-[320px] rounded-[2rem] bg-[#070d13] p-3 sm:p-4 border-2 border-secondary/40 shadow-[0_0_35px_rgba(170,224,46,0.12)]">
+            <div className="relative w-full max-w-[320px] rounded-[2rem] bg-surface-container-lowest p-3 sm:p-4 border-2 border-secondary/40 shadow-[0_0_35px_rgba(170,224,46,0.12)]">
               {/* Screen Notch / Top Bar */}
               <div className="flex items-center justify-between px-3 py-1 mb-2 font-mono-code text-[10px] text-outline border-b border-surface-container-high/40">
                 <span className="text-secondary font-bold">ECOPLUGIFY MOBILE</span>

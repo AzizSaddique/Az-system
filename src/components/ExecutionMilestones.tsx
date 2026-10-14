@@ -221,12 +221,12 @@ export const ExecutionMilestones: React.FC = () => {
                   <div
                     className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${
                       milestone.badgeType === 'flagship'
-                        ? 'bg-[#0b141c] border-2 border-secondary shadow-[0_0_18px_rgba(170,224,46,0.5)]'
+                        ? 'bg-background border-2 border-secondary shadow-[0_0_18px_rgba(170,224,46,0.5)]'
                         : milestone.badgeType === 'silver'
-                        ? 'bg-[#0b141c] border-2 border-slate-300 shadow-[0_0_16px_rgba(226,232,240,0.4)]'
+                        ? 'bg-background border-2 border-slate-300 shadow-[0_0_16px_rgba(226,232,240,0.4)]'
                         : milestone.badgeType === 'active'
-                        ? 'bg-[#0b141c] border-2 border-[#38bdf8] shadow-[0_0_18px_rgba(56,189,248,0.5)]'
-                        : 'bg-[#0b141c] border border-surface-container-highest shadow-sm'
+                        ? 'bg-background border-2 border-[#38bdf8] shadow-[0_0_18px_rgba(56,189,248,0.5)]'
+                        : 'bg-background border border-surface-container-highest shadow-sm'
                     }`}
                   >
                     {/* Inner glowing pip or pulse */}

@@ -23,7 +23,12 @@ export interface AiClientInterface {
         maxOutputTokens?: number;
         temperature?: number;
       };
-    }) => Promise<{ text?: string | null }>;
+    }) => Promise<{
+      text?: string | null;
+      candidates?: Array<{
+        finishReason?: string;
+      }>;
+    }>;
   };
 }
 
@@ -92,7 +97,7 @@ export class AiService {
     }
 
     const client = this.getClient();
-    const model = env.GEMINI_MODEL || 'gemini-flash-latest';
+    const model = env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
 
     // Construct conversation payload.
     // Client-provided history is treated strictly as untrusted dialogue turns.
@@ -119,10 +124,15 @@ export class AiService {
         contents,
         config: {
           systemInstruction: PORTFOLIO_SYSTEM_INSTRUCTION,
-          maxOutputTokens: 500,
+          maxOutputTokens: 2048,
           temperature: 0.3,
         },
       });
+
+      const finishReason = response.candidates?.[0]?.finishReason;
+      if (finishReason === 'MAX_TOKENS') {
+        console.error('[AiService] Response truncated: finishReason was MAX_TOKENS');
+      }
 
       const replyText = response.text?.trim();
 

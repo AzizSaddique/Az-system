@@ -12,26 +12,27 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
-      const saved = localStorage.getItem('portfolio-theme');
+      const saved = localStorage.getItem('theme') || localStorage.getItem('portfolio-theme');
       if (saved === 'light' || saved === 'dark') {
         return saved;
       }
     } catch {
       // Ignore localStorage errors
     }
-    return 'dark'; // Dark Mode is default on first visit
+    return 'light'; // Light Mode is default for every new visitor
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    } else {
+    if (theme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
+    } else {
+      root.classList.add('light');
+      root.classList.remove('dark');
     }
     try {
+      localStorage.setItem('theme', theme);
       localStorage.setItem('portfolio-theme', theme);
     } catch {
       // Ignore localStorage errors

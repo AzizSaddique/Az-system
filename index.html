@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
@@ -9,6 +9,25 @@
     <title>Muhammad Aziz Saddique | Systems & AI Hardware Engineer</title>
     <meta name="description" content="Portfolio of Muhammad Aziz Saddique - Robotics, Embedded Systems, and Edge AI Specialist. BS Robotics Engineering candidate at University of Gujrat." />
     
+    <!-- Theme Initializer: Light theme by default for all visitors; applies saved choice before render -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme') || localStorage.getItem('portfolio-theme');
+          if (saved === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
     <!-- Google Fonts: Geist, Geist Mono, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +43,7 @@
     </script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async defer></script>
   </head>
-  <body class="bg-[#0b141c] text-[#dae4ef] font-sans antialiased selection:bg-[#aae02e] selection:text-[#0b141c] min-h-screen">
+  <body class="bg-background text-on-surface font-sans antialiased selection:bg-secondary selection:text-on-secondary min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
