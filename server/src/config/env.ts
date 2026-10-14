@@ -1,15 +1,14 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { z } from 'zod';
 
 // Load environment variables reliably regardless of CWD or runtime environment
 // In local dev, loads from server/.env or root .env; in Vercel, process.env is injected by platform
 try {
-  dotenv.config({ path: fileURLToPath(new URL('../../../.env', import.meta.url)) });
-  dotenv.config({ path: fileURLToPath(new URL('../../.env', import.meta.url)) });
+  dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+  dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 } catch {
-  // Graceful fallback if import.meta.url is not a file URL in bundled environments
+  // Graceful fallback if __dirname is not available
 }
 dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
