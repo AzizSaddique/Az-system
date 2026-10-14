@@ -1,10 +1,13 @@
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
+import path from 'path';
 import { z } from 'zod';
 
-// Load environment variables reliably from server/.env regardless of CWD
-const envPath = fileURLToPath(new URL('../../.env', import.meta.url));
-dotenv.config({ path: envPath });
+// Load environment variables reliably regardless of CWD or runtime environment
+// In local dev, loads from server/.env or root .env; in Vercel, process.env is injected by platform
+const serverEnvPath = path.resolve(__dirname, '../../.env');
+dotenv.config({ path: serverEnvPath });
+dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 dotenv.config();
 
 const envSchema = z.object({

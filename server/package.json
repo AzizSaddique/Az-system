@@ -2,7 +2,8 @@
   "name": "stitch-portfolio-backend",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
+  "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",

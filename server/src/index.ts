@@ -33,5 +33,12 @@ if (!process.env.VERCEL) {
   process.on('SIGTERM', () => handleShutdown('SIGTERM'));
   process.on('SIGINT', () => handleShutdown('SIGINT'));
 }
-
+export { createApp };
 export default app;
+
+// Ensure full compatibility with CommonJS consumers and Vercel Lambda wrapper
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = app;
+  module.exports.default = app;
+  module.exports.createApp = createApp;
+}

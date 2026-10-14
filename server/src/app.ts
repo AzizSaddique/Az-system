@@ -35,3 +35,15 @@ export const createApp = (): Express => {
 
   return app;
 };
+
+// Instantiate default app instance for Vercel Express runtime entrypoint
+const app = createApp();
+
+export default app;
+
+// Ensure full compatibility with CommonJS consumers, Vercel Lambda wrapper, and tests
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = app;
+  module.exports.default = app;
+  module.exports.createApp = createApp;
+}
