@@ -56,11 +56,21 @@ const envSchema = z.object({
   GEMINI_API_KEY: z
     .string()
     .optional()
-    .default(''),
+    .transform(() => {
+      const candidate =
+        process.env.GEMINI_API_KEY ||
+        process.env.GOOGLE_API_KEY ||
+        process.env.GOOGLE_GENAI_API_KEY ||
+        '';
+      return cleanString(candidate);
+    }),
   GEMINI_MODEL: z
     .string()
     .optional()
-    .default('models/gemini-3.5-flash'),
+    .transform((val) => {
+      const candidate = cleanString(process.env.GEMINI_MODEL || val);
+      return candidate || 'gemini-flash-latest';
+    }),
   TURNSTILE_SECRET_KEY: z
     .string()
     .optional()
