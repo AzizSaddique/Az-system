@@ -115,7 +115,7 @@ export const ProjectsPage: React.FC = () => {
           </div>
 
           {/* Main Flagship Showcase Card */}
-          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center card-interactive border border-outline-variant/20 hover:border-secondary/30">
             <div className="lg:col-span-6 flex flex-col gap-space-md">
               <div className="rounded-xl overflow-hidden bg-surface-container-lowest shadow-inner relative group border border-outline-variant/20">
                 <img
@@ -201,7 +201,7 @@ export const ProjectsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
           
           {/* Project 1: Yexon Impex */}
-          <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors">
+          <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
             <div className="flex flex-col gap-space-sm">
               <div className="flex items-center justify-between">
                 <span className="px-space-xs py-0.5 rounded bg-surface-container-highest font-mono-label text-mono-label text-outline">LOGISTICS TELEMETRY</span>
@@ -244,7 +244,7 @@ export const ProjectsPage: React.FC = () => {
           </div>
 
           {/* Project 2: Autonomous Navigation Rover */}
-          <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors">
+          <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
             <div className="flex flex-col gap-space-sm">
               <div className="flex items-center justify-between">
                 <span className="px-space-xs py-0.5 rounded bg-secondary/15 font-mono-label text-mono-label text-secondary">ACTIVE RESEARCH // ROBOTICS</span>

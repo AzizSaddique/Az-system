@@ -94,7 +94,7 @@ const TITLES = [
 ];
 
 const TypewriterHeroHeading: React.FC = () => {
-  const [displayedText, setDisplayedText] = useState('');
+  const [displayedText, setDisplayedText] = useState(TITLES[0].text);
   const [index, setIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
@@ -183,7 +183,7 @@ export const HomePage: React.FC = () => {
           {/* Left Column: Copy & CTAs */}
           <div className="lg:col-span-7 flex flex-col gap-space-md min-w-0">
             {/* Identity Badge */}
-            <div className="inline-flex items-center gap-space-xs px-2.5 sm:px-space-sm py-1 rounded-full bg-surface-container-high w-fit max-w-full shadow-sm">
+            <div className="animate-hero-1 inline-flex items-center gap-space-xs px-2.5 sm:px-space-sm py-1 rounded-full bg-surface-container-high w-fit max-w-full shadow-sm">
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shrink-0" />
               <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary font-semibold uppercase tracking-wider truncate">
                 SOFTWARE / EMBEDDED / ROBOTICS // NAROWAL, PK
@@ -191,15 +191,17 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Hero Headline */}
-            <TypewriterHeroHeading />
+            <div className="animate-hero-2">
+              <TypewriterHeroHeading />
+            </div>
 
             {/* Subtitle */}
-            <p className="font-body-lg text-sm sm:text-body-lg text-on-surface-variant max-w-xl">
+            <p className="animate-hero-3 font-body-lg text-sm sm:text-body-lg text-on-surface-variant max-w-xl">
               Building high resilience mobile applications, scalable backend systems, and edge telemetry hardware engineered with a core focus on embedded systems and autonomous robotics.
             </p>
 
             {/* CTA Hub */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-space-md pt-space-xs">
+            <div className="animate-hero-4 flex flex-wrap items-center gap-2 sm:gap-space-md pt-space-xs">
               <a
                 href="#featured-project"
                 className="w-full sm:w-auto justify-center px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold shadow-md hover:bg-secondary-fixed transition-transform active:scale-95 flex items-center gap-space-xs min-h-[44px]"
@@ -226,7 +228,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Micro Telemetry Ticker */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-space-sm pt-space-md max-w-lg">
+            <div className="animate-hero-5 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-space-sm pt-space-md max-w-lg">
               <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-0.5">
                 <span className="font-mono-label text-[10px] sm:text-mono-label text-outline">NODE STATUS</span>
                 <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface flex items-center gap-1.5">
@@ -245,7 +247,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Right Column: Portrait Frame & Glass HUD Telemetry */}
-          <div className="lg:col-span-5 relative flex flex-col items-center mt-6 lg:mt-0">
+          <div className="animate-hero-portrait lg:col-span-5 relative flex flex-col items-center mt-6 lg:mt-0">
             {/* Floating HUD Telemetry Pill */}
             <div className="w-full max-w-md bg-surface-container-highest/90 backdrop-blur-xl p-3 sm:p-space-md rounded-xl shadow-xl flex flex-col gap-space-sm relative z-20 -mb-4 sm:-mb-8">
               <div className="flex items-center justify-between pb-space-xs text-[11px] sm:text-mono-label">
@@ -321,7 +323,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Main Flagship Showcase Card */}
-          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center card-interactive border border-outline-variant/20 hover:border-secondary/30">
             <div className="lg:col-span-6 flex flex-col gap-space-md">
               <div className="rounded-xl overflow-hidden bg-surface-container-lowest shadow-inner relative group border border-outline-variant/20">
                 <img
@@ -407,7 +409,7 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
 
             {/* Project 1 */}
-            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors">
+            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
               <div className="flex flex-col gap-space-sm">
                 <div className="flex items-center justify-between">
                   <span className="px-space-xs py-0.5 rounded bg-surface-container-highest font-mono-label text-mono-label text-outline">LOGISTICS TELEMETRY</span>
@@ -450,7 +452,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Project 2 */}
-            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors">
+            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
               <div className="flex flex-col gap-space-sm">
                 <div className="flex items-center justify-between">
                   <span className="px-space-xs py-0.5 rounded bg-secondary/15 font-mono-label text-mono-label text-secondary">ACTIVE RESEARCH // ROBOTICS</span>

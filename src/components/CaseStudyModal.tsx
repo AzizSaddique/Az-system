@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   X,
   ExternalLink,
@@ -37,12 +37,16 @@ type EcoPlugifyTab =
 export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose }) => {
   const [activeTab, setActiveTab] = useState<EcoPlugifyTab>('overview');
   const [selectedMobileIndex, setSelectedMobileIndex] = useState<number>(0);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!project) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    // Focus close button on open for keyboard accessibility
+    closeButtonRef.current?.focus();
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -69,7 +73,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-background/80 backdrop-blur-md transition-opacity duration-200"
+        className="fixed inset-0 bg-background/80 backdrop-blur-md animate-modal-backdrop"
         aria-hidden="true"
       />
 
@@ -77,7 +81,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
         role="dialog"
         aria-modal="true"
         aria-labelledby="case-study-title"
-        className="relative w-full max-w-5xl bg-surface-container border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-10 my-4 sm:my-8 max-h-[94vh] sm:max-h-[92vh] flex flex-col transition-all duration-200"
+        className="relative w-full max-w-5xl bg-surface-container border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-10 my-4 sm:my-8 max-h-[94vh] sm:max-h-[92vh] flex flex-col animate-modal-panel"
       >
           {/* Modal Header */}
           <div className="flex items-center justify-between p-3 sm:p-space-md bg-surface-container-highest/90 border-b border-outline-variant/20 shrink-0">
@@ -86,8 +90,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
               <span>{project.category} // CASE STUDY</span>
             </div>
             <button
+              ref={closeButtonRef}
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-surface-container-high text-on-surface hover:text-secondary hover:bg-surface-container-highest transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-surface-container-high text-on-surface hover:text-secondary hover:bg-surface-container-highest transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary/50"
               aria-label="Close Case Study"
             >
               <X className="w-5 h-5" />
@@ -256,9 +261,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                     {/* Hardware Image Full View */}
                     <div className="rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/30 p-2 sm:p-space-sm">
                       <img
-                        src="/images/ecoplugify/hardware-prototype.jpg"
+                        src="/images/ecoplugify/hardware-prototype-640.webp"
                         alt="EcoPlugify Physical Hardware Prototype Components"
                         className="w-full max-h-[420px] object-contain mx-auto rounded-lg"
+                        loading="lazy"
+                        decoding="async"
+                        width={640}
+                        height={480}
                       />
                       <div className="mt-2 p-2.5 bg-surface-container-low rounded-lg text-xs font-mono-code text-on-surface-variant space-y-1">
                         <span className="text-secondary font-bold block">
@@ -630,9 +639,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                       {/* Ceremony Photo */}
                       <div className="rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/30 p-2 space-y-2">
                         <img
-                          src="/images/ecoplugify/award-ceremony.jpg"
+                          src="/images/ecoplugify/award-ceremony.webp"
                           alt="EcoPlugify Award Ceremony with Dr. Umer Shoaib"
                           className="w-full max-h-72 object-contain rounded-lg mx-auto"
+                          loading="lazy"
+                          decoding="async"
+                          width={600}
+                          height={400}
                         />
                         <div className="text-xs font-mono-code text-on-surface-variant p-2 space-y-1">
                           <span className="text-secondary font-bold block">
@@ -647,9 +660,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                       {/* Envelope Photo */}
                       <div className="rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/30 p-2 space-y-2">
                         <img
-                          src="/images/ecoplugify/award-envelope.jpg"
+                          src="/images/ecoplugify/award-envelope.webp"
                           alt="University of Gujrat 2nd Position Envelope"
                           className="w-full max-h-72 object-contain rounded-lg mx-auto"
+                          loading="lazy"
+                          decoding="async"
+                          width={600}
+                          height={400}
                         />
                         <div className="text-xs font-mono-code text-on-surface-variant p-2 space-y-1">
                           <span className="text-secondary font-bold block">

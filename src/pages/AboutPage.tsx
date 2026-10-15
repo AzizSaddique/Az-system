@@ -502,7 +502,7 @@ export const AboutPage: React.FC = () => {
               <img
                 alt="EcoPlugify Physical Hardware Prototype Bench"
                 className="w-full max-h-80 object-contain rounded filter contrast-110 drop-shadow-2xl transition-transform duration-500 group-hover:scale-102"
-                src="/images/ecoplugify/hardware-prototype.jpg"
+                src="/images/ecoplugify/hardware-prototype-640.webp"
                 loading="lazy"
                 decoding="async"
                 width={500}

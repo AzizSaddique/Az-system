@@ -38,7 +38,7 @@ export const PORTFOLIO_DATA = {
     // Local public paths (guaranteed reliable load in Vite dev & build)
     heroPortrait: "/images/heroPortrait-448.webp",
     avatarSmall: "/images/avatarSmall-96.webp",
-    ecoPlugifyRender: "/images/ecoplugify/hardware-prototype-640.webp",
+    ecoPlugifyRender: "/images/ecoplugify/ecoPlugifyRender.webp",
     ecoPlugifyHardwarePhoto: "/images/ecoplugify/hardware-prototype-640.webp",
     ecoPlugifyHardwareViews: "/images/ecoplugify/ecoPlugifyHardwareViews.webp",
     ecoPlugifySpecSheet: "/images/ecoplugify/ecoPlugifySpecSheet.webp",
