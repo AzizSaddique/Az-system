@@ -15,8 +15,8 @@ const JourneyPage = lazy(() => import('./pages/JourneyPage').then(m => ({ defaul
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
-// Defer non-critical floating AI assistant widget so page shell and hero render with zero delay
-const AiChatWidget = lazy(() => import('./components/AiChatWidget').then(m => ({ default: m.AiChatWidget })));
+// Lightweight AI launcher: defers full chat dependencies until user interaction
+import { AiChatLauncher } from './components/AiChatLauncher';
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -64,9 +64,7 @@ export const App: React.FC = () => {
             </Suspense>
           </main>
           <Footer />
-          <Suspense fallback={null}>
-            <AiChatWidget />
-          </Suspense>
+          <AiChatLauncher />
           <MobileTabBar />
         </div>
       </BrowserRouter>

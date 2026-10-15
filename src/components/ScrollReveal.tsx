@@ -1,5 +1,4 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -16,33 +15,66 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   direction = 'up',
   amount = 0.05,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef<HTMLDivElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  // If user prefers reduced motion, render immediately with zero animation shift
-  if (shouldReduceMotion) {
+  useEffect(() => {
+    // Respect user motion preferences
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      setPrefersReducedMotion(true);
+      setIsVisible(true);
+      return;
+    }
+
+    const element = domRef.current;
+    if (!element) return;
+
+    const threshold = typeof amount === 'number' ? Math.min(Math.max(amount, 0), 1) : 0.05;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [amount]);
+
+  if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
   const getYOffset = () => {
-    if (direction === 'up') return 20;
-    if (direction === 'down') return -20;
-    return 0;
+    if (direction === 'up') return 'translateY(20px)';
+    if (direction === 'down') return 'translateY(-20px)';
+    return 'translateY(0)';
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: getYOffset() }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount }}
-      transition={{
-        duration: 0.5,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+    <div
+      ref={domRef}
       className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : getYOffset(),
+        transition: `opacity 500ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}s, transform 500ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}s`,
+        willChange: isVisible ? 'auto' : 'opacity, transform',
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

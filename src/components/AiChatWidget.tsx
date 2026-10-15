@@ -29,8 +29,13 @@ const INITIAL_MESSAGE: ChatMessage = {
   text: `**AZ // ASSISTANT Online**\n\nI am grounded in Muhammad Aziz Saddique's verified portfolio and engineering systems.\n\nAsk me about:\n- **EcoPlugify** (IoT hardware, ESP32, and mobile app)\n- **Full-Stack Systems** (React, React Native, Node.js, Express)\n- **Robotics & Telemetry** (ROS 2, Python, MQTT)\n- **Career Availability & Roles**`
 };
 
-export const AiChatWidget: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export interface AiChatWidgetProps {
+  defaultOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ defaultOpen = false, onClose }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +43,11 @@ export const AiChatWidget: React.FC = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose?.();
+  };
 
   // Auto-scroll chat to bottom on new message
   useEffect(() => {
@@ -57,7 +67,7 @@ export const AiChatWidget: React.FC = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
+        handleClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -192,7 +202,7 @@ export const AiChatWidget: React.FC = () => {
                 <RotateCcw className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 title="Close assistant"
                 aria-label="Close assistant window"
                 className="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"

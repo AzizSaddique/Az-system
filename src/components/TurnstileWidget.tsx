@@ -118,6 +118,21 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
         return;
       }
 
+      // Dynamically load Cloudflare Turnstile script on-demand if not already loaded
+      if (typeof window !== 'undefined' && !window.turnstile && !document.querySelector('script[data-turnstile="true"]')) {
+        window.__turnstileLoaded = false;
+        window.onloadTurnstileCallback = function () {
+          window.__turnstileLoaded = true;
+          window.dispatchEvent(new Event('turnstile-loaded'));
+        };
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.setAttribute('data-turnstile', 'true');
+        document.head.appendChild(script);
+      }
+
       // If turnstile object is already loaded, render immediately
       if (window.turnstile) {
         renderWidgetInstance();

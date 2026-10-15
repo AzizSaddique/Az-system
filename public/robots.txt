@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://frontend-bay-chi-32.vercel.app/sitemap.xml

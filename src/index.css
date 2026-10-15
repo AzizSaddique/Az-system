@@ -20,11 +20,11 @@
     --color-on-surface-variant: 91 100 114;
     --color-on-background: 17 24 39;
 
-    --color-outline: 107 114 128;
+    --color-outline: 75 85 99;
     --color-outline-variant: 226 232 240;
 
-    --color-secondary: 101 163 13;
-    --color-secondary-fixed: 132 204 22;
+    --color-secondary: 63 98 18;
+    --color-secondary-fixed: 77 124 15;
     --color-on-secondary: 255 255 255;
     --color-secondary-container: 236 253 245;
 
@@ -95,3 +95,10 @@
     linear-gradient(to right, rgba(143, 145, 148, 0.08) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(143, 145, 148, 0.08) 1px, transparent 1px);
 }
+
+/* High-contrast focus visibility for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-secondary));
+  outline-offset: 2px;
+}
+

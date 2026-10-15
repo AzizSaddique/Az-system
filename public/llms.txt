@@ -1,0 +1,26 @@
+# Muhammad Aziz Saddique — Systems & AI Hardware Engineer
+
+> Systems & AI Hardware Engineer specializing in IoT hardware, embedded firmware, robotics (ROS 2), and full-stack software development. BS Computer Science graduate from University of Gujrat.
+
+## Core Expertise
+- **Hardware & IoT**: ESP32, ESP8266, C++ Firmware, BLE Provisioning, MQTT (TLS), AC Electrical Telemetry (HLW8012, PZEM-004T).
+- **Robotics**: ROS 2 Humble, Python, LiDAR SLAM, Kinematics, Autonomous Ground Rovers, Gazebo.
+- **Full-Stack & Mobile**: React Native (CLI), React, Next.js, Node.js, Express, MongoDB, PostgreSQL, Tailwind CSS, TypeScript.
+
+## Key Projects
+- [EcoPlugify - Smart Energy Monitoring & Control System](https://frontend-bay-chi-32.vercel.app/projects): 2nd Position Winner at University of Gujrat FYP Competition 2026. ESP32 microcontroller with high-voltage AC relay switching, electrical telemetry, MQTT bridge, and React Native mobile application.
+- [Yexon Impex Platform](https://yexonimpex.store/): Enterprise logistics telemetry portal built with Next.js 14, TypeScript, PostgreSQL, and Docker.
+- [Autonomous Navigation Rover](https://frontend-bay-chi-32.vercel.app/projects): Differential drive mobile robotics platform utilizing ROS 2 nodes, 2D LiDAR point-cloud mapping, and SLAM algorithms.
+
+## Portfolio Navigation
+- [Home](https://frontend-bay-chi-32.vercel.app/): Overview and flagship project showcase.
+- [About](https://frontend-bay-chi-32.vercel.app/about): Engineering background, academic qualifications, and design philosophy.
+- [Projects](https://frontend-bay-chi-32.vercel.app/projects): Technical deep dives and architecture diagrams.
+- [Journey](https://frontend-bay-chi-32.vercel.app/journey): Timeline of education, competitions, and milestone engineering projects.
+- [Contact](https://frontend-bay-chi-32.vercel.app/contact): Secure transmission form and direct communication channels.
+
+## Contact Information
+- Email: azizsaddiquesaddique@gmail.com
+- GitHub: https://github.com/AzizSaddique
+- LinkedIn: https://linkedin.com/in/muhammad-aziz-saddique-5a8626298
+- Location: Narowal / Gujrat, Punjab, Pakistan

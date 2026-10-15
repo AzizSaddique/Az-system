@@ -194,6 +194,9 @@ export const Navbar: React.FC = () => {
                   alt="Muhammad Aziz Saddique"
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-outline-variant/40 group-hover:border-secondary transition-colors"
                   src={PORTFOLIO_DATA.personalInfo.avatarSmall}
+                  width={40}
+                  height={40}
+                  decoding="async"
                 />
                 {/* Active Availability Dot on Avatar */}
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-surface-container-lowest" />
@@ -220,6 +223,10 @@ export const Navbar: React.FC = () => {
                       alt="Muhammad Aziz Saddique"
                       className="w-full h-full object-cover"
                       src={PORTFOLIO_DATA.personalInfo.avatarSmall}
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="flex flex-col min-w-0">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
   ExternalLink,
@@ -67,23 +66,19 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
   const isEcoPlugify = project.id === 'ecoplugify';
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-background/80 backdrop-blur-md"
-        />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-background/80 backdrop-blur-md transition-opacity duration-200"
+        aria-hidden="true"
+      />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.98, y: 15 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full max-w-5xl bg-surface-container border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-10 my-4 sm:my-8 max-h-[94vh] sm:max-h-[92vh] flex flex-col"
-        >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="case-study-title"
+        className="relative w-full max-w-5xl bg-surface-container border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-10 my-4 sm:my-8 max-h-[94vh] sm:max-h-[92vh] flex flex-col transition-all duration-200"
+      >
           {/* Modal Header */}
           <div className="flex items-center justify-between p-3 sm:p-space-md bg-surface-container-highest/90 border-b border-outline-variant/20 shrink-0">
             <div className="flex items-center gap-space-xs font-mono-label text-[11px] sm:text-mono-label text-secondary uppercase">
@@ -758,11 +753,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
               >
                 Close
               </button>
-            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
+    </div>
   );
 };
 

@@ -121,7 +121,7 @@ export const ProjectsPage: React.FC = () => {
                 <img
                   alt="EcoPlugify Physical Hardware Prototype Bench"
                   className="w-full h-64 sm:h-80 object-contain p-space-sm group-hover:scale-105 transition-transform duration-500"
-                  src="/images/ecoplugify/hardware-prototype.jpg"
+                  src="/images/ecoplugify/hardware-prototype-640.webp"
                   loading="lazy"
                   decoding="async"
                   width={600}

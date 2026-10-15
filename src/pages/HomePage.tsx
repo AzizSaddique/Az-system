@@ -264,17 +264,22 @@ export const HomePage: React.FC = () => {
 
             {/* Verified Portrait Image Container */}
             <div className="relative w-full max-w-md rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/30 shadow-2xl aspect-[4/5] flex items-center justify-center group">
-              <img
-                alt="Muhammad Aziz Saddique portrait"
-                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                src={PORTFOLIO_DATA.personalInfo.heroPortrait}
-                loading="eager"
-                // @ts-expect-error fetchpriority is a modern HTML attribute
-                fetchpriority="high"
-                decoding="sync"
-                width={448}
-                height={560}
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="/images/heroPortrait-360.webp 360w, /images/heroPortrait-448.webp 448w, /images/heroPortrait.webp 512w"
+                  sizes="(max-width: 640px) 360px, (max-width: 1024px) 448px, 448px"
+                />
+                <img
+                  alt="Muhammad Aziz Saddique portrait"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  src="/images/heroPortrait-448.webp"
+                  loading="eager"
+                  decoding="async"
+                  width={448}
+                  height={560}
+                />
+              </picture>
               <div className="absolute inset-x-0 bottom-0 p-space-md bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/80 to-transparent flex justify-between items-end backdrop-blur-[2px]">
                 <div>
                   <p className="font-heading-md text-heading-md text-on-surface font-bold">Muhammad Aziz Saddique</p>
@@ -322,7 +327,7 @@ export const HomePage: React.FC = () => {
                 <img
                   alt="EcoPlugify Physical Hardware Prototype Bench"
                   className="w-full h-64 sm:h-80 object-contain p-space-sm group-hover:scale-105 transition-transform duration-500"
-                  src="/images/ecoplugify/hardware-prototype.jpg"
+                  src="/images/ecoplugify/hardware-prototype-640.webp"
                   loading="lazy"
                   decoding="async"
                   width={640}

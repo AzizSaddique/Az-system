@@ -36,19 +36,19 @@ export const PORTFOLIO_DATA = {
     fypAward: "2nd Position — University of Gujrat FYP Competition 2026",
 
     // Local public paths (guaranteed reliable load in Vite dev & build)
-    heroPortrait: "/images/heroPortrait.jpg",
-    avatarSmall: "/images/avatarSmall.jpg",
-    ecoPlugifyRender: "/images/ecoplugify/hardware-prototype.jpg",
-    ecoPlugifyHardwarePhoto: "/images/ecoplugify/hardware-prototype.jpg",
-    ecoPlugifyHardwareViews: "/images/ecoplugify/hardware-prototype.jpg",
-    ecoPlugifySpecSheet: "/images/ecoplugify/hardware-prototype.jpg",
-    ecoPlugifyAwardCeremony: "/images/ecoplugify/award-ceremony.jpg",
-    ecoPlugifyAwardEnvelope: "/images/ecoplugify/award-envelope.jpg",
-    certificateImage: "/images/ecoplugify/award-ceremony.jpg",
-    stageImage: "/images/stageImage.jpg",
-    campusImage: "/images/campusImage.jpg",
-    workspaceImage: "/images/workspaceImage.jpg",
-    labImage: "/images/labImage.jpg",
+    heroPortrait: "/images/heroPortrait-448.webp",
+    avatarSmall: "/images/avatarSmall-96.webp",
+    ecoPlugifyRender: "/images/ecoplugify/hardware-prototype-640.webp",
+    ecoPlugifyHardwarePhoto: "/images/ecoplugify/hardware-prototype-640.webp",
+    ecoPlugifyHardwareViews: "/images/ecoplugify/ecoPlugifyHardwareViews.webp",
+    ecoPlugifySpecSheet: "/images/ecoplugify/ecoPlugifySpecSheet.webp",
+    ecoPlugifyAwardCeremony: "/images/ecoplugify/award-ceremony.webp",
+    ecoPlugifyAwardEnvelope: "/images/ecoplugify/award-envelope.webp",
+    certificateImage: "/images/ecoplugify/award-ceremony.webp",
+    stageImage: "/images/stageImage.webp",
+    campusImage: "/images/campusImage.webp",
+    workspaceImage: "/images/workspaceImage.webp",
+    labImage: "/images/labImage.webp",
 
     // Original remote URLs kept as secondary references
     remoteUrls: {
@@ -78,7 +78,7 @@ export const PORTFOLIO_DATA = {
       achievement: "2nd Position, Final Year Project Competition 2026 (Cash Prize & Certificate Awarded)",
       summary: "A physical IoT smart plug prototype paired with a React Native mobile application and Node.js backend. Features remote appliance switching, AC electrical telemetry, BLE onboarding, and tariff-based cost calculation.",
       fullDescription: "EcoPlugify is an IoT-based smart energy monitoring and control system developed and prototyped as a final-year project at the Department of Computer Science, University of Gujrat (Hafiz Hayat Campus), under the academic supervision of Dr. Umer Shoaib. The project tackles domestic energy wastage through an end-to-end architecture: an ESP32 microcontroller with a high-voltage AC relay switching circuit, AC-to-DC internal power regulation, AC electrical telemetry sensing (evaluating HLW8012 pulse-frequency transducers and PZEM-004T transducers during development), an MQTT pub/sub telemetry bridge, a Node.js/MongoDB backend, and a custom React Native CLI mobile application with Bluetooth Low Energy (BLE) provisioning.",
-      imageUrl: "/images/ecoplugify/hardware-prototype.jpg",
+      imageUrl: "/images/ecoplugify/hardware-prototype-640.webp",
       tags: ["ESP32 Microcontroller", "C++ Firmware", "React Native CLI", "MQTT Broker", "Node.js / Express", "MongoDB", "AC Relay Circuit", "BLE Provisioning"],
       metrics: [
         { label: "PROJECT TYPE", value: "FYP Prototype" },
@@ -103,60 +103,60 @@ export const PORTFOLIO_DATA = {
       ],
       hardwarePhotos: [
         {
-          url: "/images/ecoplugify/hardware-prototype.jpg",
+          url: "/images/ecoplugify/hardware-prototype-640.webp",
           caption: "Benchtop hardware prototype: ESP32 NodeMCU, Songle AC relay module, MOV transient suppression disc, terminal wiring, and acrylic-shielded switchboard faceplate.",
           tag: "HARDWARE PROTOTYPE"
         }
       ],
       appScreenshots: [
         {
-          url: "/images/ecoplugify/app-dashboard.png",
+          url: "/images/ecoplugify/app-dashboard.webp",
           screen: "Device Dashboard",
           caption: "Live device dashboard showing linked plug (plug1), real-time power (0W), daily energy total (0.0 Wh), calculated cost in PKR (Rs 0), and instant relay toggle."
         },
         {
-          url: "/images/ecoplugify/app-ble-setup.png",
+          url: "/images/ecoplugify/app-ble-setup.webp",
           screen: "BLE Provisioning",
           caption: "Bluetooth Low Energy setup wizard guiding user to discover and connect to unassigned EcoPlugify hardware."
         },
         {
-          url: "/images/ecoplugify/app-wifi-provision.png",
+          url: "/images/ecoplugify/app-wifi-provision.webp",
           screen: "Wi-Fi Provisioning",
           caption: "Wi-Fi network scanner and credential dispatch screen sending home Wi-Fi SSID and password to the ESP32 over BLE."
         },
         {
-          url: "/images/ecoplugify/app-schedule.png",
+          url: "/images/ecoplugify/app-schedule.webp",
           screen: "Backend Automations",
           caption: "Automation scheduler displaying synchronized timed on/off events for connected smart plugs."
         },
         {
-          url: "/images/ecoplugify/app-analytics.png",
+          url: "/images/ecoplugify/app-analytics.webp",
           screen: "Power Draw Gauge",
           caption: "Real-time circular power meter (Watts) and energy/cost summaries calculated from telemetry data."
         },
         {
-          url: "/images/ecoplugify/app-ai-history.png",
+          url: "/images/ecoplugify/app-ai-history.webp",
           screen: "Appliance Telemetry",
           caption: "Telemetry view for real-time device readings and classification insights."
         },
         {
-          url: "/images/ecoplugify/app-login.png",
+          url: "/images/ecoplugify/app-login.webp",
           screen: "App Authentication",
           caption: "Branded mobile login screen built with React Native CLI (package com.ecoplugify) and NativeWind."
         },
         {
-          url: "/images/ecoplugify/app-profile.png",
+          url: "/images/ecoplugify/app-profile.webp",
           screen: "Profile & Navigation",
           caption: "User profile drawer and account management options."
         }
       ],
       awardPhotos: [
         {
-          url: "/images/ecoplugify/award-ceremony.jpg",
+          url: "/images/ecoplugify/award-ceremony.webp",
           caption: "Award Ceremony: Department of Computer Science, University of Gujrat FYP Competition 2026 (2nd Position Winner) with supervisor Dr. Umer Shoaib and faculty."
         },
         {
-          url: "/images/ecoplugify/award-envelope.jpg",
+          url: "/images/ecoplugify/award-envelope.webp",
           caption: "Official University of Gujrat 2nd Position FYP-2026 distinction envelope at Hafiz Hayat Campus."
         }
       ]
