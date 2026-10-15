@@ -507,13 +507,13 @@ export const ExecutionMilestones: React.FC = () => {
                   >
                     {/* Architectural Milestone Timestamp Pillar */}
                     <div className={`flex flex-col ${isEven ? 'items-end pr-8' : 'items-start pl-8'}`}>
-                      <span className="font-mono-metric text-4xl font-extrabold text-surface-container-highest/70 select-none">
+                      <span className="font-mono-metric text-4xl font-extrabold text-outline/70 select-none">
                         {milestone.sequence}
                       </span>
                       <span className="font-mono-label text-xs text-outline uppercase tracking-widest mt-1">
                         PHASE // {milestone.periodLabel}
                       </span>
-                      <div className="flex items-center gap-1 mt-2 text-outline-variant font-mono-code text-[11px]">
+                      <div className="flex items-center gap-1 mt-2 text-outline font-mono-code text-[11px]">
                         <span>[STAMP: {milestone.year}]</span>
                       </div>
                     </div>

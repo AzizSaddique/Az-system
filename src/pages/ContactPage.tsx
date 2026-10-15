@@ -239,7 +239,7 @@ export const ContactPage: React.FC = () => {
                   <OpenInNew className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="block font-mono-label text-mono-label text-outline-variant uppercase">GitHub Source</span>
+                  <span className="block font-mono-label text-mono-label text-outline uppercase">GitHub Source</span>
                   <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">@AzizSaddique</span>
                 </div>
               </a>
@@ -255,7 +255,7 @@ export const ContactPage: React.FC = () => {
                   <NorthEast className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="block font-mono-label text-mono-label text-outline-variant uppercase">LinkedIn</span>
+                  <span className="block font-mono-label text-mono-label text-outline uppercase">LinkedIn</span>
                   <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">in/Muhammad Aziz Saddique</span>
                 </div>
               </a>
@@ -269,7 +269,7 @@ export const ContactPage: React.FC = () => {
                   <ContentCopy className={`w-4 h-4 ${channelCopied ? 'text-secondary' : ''}`} />
                 </div>
                 <div>
-                  <span className="block font-mono-label text-mono-label text-outline-variant uppercase">Direct Mail</span>
+                  <span className="block font-mono-label text-mono-label text-outline uppercase">Direct Mail</span>
                   <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">
                     {channelCopied ? 'Copied to Clipboard!' : 'azizsaddique.dev'}
                   </span>

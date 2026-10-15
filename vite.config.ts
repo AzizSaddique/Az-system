@@ -27,6 +27,12 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-icons': ['lucide-react'],
         },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && /\.(woff|woff2)$/.test(assetInfo.name)) {
+            return 'assets/fonts/[name][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
   },

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/geist": "^5.3.0",
+    "@fontsource/geist-mono": "^5.3.0",
     "@google/genai": "^2.29.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
@@ -34,6 +36,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "axe-core": "^4.14.0",
     "postcss": "^8.4.47",
     "sharp": "^0.35.5",
     "tailwindcss": "^3.4.14",

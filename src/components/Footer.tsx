@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-md font-mono-label text-[10px] sm:text-mono-label text-outline pb-space-md border-b border-outline-variant/20">
           <div className="flex flex-wrap items-center gap-2 sm:gap-space-md">
-            <span>LOC: GUJRAT, PUNJAB, PAKISTAN</span>
+            <span>LOC: NAROWAL, PUNJAB, PAKISTAN</span>
             <span className="hidden sm:inline">•</span>
             <span>SYS_STATUS: ALL SYSTEMS NOMINAL</span>
           </div>
@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
 
         {/* Professional Copyright Notice */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-xs font-mono-label text-mono-label text-on-surface-variant text-[12px]">
-          <span>© 2026 Muhammad Aziz Saddique. All rights reserved.</span>
+          <span className='text-[11px]'>© 2026 AZ / SYSTEMS. All rights reserved.</span>
           <span className="text-outline uppercase tracking-wider text-[11px]">ENGINEERED IN NAROWAL, PK</span>
         </div>
       </div>

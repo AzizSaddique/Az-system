@@ -327,7 +327,7 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ defaultOpen = false,
 
             {/* Privacy Notice */}
             <p className="text-[9px] text-outline text-center mt-1.5 font-mono-label leading-tight">
-              Powered by Google Gemini.
+              Powered by AZ//System.
             </p>
           </div>
         </div>

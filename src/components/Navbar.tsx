@@ -49,7 +49,7 @@ export const Navbar: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-2 sm:p-space-sm md:p-space-md">
       <div className="h-16 sm:h-20 max-w-[1200px] w-full mx-auto px-3 sm:px-space-md flex items-center justify-between rounded-full bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.35)] border border-outline-variant/30 relative">
-        
+
         {/* Logo Branding */}
         <div className="flex items-center gap-space-sm sm:gap-space-md">
           <Link
@@ -185,9 +185,8 @@ export const Navbar: React.FC = () => {
               aria-label="Open profile and actions menu"
               aria-expanded={isProfileOpen}
               aria-haspopup="true"
-              className={`relative flex items-center gap-1 p-0.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary group ${
-                isProfileOpen ? 'ring-2 ring-secondary' : 'hover:ring-1 hover:ring-secondary/50'
-              }`}
+              className={`relative flex items-center gap-1 p-0.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary group ${isProfileOpen ? 'ring-2 ring-secondary' : 'hover:ring-1 hover:ring-secondary/50'
+                }`}
             >
               <div className="relative">
                 <img
@@ -202,9 +201,8 @@ export const Navbar: React.FC = () => {
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-surface-container-lowest" />
               </div>
               <ChevronDown
-                className={`w-3.5 h-3.5 text-on-surface-variant transition-transform duration-200 hidden sm:block ${
-                  isProfileOpen ? 'rotate-180 text-secondary' : 'group-hover:text-on-surface'
-                }`}
+                className={`w-3.5 h-3.5 text-on-surface-variant transition-transform duration-200 hidden sm:block ${isProfileOpen ? 'rotate-180 text-secondary' : 'group-hover:text-on-surface'
+                  }`}
               />
             </button>
 
@@ -250,7 +248,7 @@ export const Navbar: React.FC = () => {
                   <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
                     RESUME &amp; CREDENTIALS
                   </span>
-                  
+
                   <a
                     href={resumePdf}
                     target="_blank"
@@ -278,7 +276,7 @@ export const Navbar: React.FC = () => {
                   <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
                     QUICK NAVIGATION
                   </span>
-                  
+
                   <Link
                     to="/about"
                     onClick={() => setIsProfileOpen(false)}
@@ -300,7 +298,7 @@ export const Navbar: React.FC = () => {
 
                 {/* Location / Meta Footer */}
                 <div className="pt-2 border-t border-outline-variant/15 flex items-center justify-between text-[10px] font-mono-label text-outline px-1">
-                  <span>LOC: GUJRAT, PK</span>
+                  <span>LOC: Narowal, Punjab, PK</span>
                   <span>UTC+5 (PKT)</span>
                 </div>
               </div>
