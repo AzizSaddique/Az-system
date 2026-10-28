@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Home, User, Briefcase, Compass, Mail } from 'lucide-react';
 
 interface TabItem {
@@ -33,7 +34,7 @@ export const MobileTabBar: React.FC = () => {
               to={tab.to}
               end={tab.end}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center flex-1 py-1.5 px-1 min-h-[48px] rounded-xl transition-all duration-200 relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${
+                `flex flex-col items-center justify-center flex-1 py-1.5 px-1 min-h-[48px] rounded-xl transition-all duration-200 relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary active:scale-95 ${
                   isActive
                     ? 'text-secondary font-semibold'
                     : 'text-on-surface-variant/70 hover:text-on-surface'
@@ -42,9 +43,13 @@ export const MobileTabBar: React.FC = () => {
             >
               {({ isActive }) => (
                 <>
-                  {/* Subtle active glow indicator at the top of the active tab */}
+                  {/* Animated active glow indicator sliding between tabs */}
                   {isActive && (
-                    <span className="absolute top-0 w-8 h-0.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(170,224,46,0.8)]" />
+                    <motion.span
+                      layoutId="mobileActiveTabGlow"
+                      className="absolute top-0 w-8 h-0.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(170,224,46,0.8)]"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                    />
                   )}
 
                   <div

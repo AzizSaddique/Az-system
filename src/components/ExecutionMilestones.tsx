@@ -292,19 +292,18 @@ export const ExecutionMilestones: React.FC = () => {
                           ? { opacity: 0 }
                           : {
                               opacity: 0,
-                              y: 35,
-                              x: isEven ? 20 : -20,
-                              filter: 'blur(5px)',
+                              y: 24,
+                              x: isEven ? 16 : -16,
                             }
                       }
                       whileInView={{
                         opacity: 1,
                         y: 0,
                         x: 0,
-                        filter: 'blur(0px)',
                       }}
-                      viewport={{ once: false, amount: 0.25, margin: '-40px' }}
-                      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                      inherit={false}
+                      viewport={{ once: true, amount: 0.12, margin: '0px 0px -20px 0px' }}
+                      transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
                       className={`group relative rounded-xl p-4 sm:p-space-lg transition-all duration-300 ${
                         milestone.badgeType === 'flagship'
                           ? 'bg-surface-container-low/95 border-2 border-secondary/50 shadow-[0_0_35px_rgba(170,224,46,0.12)] hover:border-secondary hover:shadow-[0_0_45px_rgba(170,224,46,0.22)]'

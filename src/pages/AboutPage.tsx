@@ -8,6 +8,7 @@ import {
 } from '../components/Icons';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { LazyImage } from '../components/LazyImage';
 
 export const AboutPage: React.FC = () => {
   return (
@@ -15,8 +16,8 @@ export const AboutPage: React.FC = () => {
       
       {/* HERO / EDITORIAL HEADER */}
       <section className="relative pt-space-md pb-space-lg flex flex-col gap-space-sm overflow-hidden">
-        <div className="absolute -top-24 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-20 w-80 h-80 bg-surface-container-high/40 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -top-24 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none animate-ambient-glow-1" />
+        <div className="absolute -bottom-24 -left-20 w-80 h-80 bg-surface-container-high/40 rounded-full blur-2xl pointer-events-none animate-ambient-glow-2" />
         
         <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label tracking-widest text-secondary max-w-full truncate">
           <span className="w-2 h-2 rounded-full bg-secondary shrink-0" />
@@ -38,31 +39,39 @@ export const AboutPage: React.FC = () => {
 
         {/* System Vital Strip */}
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-space-sm mt-space-md p-2 sm:p-space-sm bg-surface-container-low rounded-xl">
-          <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg">
-            <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Credential</span>
-            <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">BS Computer Science</span>
-          </div>
-          <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg">
-            <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Core Discipline</span>
-            <span className="font-mono-code text-xs sm:text-mono-code font-bold text-secondary">Software • Embedded IoT</span>
-          </div>
-          <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg">
-            <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Next Frontier</span>
-            <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">ROS 2 • Robotics</span>
-          </div>
-          <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg">
-            <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Base Station</span>
-            <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">Gujrat, Pakistan</span>
-          </div>
+          <ScrollReveal delay={0}>
+            <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg card-interactive border border-outline-variant/15 hover:border-secondary/30 h-full">
+              <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Credential</span>
+              <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">BS Computer Science</span>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.06}>
+            <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg card-interactive border border-outline-variant/15 hover:border-secondary/30 h-full">
+              <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Core Discipline</span>
+              <span className="font-mono-code text-xs sm:text-mono-code font-bold text-secondary">Software • Embedded IoT</span>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.12}>
+            <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg card-interactive border border-outline-variant/15 hover:border-secondary/30 h-full">
+              <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Next Frontier</span>
+              <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">ROS 2 • Robotics</span>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.18}>
+            <div className="flex flex-col p-2.5 sm:p-space-sm bg-surface-container rounded-lg card-interactive border border-outline-variant/15 hover:border-secondary/30 h-full">
+              <span className="font-mono-label text-[10px] sm:text-mono-label text-outline uppercase">Base Station</span>
+              <span className="font-mono-code text-xs sm:text-mono-code font-bold text-on-surface">Gujrat, Pakistan</span>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* SECTION A: MY STORY */}
-      <ScrollReveal>
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
-          
-          {/* Left Column: Portrait */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-3 sm:p-space-md bg-surface-container-low rounded-xl relative group">
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
+        
+        {/* Left Column: Portrait */}
+        <ScrollReveal direction="left" className="lg:col-span-5 h-full">
+          <div className="h-full flex flex-col justify-between p-3 sm:p-space-md bg-surface-container-low rounded-xl relative group">
             <div className="flex items-center justify-between pb-space-sm text-outline font-mono-label text-[10px] sm:text-mono-label">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
@@ -71,12 +80,12 @@ export const AboutPage: React.FC = () => {
               <span>LAT: 32.5744° N</span>
             </div>
             <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-surface-container-high my-space-sm shadow-xl">
-              <img
+              <LazyImage
                 alt="Muhammad Aziz Saddique Portrait"
                 className="w-full h-full object-cover object-top filter grayscale contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                wrapperClassName="w-full h-full"
                 src={PORTFOLIO_DATA.personalInfo.heroPortrait}
-                loading="lazy"
-                decoding="async"
+                skeletonLabel="AZIZ_PORTRAIT"
                 width={400}
                 height={500}
               />
@@ -91,9 +100,11 @@ export const AboutPage: React.FC = () => {
               <span className="text-secondary tracking-widest font-bold">READY FOR MISSION</span>
             </div>
           </div>
+        </ScrollReveal>
 
-          {/* Right Column: Personal Narrative */}
-          <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-space-lg bg-surface-container-low rounded-xl space-y-space-md">
+        {/* Right Column: Personal Narrative */}
+        <ScrollReveal direction="right" delay={0.1} className="lg:col-span-7 h-full">
+          <div className="h-full flex flex-col justify-between p-4 sm:p-space-lg bg-surface-container-low rounded-xl space-y-space-md">
             <div className="space-y-space-xs">
               <span className="font-mono-label text-mono-label text-secondary tracking-widest uppercase">Chronicle // Evolution</span>
               <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface font-semibold">
@@ -127,13 +138,13 @@ export const AboutPage: React.FC = () => {
               </div>
             </div>
           </div>
+        </ScrollReveal>
 
-        </section>
-      </ScrollReveal>
+      </section>
 
       {/* SECTION B: HOW I THINK */}
-      <ScrollReveal>
-        <section className="flex flex-col space-y-space-md">
+      <section className="flex flex-col space-y-space-md">
+        <ScrollReveal>
           <div className="flex items-center justify-between">
             <div>
               <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">Cognitive Blueprint // 02</span>
@@ -141,10 +152,12 @@ export const AboutPage: React.FC = () => {
             </div>
             <span className="font-mono-label text-mono-label text-outline hidden sm:inline">FIRST-PRINCIPLES MINDSET</span>
           </div>
+        </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-            {/* Card 1 */}
-            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+          {/* Card 1 */}
+          <ScrollReveal delay={0} className="h-full flex flex-col">
+            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg h-full card-interactive">
               <div className="space-y-space-sm">
                 <div className="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
                   <Terminal className="w-5 h-5" />
@@ -161,9 +174,11 @@ export const AboutPage: React.FC = () => {
                 <span>&gt;</span><span>code • flash • stress-test</span>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Card 2 */}
-            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg">
+          {/* Card 2 */}
+          <ScrollReveal delay={0.1} className="h-full flex flex-col">
+            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg h-full card-interactive">
               <div className="space-y-space-sm">
                 <div className="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
                   <Memory className="w-5 h-5" />
@@ -180,9 +195,11 @@ export const AboutPage: React.FC = () => {
                 <span>&gt;</span><span>MQTT • UART • WebSockets</span>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Card 3 */}
-            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg">
+          {/* Card 3 */}
+          <ScrollReveal delay={0.2} className="h-full flex flex-col">
+            <div className="p-space-lg bg-surface-container-low hover:bg-surface-container rounded-xl flex flex-col justify-between transition-all duration-300 group shadow-lg h-full card-interactive">
               <div className="space-y-space-sm">
                 <div className="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
                   <PrecisionManufacturing className="w-5 h-5" />
@@ -199,13 +216,13 @@ export const AboutPage: React.FC = () => {
                 <span>&gt;</span><span>ROS 2 • SLAM • Python Core</span>
               </div>
             </div>
-          </div>
-        </section>
-      </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* SECTION C: WHAT I BUILD */}
-      <ScrollReveal>
-        <section className="flex flex-col space-y-space-md">
+      <section className="flex flex-col space-y-space-md">
+        <ScrollReveal>
           <div className="flex items-center justify-between">
             <div>
               <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">Core Verticals // 03</span>
@@ -213,10 +230,12 @@ export const AboutPage: React.FC = () => {
             </div>
             <span className="font-mono-label text-mono-label text-outline">SYSTEM SPECIALIZATIONS</span>
           </div>
+        </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-            {/* Card 1 */}
-            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+          {/* Card 1 */}
+          <ScrollReveal delay={0} className="h-full flex flex-col">
+            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group h-full card-interactive">
               <div className="relative h-44 bg-surface-container-high overflow-hidden">
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -247,9 +266,11 @@ export const AboutPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Card 2 */}
-            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group">
+          {/* Card 2 */}
+          <ScrollReveal delay={0.1} className="h-full flex flex-col">
+            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group h-full card-interactive">
               <div className="relative h-44 bg-surface-container-high overflow-hidden">
                 <img
                   alt="EcoPlugify Embedded Hardware Smart Plug Views"
@@ -280,9 +301,11 @@ export const AboutPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Card 3 */}
-            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group">
+          {/* Card 3 */}
+          <ScrollReveal delay={0.2} className="h-full flex flex-col">
+            <div className="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-lg group h-full card-interactive">
               <div className="relative h-44 bg-surface-container-high overflow-hidden">
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -313,13 +336,13 @@ export const AboutPage: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* SECTION D: TECHNICAL TOOLKIT */}
-      <ScrollReveal>
-        <section className="p-space-lg bg-surface-container-low rounded-xl space-y-space-lg">
+      <section className="p-space-lg bg-surface-container-low rounded-xl space-y-space-lg">
+        <ScrollReveal>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
             <div>
               <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">Competency Registry // 04</span>
@@ -334,10 +357,12 @@ export const AboutPage: React.FC = () => {
               </span>
             </div>
           </div>
+        </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
-            {/* Column 1 */}
-            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+          {/* Column 1 */}
+          <ScrollReveal delay={0} className="h-full flex flex-col">
+            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm h-full card-interactive">
               <div className="flex items-center justify-between pb-space-xs border-b border-outline-variant/10">
                 <span className="font-mono-code text-mono-code font-bold text-on-surface">Frontend</span>
                 <span className="font-mono-label text-mono-label text-secondary">PROD</span>
@@ -365,9 +390,11 @@ export const AboutPage: React.FC = () => {
                 </li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Column 2 */}
-            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm">
+          {/* Column 2 */}
+          <ScrollReveal delay={0.08} className="h-full flex flex-col">
+            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm h-full card-interactive">
               <div className="flex items-center justify-between pb-space-xs border-b border-outline-variant/10">
                 <span className="font-mono-code text-mono-code font-bold text-on-surface">Backend &amp; DB</span>
                 <span className="font-mono-label text-mono-label text-secondary">PROD</span>
@@ -395,9 +422,11 @@ export const AboutPage: React.FC = () => {
                 </li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Column 3 */}
-            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm">
+          {/* Column 3 */}
+          <ScrollReveal delay={0.16} className="h-full flex flex-col">
+            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm h-full card-interactive">
               <div className="flex items-center justify-between pb-space-xs border-b border-outline-variant/10">
                 <span className="font-mono-code text-mono-code font-bold text-on-surface">IoT &amp; Embedded</span>
                 <span className="font-mono-label text-mono-label text-secondary">PROD</span>
@@ -425,9 +454,11 @@ export const AboutPage: React.FC = () => {
                 </li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Column 4 */}
-            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm">
+          {/* Column 4 */}
+          <ScrollReveal delay={0.24} className="h-full flex flex-col">
+            <div className="p-space-md bg-surface-container rounded-lg space-y-space-sm h-full card-interactive">
               <div className="flex items-center justify-between pb-space-xs border-b border-outline-variant/10">
                 <span className="font-mono-code text-mono-code font-bold text-on-surface">Robotics (Active)</span>
                 <span className="font-mono-label text-mono-label text-outline">LEARNING</span>
@@ -455,68 +486,72 @@ export const AboutPage: React.FC = () => {
                 </li>
               </ul>
             </div>
-          </div>
-        </section>
-      </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* SECTION E: FEATURED FLAGSHIP PREVIEW */}
-      <ScrollReveal>
-        <section className="p-4 sm:p-space-lg bg-surface-container-low rounded-xl relative overflow-hidden group">
-          <div className="flex flex-col lg:flex-row items-center gap-space-lg">
-            <div className="w-full lg:w-1/2 space-y-space-sm">
-              <div className="flex flex-wrap items-center gap-space-xs">
-                <span className="px-space-xs py-0.5 rounded bg-secondary text-on-secondary font-mono-label text-[10px] sm:text-mono-label font-bold uppercase">
-                  Final Year Engineering Prototype
-                </span>
-                <span className="font-mono-label text-[10px] sm:text-mono-label text-outline">UOG FYP 2026 • 2ND POSITION</span>
-              </div>
-              <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl font-bold text-on-surface">EcoPlugify — IoT Smart Energy Monitor</h2>
-              <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-                Engineered as an IoT final-year project at the Department of Computer Science, University of Gujrat, under the supervision of Dr. Umer Shoaib: onboard ESP32 microcontroller, AC relay load switching, live energy telemetry over Wi-Fi MQTT, BLE provisioning, and a companion React Native mobile application.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-space-xs font-mono-label text-[11px] sm:text-mono-label text-outline">
-                <div className="p-2 bg-surface-container rounded">
-                  <span className="text-secondary font-bold block">ESP32 Dual-Core</span>
-                  <span>C++ Firmware</span>
+      <section className="p-4 sm:p-space-lg bg-surface-container-low rounded-xl relative overflow-hidden group">
+        <div className="flex flex-col lg:flex-row items-center gap-space-lg">
+          <div className="w-full lg:w-1/2 space-y-space-sm">
+            <ScrollReveal direction="left">
+              <div className="space-y-space-sm">
+                <div className="flex flex-wrap items-center gap-space-xs">
+                  <span className="px-space-xs py-0.5 rounded bg-secondary text-on-secondary font-mono-label text-[10px] sm:text-mono-label font-bold uppercase">
+                    Final Year Engineering Prototype
+                  </span>
+                  <span className="font-mono-label text-[10px] sm:text-mono-label text-outline">UOG FYP 2026 • 2ND POSITION</span>
                 </div>
-                <div className="p-2 bg-surface-container rounded">
-                  <span className="text-secondary font-bold block">AC Relay</span>
-                  <span>Load Switching</span>
+                <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl font-bold text-on-surface">EcoPlugify — IoT Smart Energy Monitor</h2>
+                <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                  Engineered as an IoT final-year project at the Department of Computer Science, University of Gujrat, under the supervision of Dr. Umer Shoaib: onboard ESP32 microcontroller, AC relay load switching, live energy telemetry over Wi-Fi MQTT, BLE provisioning, and a companion React Native mobile application.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-space-xs font-mono-label text-[11px] sm:text-mono-label text-outline">
+                  <div className="p-2 bg-surface-container rounded">
+                    <span className="text-secondary font-bold block">ESP32 Dual-Core</span>
+                    <span>C++ Firmware</span>
+                  </div>
+                  <div className="p-2 bg-surface-container rounded">
+                    <span className="text-secondary font-bold block">AC Relay</span>
+                    <span>Load Switching</span>
+                  </div>
+                  <div className="p-2 bg-surface-container rounded col-span-2 sm:col-span-1">
+                    <span className="text-secondary font-bold block">MQTT / TLS</span>
+                    <span>Telemetry Uplink</span>
+                  </div>
                 </div>
-                <div className="p-2 bg-surface-container rounded col-span-2 sm:col-span-1">
-                  <span className="text-secondary font-bold block">MQTT / TLS</span>
-                  <span>Telemetry Uplink</span>
+                <div className="pt-space-sm">
+                  <a
+                    href="/projects"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-full bg-surface-container-high hover:bg-secondary hover:text-on-secondary font-mono-code text-xs sm:text-mono-code text-on-surface transition-all min-h-[44px] btn-micro group/btn"
+                  >
+                    <span>Inspect Case Study &amp; Gallery</span>
+                    <ArrowForward className="text-sm transition-transform duration-200 group-hover/btn:translate-x-1" />
+                  </a>
                 </div>
               </div>
-              <div className="pt-space-sm">
-                <a
-                  href="/projects"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-full bg-surface-container-high hover:bg-secondary hover:text-on-secondary font-mono-code text-xs sm:text-mono-code text-on-surface transition-all min-h-[44px]"
-                >
-                  <span>Inspect Case Study &amp; Gallery</span>
-                  <ArrowForward className="text-sm" />
-                </a>
-              </div>
-            </div>
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-space-sm bg-surface-container rounded-lg border border-outline-variant/20">
-              <img
+            </ScrollReveal>
+          </div>
+          <div className="w-full lg:w-1/2 flex items-center justify-center p-space-sm bg-surface-container rounded-lg border border-outline-variant/20">
+            <ScrollReveal direction="right" delay={0.1}>
+              <LazyImage
                 alt="EcoPlugify Physical Hardware Prototype Bench"
                 className="w-full max-h-80 object-contain rounded filter contrast-110 drop-shadow-2xl transition-transform duration-500 group-hover:scale-102"
+                wrapperClassName="w-full max-h-80 flex items-center justify-center"
                 src="/images/ecoplugify/hardware-prototype-640.webp"
-                loading="lazy"
-                decoding="async"
+                skeletonLabel="HARDWARE_BENCH"
                 width={500}
                 height={320}
               />
-            </div>
+            </ScrollReveal>
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
       {/* SECTION F: CONTACT BANNER / CTA */}
       <ScrollReveal>
         <section className="p-5 sm:p-space-xl bg-surface-container-low rounded-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-space-lg">
-          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-secondary/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-ambient-glow-1" />
           <div className="space-y-space-xs max-w-xl text-center sm:text-left">
             <div className="inline-flex items-center gap-space-xs text-secondary font-mono-label text-[10px] sm:text-mono-label uppercase">
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
@@ -532,7 +567,7 @@ export const AboutPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center gap-space-sm w-full sm:w-auto">
             <Link
               to="/contact"
-              className="w-full sm:w-auto px-space-xl py-3 rounded-full bg-secondary text-on-secondary font-heading-md text-sm sm:text-body-regular font-bold tracking-tight hover:scale-105 active:scale-95 transition-all text-center shadow-lg min-h-[44px] flex items-center justify-center"
+              className="w-full sm:w-auto px-space-xl py-3 rounded-full bg-secondary text-on-secondary font-heading-md text-sm sm:text-body-regular font-bold tracking-tight hover:bg-secondary-fixed active:scale-95 transition-all text-center shadow-lg min-h-[44px] flex items-center justify-center btn-micro"
             >
               Contact Me Direct
             </Link>
@@ -540,7 +575,7 @@ export const AboutPage: React.FC = () => {
               href={PORTFOLIO_DATA.personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-space-md py-3 rounded-full bg-surface-container-high hover:bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface transition-all text-center min-h-[44px] flex items-center justify-center"
+              className="w-full sm:w-auto px-space-md py-3 rounded-full bg-surface-container-high hover:bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface transition-all text-center min-h-[44px] flex items-center justify-center btn-micro"
             >
               GitHub Profile
             </a>

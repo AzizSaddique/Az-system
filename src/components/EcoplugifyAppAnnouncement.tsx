@@ -1,5 +1,6 @@
 import React from 'react';
-import { Smartphone, Zap, ArrowDown, Radio, Clock, Power } from 'lucide-react';
+import { Smartphone, ArrowDown } from 'lucide-react';
+import { LazyImage } from './LazyImage';
 
 export const EcoplugifyAppAnnouncement: React.FC = () => {
   const handleScrollToEcoplugify = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -17,11 +18,11 @@ export const EcoplugifyAppAnnouncement: React.FC = () => {
     >
       {/* Background Ambient Glows */}
       <div
-        className="absolute -top-12 left-1/3 w-80 h-80 rounded-full bg-secondary/10 blur-[130px] pointer-events-none -z-10"
+        className="absolute -top-12 left-1/3 w-80 h-80 rounded-full bg-secondary/10 blur-[130px] pointer-events-none -z-10 animate-ambient-glow-1"
         aria-hidden="true"
       />
       <div
-        className="absolute -bottom-10 right-1/4 w-72 h-72 rounded-full bg-[#38bdf8]/10 blur-[140px] pointer-events-none -z-10"
+        className="absolute -bottom-10 right-1/4 w-72 h-72 rounded-full bg-[#38bdf8]/10 blur-[140px] pointer-events-none -z-10 animate-ambient-glow-2"
         aria-hidden="true"
       />
 
@@ -78,10 +79,10 @@ export const EcoplugifyAppAnnouncement: React.FC = () => {
               <a
                 href="#featured-project"
                 onClick={handleScrollToEcoplugify}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-sm font-bold shadow-md hover:bg-secondary-fixed transition-all active:scale-95 cursor-pointer min-h-[44px]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-sm font-bold shadow-md hover:bg-secondary-fixed transition-all btn-micro group cursor-pointer min-h-[44px]"
               >
                 <span>Explore Ecoplugify</span>
-                <ArrowDown className="w-4 h-4 shrink-0" />
+                <ArrowDown className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-y-0.5" />
               </a>
 
               {/* Secondary: App Coming Soon (Informational / In Development) */}
@@ -98,60 +99,44 @@ export const EcoplugifyAppAnnouncement: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Visual Telemetry Mobile Interface Preview */}
-          <div className="lg:col-span-5 flex justify-center mt-4 lg:mt-0">
-            {/* Phone Mockup Frame */}
-            <div className="relative w-full max-w-[320px] rounded-[2rem] bg-surface-container-lowest p-3 sm:p-4 border-2 border-secondary/40 shadow-[0_0_35px_rgba(170,224,46,0.12)]">
-              {/* Screen Notch / Top Bar */}
-              <div className="flex items-center justify-between px-3 py-1 mb-2 font-mono-code text-[10px] text-outline border-b border-surface-container-high/40">
-                <span className="text-secondary font-bold">ECOPLUGIFY MOBILE</span>
-                <span className="flex items-center gap-1">
-                  <Radio className="w-3 h-3 text-secondary animate-pulse" />
-                  <span>BLE / MQTT</span>
-                </span>
-              </div>
+          {/* Right Column: Actual Ecoplugify Mobile App Interface Screenshot */}
+          <div className="lg:col-span-5 flex justify-center mt-6 lg:mt-0">
+            <div className="relative group/phone w-full max-w-[260px] sm:max-w-[280px]">
+              {/* Ambient Glow behind Screenshot */}
+              <div
+                className="absolute -inset-3 bg-gradient-to-tr from-secondary/25 via-transparent to-[#38bdf8]/20 rounded-[2.5rem] blur-xl opacity-75 group-hover/phone:opacity-100 transition-opacity duration-500 pointer-events-none -z-10"
+                aria-hidden="true"
+              />
 
-              {/* App Interface Visual Telemetry Preview */}
-              <div className="rounded-xl bg-surface-container-low p-3 sm:p-4 flex flex-col gap-3 border border-surface-container-high/60">
-                {/* Active Socket Status */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-mono-label text-[10px] text-outline block uppercase">CONNECTED APPLIANCE</span>
-                    <span className="font-heading-md text-sm sm:text-base text-on-surface font-bold">Lab Bench Relay #01</span>
-                  </div>
-                  <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-ping" />
-                </div>
-
-                {/* Energy Consumption Live Gauge Box */}
-                <div className="p-3 rounded-lg bg-surface-container-lowest border border-secondary/20 flex flex-col gap-1">
-                  <div className="flex items-center justify-between text-outline font-mono-label text-[10px]">
-                    <span className="text-secondary flex items-center gap-1 font-bold">
-                      <Zap className="w-3 h-3 text-secondary" />
-                      <span>REAL-TIME POWER</span>
-                    </span>
-                    <span className="text-on-surface-variant font-mono-code">238.4 V // 4.12 A</span>
-                  </div>
-                  <div className="flex items-baseline gap-1.5 pt-0.5">
-                    <span className="font-mono-metric text-2xl sm:text-3xl text-secondary font-bold">982.2</span>
-                    <span className="font-mono-label text-xs text-on-surface-variant uppercase">Watts</span>
-                  </div>
-                </div>
-
-                {/* Switch State */}
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-high/50 font-mono-code text-xs">
-                  <div className="flex items-center gap-2 text-on-surface">
-                    <Power className="w-4 h-4 text-secondary" />
-                    <span>Relay Switch Control</span>
-                  </div>
-                  <span className="font-mono-label text-[10px] font-bold px-2 py-0.5 rounded bg-secondary text-on-secondary">
-                    ENGAGED
+              {/* Presentation Shell / Frame */}
+              <div className="relative rounded-[2.2rem] p-2 bg-surface-container-lowest/90 border border-secondary/30 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6),0_0_30px_rgba(170,224,46,0.12)] backdrop-blur-md">
+                {/* Micro Telemetry Header */}
+                <div className="flex items-center justify-between px-3 py-1 mb-1.5 font-mono-code text-[10px] text-outline border-b border-surface-container-high/40">
+                  <span className="text-secondary font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                    LIVE CLIENT TELEMETRY
                   </span>
+                  <span className="text-outline-variant uppercase">REACT NATIVE</span>
                 </div>
 
-                {/* Status Notice */}
-                <div className="pt-1 text-center font-mono-label text-[10px] text-outline uppercase tracking-wider flex items-center justify-center gap-1.5">
-                  <Clock className="w-3 h-3 text-secondary" />
-                  <span>Mobile Client • Staged for Release</span>
+                {/* Actual Ecoplugify App Screenshot */}
+                <div className="relative rounded-[1.8rem] overflow-hidden bg-surface-container-low shadow-inner">
+                  <LazyImage
+                    src="/images/ecoplugify/app-dashboard.webp"
+                    srcSet="/images/ecoplugify/app-dashboard.webp, /images/ecoplugify/app-dashboard.png 1x"
+                    alt="Ecoplugify Mobile Application Dashboard Screenshot - Live device telemetry and appliance controls"
+                    width={502}
+                    height={1059}
+                    className="w-full h-auto object-contain rounded-[1.8rem] transition-transform duration-500 group-hover/phone:scale-[1.02]"
+                    wrapperClassName="w-full"
+                    skeletonLabel="ECOPLUGIFY_APP"
+                  />
+                </div>
+
+                {/* Micro Telemetry Caption */}
+                <div className="mt-2 text-center font-mono-label text-[10px] text-outline flex items-center justify-center gap-1.5">
+                  <Smartphone className="w-3 h-3 text-secondary" />
+                  <span>Real App Interface • React Native CLI</span>
                 </div>
               </div>
             </div>

@@ -133,6 +133,69 @@
   animation: heroFadeSlideUp 420ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
 }
 
+/* Page Route Transitions (Subtle 300ms fade up) */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Ambient Background Glow Movement */
+@keyframes ambientGlowSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.10;
+  }
+  50% {
+    transform: translate3d(14px, -12px, 0) scale(1.08);
+    opacity: 0.18;
+  }
+}
+
+@keyframes ambientGlowSlowAlt {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate3d(-14px, 10px, 0) scale(1.06);
+    opacity: 0.15;
+  }
+}
+
+.animate-ambient-glow-1 {
+  animation: ambientGlowSlow 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-ambient-glow-2 {
+  animation: ambientGlowSlowAlt 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Shimmer Progress Effect */
+@keyframes cyberShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: cyberShimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Modal Transitions */
 @keyframes modalBackdropFade {
   from { opacity: 0; }
@@ -158,14 +221,44 @@
   animation: modalPanelSlide 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Skeleton & Progress Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Interactive Card Hover Transition */
 .card-interactive {
-  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease, background-color 200ms ease;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease, background-color 200ms ease;
 }
+
 @media (hover: hover) and (pointer: fine) {
   .card-interactive:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.35), 0 0 20px -3px rgba(170, 224, 46, 0.14);
+    border-color: rgba(170, 224, 46, 0.4);
   }
+
+  html.light .card-interactive:hover {
+    box-shadow: 0 14px 30px -8px rgba(17, 24, 39, 0.09), 0 0 16px -2px rgba(63, 98, 18, 0.12);
+    border-color: rgba(63, 98, 18, 0.35);
+  }
+}
+
+/* Micro-interaction Button Pop */
+.btn-micro {
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.btn-micro:active {
+  transform: scale(0.97);
 }
 
 /* Respect user accessibility motion preferences */
@@ -176,14 +269,22 @@
   .animate-hero-4,
   .animate-hero-5,
   .animate-hero-portrait,
+  .animate-page-enter,
   .animate-modal-backdrop,
-  .animate-modal-panel {
+  .animate-modal-panel,
+  .animate-ambient-glow-1,
+  .animate-ambient-glow-2,
+  .animate-shimmer {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
 
   .card-interactive:hover {
+    transform: none !important;
+  }
+
+  .btn-micro:active {
     transform: none !important;
   }
 }

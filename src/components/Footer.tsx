@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-space-md font-mono-code text-xs sm:text-mono-code">
             <a
-              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors"
+              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors btn-micro"
               href={PORTFOLIO_DATA.personalInfo.github}
               rel="noopener noreferrer"
               target="_blank"
@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
               github.com/AzizSaddique
             </a>
             <a
-              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors"
+              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors btn-micro"
               href={PORTFOLIO_DATA.personalInfo.linkedin}
               rel="noopener noreferrer"
               target="_blank"
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
               LinkedIn
             </a>
             <a
-              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors"
+              className="px-space-sm sm:px-space-md py-space-xs rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:text-secondary hover:border-secondary/40 transition-colors btn-micro"
               href={`mailto:${PORTFOLIO_DATA.personalInfo.email}`}
             >
               Email // Direct

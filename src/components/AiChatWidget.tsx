@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Bot,
   X,
@@ -40,13 +41,16 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ defaultOpen = false,
   const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorNotice, setErrorNotice] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleClose = () => {
     setIsOpen(false);
-    onClose?.();
+    setTimeout(() => {
+      onClose?.();
+    }, 220);
   };
 
   // Auto-scroll chat to bottom on new message
@@ -145,193 +149,217 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ defaultOpen = false,
   return (
     <div className="relative font-body-regular">
       {/* Floating Launcher Button */}
-      {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          aria-label="Open AI Portfolio Assistant"
-          aria-expanded={isOpen}
-          className="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 z-50 group flex items-center gap-2.5 px-4 py-3 rounded-full bg-surface-container-high/90 hover:bg-surface-container-highest backdrop-blur-xl border border-secondary/50 text-on-surface shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_0_24px_rgba(170,224,46,0.35)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-        >
-          <div className="relative flex items-center justify-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-ping absolute -top-0.5 -right-0.5 opacity-75" />
-            <span className="w-2 h-2 rounded-full bg-secondary absolute -top-0.5 -right-0.5" />
-            <Bot className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />
-          </div>
-          <div className="flex flex-col text-left">
-
-            <span className="font-mono-code text-[9px] text-outline leading-tight hidden sm:inline">
-              ONLINE
-            </span>
-          </div>
-        </button>
-      )}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            key="widget-launcher-btn"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsOpen(true)}
+            aria-label="Open AI Portfolio Assistant"
+            aria-expanded={isOpen}
+            className="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 z-50 group flex items-center gap-2.5 px-4 py-3 rounded-full bg-surface-container-high/90 hover:bg-surface-container-highest backdrop-blur-xl border border-secondary/50 text-on-surface shadow-[0_4px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_0_24px_rgba(170,224,46,0.35)] transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+          >
+            <div className="relative flex items-center justify-center">
+              <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-ping absolute -top-0.5 -right-0.5 opacity-75" />
+              <span className="w-2 h-2 rounded-full bg-secondary absolute -top-0.5 -right-0.5" />
+              <Bot className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-mono-code text-[9px] text-outline leading-tight hidden sm:inline">
+                ONLINE
+              </span>
+            </div>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Chat Window Panel */}
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-label="AI Portfolio Assistant Window"
-          className="fixed bottom-20 right-3 left-3 sm:left-auto sm:right-4 sm:w-[420px] lg:bottom-6 lg:right-6 h-[540px] max-h-[calc(100vh-140px)] lg:max-h-[620px] z-50 flex flex-col rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/30 shadow-[0_12px_48px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-200"
-        >
-          {/* Header */}
-          <div className="p-3.5 sm:p-4 bg-surface-container-low/90 border-b border-outline-variant/20 flex items-center justify-between gap-2 shrink-0">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-surface-container-high border border-secondary/30 flex items-center justify-center shrink-0 text-secondary">
-                <Bot className="w-4 h-4" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shrink-0" />
-                  <span className="font-mono-label text-xs sm:text-mono-label font-bold text-secondary tracking-widest truncate">
-                    AZ // ASSISTANT
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            role="dialog"
+            aria-label="AI Portfolio Assistant Window"
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-20 right-3 left-3 sm:left-auto sm:right-4 sm:w-[420px] lg:bottom-6 lg:right-6 h-[540px] max-h-[calc(100vh-140px)] lg:max-h-[620px] z-50 flex flex-col rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/30 shadow-[0_12px_48px_rgba(0,0,0,0.6)] overflow-hidden"
+          >
+            {/* Header */}
+            <div className="p-3.5 sm:p-4 bg-surface-container-low/90 border-b border-outline-variant/20 flex items-center justify-between gap-2 shrink-0">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-surface-container-high border border-secondary/30 flex items-center justify-center shrink-0 text-secondary">
+                  <Bot className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shrink-0" />
+                    <span className="font-mono-label text-xs sm:text-mono-label font-bold text-secondary tracking-widest truncate">
+                      AZ // ASSISTANT
+                    </span>
+                  </div>
+                  <span className="font-mono-code text-[10px] text-outline truncate">
+                    PORTFOLIO_INTELLIGENCE
                   </span>
                 </div>
-                <span className="font-mono-code text-[10px] text-outline truncate">
-                  PORTFOLIO_INTELLIGENCE
-                </span>
               </div>
-            </div>
 
-            <div className="flex items-center gap-1 shrink-0">
-              <button
-                onClick={handleClearHistory}
-                title="Clear conversation history"
-                aria-label="Clear conversation history"
-                className="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleClose}
-                title="Close assistant"
-                aria-label="Close assistant window"
-                className="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Quick Prompts Strip (Visible on start or whenever history is short) */}
-          {messages.length <= 1 && (
-            <div className="p-2.5 bg-surface-container/50 border-b border-outline-variant/10 shrink-0">
-              <span className="block font-mono-label text-[9px] uppercase tracking-wider text-outline mb-1.5 px-1">
-                Suggested Telemetry Queries:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {QUICK_PROMPTS.map((qp) => (
-                  <button
-                    key={qp.label}
-                    onClick={() => handleSendMessage(qp.prompt)}
-                    disabled={isLoading}
-                    className="px-2.5 py-1 rounded-md bg-surface-container-high/70 hover:bg-surface-container-highest hover:text-secondary border border-outline-variant/20 font-mono-code text-[11px] text-on-surface-variant transition-colors disabled:opacity-50 text-left"
-                  >
-                    {qp.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Message Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 scroll-smooth">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'
-                  }`}
-              >
-                <span className="font-mono-label text-[9px] tracking-wider uppercase mb-1 text-outline px-1">
-                  {msg.role === 'user' ? 'TRANSMITTER // USER' : 'AZ_ASSISTANT'}
-                </span>
-                <div
-                  className={`max-w-[92%] sm:max-w-[88%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-body-sm leading-relaxed overflow-hidden ${msg.role === 'user'
-                    ? 'bg-secondary text-on-secondary font-medium rounded-tr-sm shadow-[0_2px_8px_rgba(170,224,46,0.25)] whitespace-pre-wrap break-words'
-                    : 'bg-surface-container/90 text-on-surface border border-outline-variant/20 rounded-tl-sm'
-                    }`}
-                >
-                  {msg.role === 'assistant' ? (
-                    <MarkdownMessage content={msg.text} />
-                  ) : (
-                    <span className="break-words">{msg.text}</span>
-                  )}
-                </div>
-              </div>
-            ))}
-
-            {/* Loading Indicator */}
-            {isLoading && (
-              <div className="flex flex-col items-start">
-                <span className="font-mono-label text-[9px] tracking-wider uppercase mb-1 text-secondary px-1 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
-                  PROCESSING...
-                </span>
-                <div className="bg-surface-container/90 border border-secondary/30 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2 text-secondary">
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-bounce [animation-delay:-0.3s]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-bounce [animation-delay:-0.15s]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-bounce" />
-                  <span className="font-mono-code text-[11px] text-outline ml-1">Formulating verified reply...</span>
-                </div>
-              </div>
-            )}
-
-            {/* Error Banner */}
-            {errorNotice && (
-              <div className="p-3 rounded-lg bg-error/10 border border-error/30 text-error flex items-start gap-2 text-xs">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <div className="flex flex-col">
-                  <span className="font-mono-code font-bold uppercase text-[10px]">TRANSMISSION FAULT</span>
-                  <span>{errorNotice}</span>
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Area */}
-          <div className="p-3 bg-surface-container-low/90 border-t border-outline-variant/20 shrink-0">
-            <div className="relative flex flex-col">
-              <textarea
-                ref={inputRef}
-                rows={2}
-                value={inputMessage}
-                maxLength={1000}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about EcoPlugify, ROS 2, or skills... (Enter to send)"
-                disabled={isLoading}
-                aria-label="Message to AI assistant"
-                className="w-full pl-3 pr-10 py-2 rounded-xl bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-xs sm:text-body-sm focus:bg-surface-container-high focus:outline-none resize-none transition-colors border border-transparent focus:border-secondary/40"
-              />
-
-              <div className="flex items-center justify-between mt-1.5 px-1">
-                <div className="flex items-center gap-1.5 text-[9px] font-mono-code text-outline">
-                  <span className={inputMessage.length > 900 ? 'text-error font-bold' : ''}>
-                    {inputMessage.length}/1000
-                  </span>
-                  <span>•</span>
-                  <span>Shift+Enter for newline</span>
-                </div>
-
+              <div className="flex items-center gap-1 shrink-0">
                 <button
-                  onClick={() => handleSendMessage()}
-                  disabled={!inputMessage.trim() || isLoading}
-                  aria-label="Send message"
-                  className="p-1.5 rounded-lg bg-secondary text-on-secondary hover:brightness-110 active:scale-95 transition-all disabled:opacity-30 disabled:pointer-events-none"
+                  onClick={handleClearHistory}
+                  title="Clear conversation history"
+                  aria-label="Clear conversation history"
+                  className="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary btn-micro active:scale-95"
                 >
-                  <Send className="w-4 h-4" />
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleClose}
+                  title="Close assistant"
+                  aria-label="Close assistant window"
+                  className="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary btn-micro active:scale-95"
+                >
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Privacy Notice */}
-            <p className="text-[9px] text-outline text-center mt-1.5 font-mono-label leading-tight">
-              Powered by AZ//System.
-            </p>
-          </div>
-        </div>
-      )}
+            {/* Quick Prompts Strip (Visible on start or whenever history is short) */}
+            {messages.length <= 1 && (
+              <div className="p-2.5 bg-surface-container/50 border-b border-outline-variant/10 shrink-0">
+                <span className="block font-mono-label text-[9px] uppercase tracking-wider text-outline mb-1.5 px-1">
+                  Suggested Telemetry Queries:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {QUICK_PROMPTS.map((qp) => (
+                    <button
+                      key={qp.label}
+                      onClick={() => handleSendMessage(qp.prompt)}
+                      disabled={isLoading}
+                      className="px-2.5 py-1 rounded-md bg-surface-container-high/70 hover:bg-surface-container-highest hover:text-secondary border border-outline-variant/20 font-mono-code text-[11px] text-on-surface-variant transition-colors disabled:opacity-50 text-left btn-micro active:scale-95"
+                    >
+                      {qp.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Message Scroll Area */}
+            <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 scroll-smooth">
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'
+                    }`}
+                >
+                  <span className="font-mono-label text-[9px] tracking-wider uppercase mb-1 text-outline px-1">
+                    {msg.role === 'user' ? 'TRANSMITTER // USER' : 'AZ_ASSISTANT'}
+                  </span>
+                  <div
+                    className={`max-w-[92%] sm:max-w-[88%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-body-sm leading-relaxed overflow-hidden ${msg.role === 'user'
+                      ? 'bg-secondary text-on-secondary font-medium rounded-tr-sm shadow-[0_2px_8px_rgba(170,224,46,0.25)] whitespace-pre-wrap break-words'
+                      : 'bg-surface-container/90 text-on-surface border border-outline-variant/20 rounded-tl-sm'
+                      }`}
+                  >
+                    {msg.role === 'assistant' ? (
+                      <MarkdownMessage content={msg.text} />
+                    ) : (
+                      <span className="break-words">{msg.text}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Loading Indicator */}
+              <AnimatePresence>
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.18 }}
+                    className="flex flex-col items-start"
+                  >
+                    <span className="font-mono-label text-[9px] tracking-wider uppercase mb-1 text-secondary px-1 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                      PROCESSING TELEMETRY...
+                    </span>
+                    <div className="bg-surface-container/90 border border-secondary/30 rounded-2xl rounded-tl-sm px-4 py-2.5 flex items-center gap-2.5 text-secondary shadow-sm">
+                      <div className="flex items-center gap-1">
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-bounce [animation-delay:-0.3s]" />
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-bounce [animation-delay:-0.15s]" />
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" />
+                      </div>
+                      <span className="font-mono-code text-[11px] text-on-surface-variant">Formulating verified reply...</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Error Banner */}
+              {errorNotice && (
+                <div className="p-3 rounded-lg bg-error/10 border border-error/30 text-error flex items-start gap-2 text-xs">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div className="flex flex-col">
+                    <span className="font-mono-code font-bold uppercase text-[10px]">TRANSMISSION FAULT</span>
+                    <span>{errorNotice}</span>
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input Area */}
+            <div className="p-3 bg-surface-container-low/90 border-t border-outline-variant/20 shrink-0">
+              <div className="relative flex flex-col">
+                <textarea
+                  ref={inputRef}
+                  rows={2}
+                  value={inputMessage}
+                  maxLength={1000}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about EcoPlugify, ROS 2, or skills... (Enter to send)"
+                  disabled={isLoading}
+                  aria-label="Message to AI assistant"
+                  className="w-full pl-3 pr-10 py-2 rounded-xl bg-surface-container text-on-surface placeholder:text-outline/60 font-body-regular text-xs sm:text-body-sm focus:bg-surface-container-high focus:outline-none resize-none transition-colors border border-transparent focus:border-secondary/40"
+                />
+
+                <div className="flex items-center justify-between mt-1.5 px-1">
+                  <div className="flex items-center gap-1.5 text-[9px] font-mono-code text-outline">
+                    <span className={inputMessage.length > 900 ? 'text-error font-bold' : ''}>
+                      {inputMessage.length}/1000
+                    </span>
+                    <span>•</span>
+                    <span>Shift+Enter for newline</span>
+                  </div>
+
+                  <button
+                    onClick={() => handleSendMessage()}
+                    disabled={!inputMessage.trim() || isLoading}
+                    aria-label="Send message"
+                    className="p-1.5 rounded-lg bg-secondary text-on-secondary hover:brightness-110 active:scale-95 transition-all disabled:opacity-30 disabled:pointer-events-none btn-micro"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Privacy Notice */}
+              <p className="text-[9px] text-outline text-center mt-1.5 font-mono-label leading-tight">
+                Powered by AZ//System.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

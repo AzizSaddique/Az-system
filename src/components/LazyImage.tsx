@@ -4,6 +4,7 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   aspectRatioClass?: string;
   wrapperClassName?: string;
   priority?: boolean;
+  skeletonLabel?: string;
 }
 
 export const LazyImage: React.FC<LazyImageProps> = ({
@@ -15,6 +16,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   priority = false,
   width,
   height,
+  skeletonLabel,
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,19 +26,34 @@ export const LazyImage: React.FC<LazyImageProps> = ({
     <div
       className={`relative overflow-hidden bg-surface-container-low ${aspectRatioClass} ${wrapperClassName}`}
     >
-      {/* Lightweight cyber placeholder shimmer before image loads */}
+      {/* Cyber Skeleton Placeholder */}
       {!isLoaded && !hasError && (
         <div
-          className="absolute inset-0 bg-surface-container-high/40 animate-pulse flex items-center justify-center pointer-events-none"
+          className="absolute inset-0 bg-surface-container-high/30 flex flex-col items-center justify-center pointer-events-none p-2"
           aria-hidden="true"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-secondary/40 animate-ping" />
+          {/* Subtle tech grid background */}
+          <div className="absolute inset-0 bg-tech-grid opacity-10 pointer-events-none" />
+          
+          {/* Scanning Shimmer Beam */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-surface-container-highest/40 to-transparent animate-shimmer" />
+
+          {/* Micro Telemetry Pill */}
+          <div className="relative z-10 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-lowest/80 border border-outline-variant/30 text-[10px] font-mono-label text-outline">
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+            <span className="truncate max-w-[140px] uppercase tracking-wider">
+              {skeletonLabel || 'SYNCING ASSET'}
+            </span>
+          </div>
         </div>
       )}
 
       {hasError ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-center bg-surface-container-low text-outline font-mono-code text-[11px]">
-          <span>IMAGE_NOT_RESOLVED</span>
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-surface-container-low text-outline font-mono-code text-[11px] border border-outline-variant/20">
+          <span className="text-secondary font-bold">ASSET // OFFLINE</span>
+          <span className="text-[10px] opacity-75 mt-0.5 truncate max-w-full">
+            {alt || 'Media stream unavailable'}
+          </span>
         </div>
       ) : (
         <img
@@ -50,7 +67,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
           fetchpriority={priority ? 'high' : 'auto'}
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}
-          className={`transition-opacity duration-500 ease-out ${
+          className={`transition-opacity duration-300 ease-out ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           } ${className}`}
           {...props}
@@ -61,3 +78,4 @@ export const LazyImage: React.FC<LazyImageProps> = ({
 };
 
 export default LazyImage;
+

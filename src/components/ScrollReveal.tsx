@@ -1,80 +1,100 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 
-interface ScrollRevealProps {
+export interface ScrollRevealProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  direction?: 'up' | 'down' | 'none';
+  duration?: number;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'none';
+  distance?: number;
   amount?: number | 'some' | 'all';
+  once?: boolean;
 }
 
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   className = '',
   delay = 0,
+  duration = 0.52,
   direction = 'up',
-  amount = 0.05,
+  distance = 24,
+  amount = 0.15,
+  once = true,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef<HTMLDivElement>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    // Respect user motion preferences
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches) {
-      setPrefersReducedMotion(true);
-      setIsVisible(true);
-      return;
-    }
+  // Determine viewport threshold
+  const threshold =
+    typeof amount === 'number'
+      ? amount
+      : amount === 'all'
+      ? 0.5
+      : 0.12;
 
-    const element = domRef.current;
-    if (!element) return;
+  // Track viewport intersection directly to ensure bulletproof triggering
+  const isInView = useInView(ref, {
+    once,
+    amount: threshold,
+  });
 
-    const threshold = typeof amount === 'number' ? Math.min(Math.max(amount, 0), 1) : 0.05;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold }
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [amount]);
-
-  if (prefersReducedMotion) {
+  if (shouldReduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
-  const getYOffset = () => {
-    if (direction === 'up') return 'translateY(20px)';
-    if (direction === 'down') return 'translateY(-20px)';
-    return 'translateY(0)';
+  const getInitialOffset = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance, x: 0 };
+      case 'down':
+        return { y: -distance, x: 0 };
+      case 'left':
+        return { x: distance, y: 0 };
+      case 'right':
+        return { x: -distance, y: 0 };
+      case 'none':
+      default:
+        return { x: 0, y: 0 };
+    }
+  };
+
+  const initialOffset = getInitialOffset();
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: initialOffset.x,
+      y: initialOffset.y,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
   };
 
   return (
-    <div
-      ref={domRef}
-      className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : getYOffset(),
-        transition: `opacity 500ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}s, transform 500ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}s`,
-        willChange: isVisible ? 'auto' : 'opacity, transform',
+    <motion.div
+      ref={ref}
+      inherit={false}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      whileInView="visible"
+      viewport={{
+        once,
+        amount: threshold,
       }}
+      variants={variants}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

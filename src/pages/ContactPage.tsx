@@ -157,23 +157,25 @@ export const ContactPage: React.FC = () => {
     <div className="flex flex-col w-full">
       <div className="relative w-full overflow-hidden pb-space-xl">
         {/* Backdrop Glows */}
-        <div className="absolute -top-32 left-1/4 w-[560px] h-[560px] bg-secondary/5 rounded-full blur-[140px] pointer-events-none -z-10" />
-        <div className="absolute top-1/2 -right-24 w-[480px] h-[480px] bg-surface-bright/20 rounded-full blur-[160px] pointer-events-none -z-10" />
+        <div className="absolute -top-32 left-1/4 w-[560px] h-[560px] bg-secondary/5 rounded-full blur-[140px] pointer-events-none -z-10 animate-ambient-glow-1" />
+        <div className="absolute top-1/2 -right-24 w-[480px] h-[480px] bg-surface-bright/20 rounded-full blur-[160px] pointer-events-none -z-10 animate-ambient-glow-2" />
 
         {/* Top Telemetry Strip */}
-        <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-space-sm mb-space-md sm:mb-space-lg text-outline">
-          <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label">
-            <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
-            <span className="text-secondary font-bold tracking-widest">COMMUNICATION_LINK // 04_CONTACT</span>
-            <span className="text-outline-variant">/</span>
-            <span className="text-on-surface-variant">NODE_PK_EAST</span>
+        <ScrollReveal>
+          <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-space-sm mb-space-md sm:mb-space-lg text-outline">
+            <div className="flex items-center gap-space-xs font-mono-label text-[10px] sm:text-mono-label">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+              <span className="text-secondary font-bold tracking-widest">COMMUNICATION_LINK // 04_CONTACT</span>
+              <span className="text-outline-variant">/</span>
+              <span className="text-on-surface-variant">NODE_PK_EAST</span>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-space-md font-mono-label text-[10px] sm:text-mono-label text-on-surface-variant">
+              <span>LAT: 32.5744° N</span>
+              <span>LONG: 74.0754° E</span>
+              <span className="text-secondary px-space-xs py-0.5 rounded-sm bg-surface-container-high">PKT [UTC+5]</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 sm:gap-space-md font-mono-label text-[10px] sm:text-mono-label text-on-surface-variant">
-            <span>LAT: 32.5744° N</span>
-            <span>LONG: 74.0754° E</span>
-            <span className="text-secondary px-space-xs py-0.5 rounded-sm bg-surface-container-high">PKT [UTC+5]</span>
-          </div>
-        </div>
+        </ScrollReveal>
 
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-start">
@@ -182,180 +184,199 @@ export const ContactPage: React.FC = () => {
           <div className="lg:col-span-6 flex flex-col gap-space-lg sm:gap-space-xl">
 
             {/* Header */}
-            <div className="flex flex-col gap-space-sm sm:gap-space-md">
-              <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-sm bg-surface-container-low max-w-fit">
-                <span className="w-2 h-2 rounded-full bg-secondary" />
-                <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary tracking-widest uppercase">
-                  GET IN TOUCH // OPEN FOR OPPORTUNITIES
-                </span>
+            <ScrollReveal>
+              <div className="flex flex-col gap-space-sm sm:gap-space-md">
+                <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-sm bg-surface-container-low max-w-fit">
+                  <span className="w-2 h-2 rounded-full bg-secondary" />
+                  <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary tracking-widest uppercase">
+                    GET IN TOUCH // OPEN FOR OPPORTUNITIES
+                  </span>
+                </div>
+                <h1 className="font-heading-xl text-3xl sm:text-4xl lg:text-display-2xl text-on-surface font-bold tracking-tight">
+                  Let's Build Something <span className="text-secondary">Meaningful.</span>
+                </h1>
+                <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+                  Have a software system to scale, an IoT embedded pipeline to prototype, or an opportunity spanning cloud architecture and field hardware? I'm always prepared to synchronize.
+                </p>
               </div>
-              <h1 className="font-heading-xl text-3xl sm:text-4xl lg:text-display-2xl text-on-surface font-bold tracking-tight">
-                Let's Build Something <span className="text-secondary">Meaningful.</span>
-              </h1>
-              <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
-                Have a software system to scale, an IoT embedded pipeline to prototype, or an opportunity spanning cloud architecture and field hardware? I'm always prepared to synchronize.
-              </p>
-            </div>
+            </ScrollReveal>
 
             {/* Profile Snapshot Pill */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md p-3 sm:p-space-md rounded-xl bg-surface-container-low backdrop-blur-md">
-              <div className="flex items-center gap-3 sm:gap-space-md">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0">
-                  <img
-                    alt="Muhammad Aziz Saddique"
-                    className="w-full h-full object-cover"
-                    src={PORTFOLIO_DATA.personalInfo.avatarSmall}
-                    loading="lazy"
-                    decoding="async"
-                    width={56}
-                    height={56}
-                  />
-                  <div className="absolute inset-0 bg-secondary/10 mix-blend-color" />
+            <ScrollReveal delay={0.06}>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md p-3 sm:p-space-md rounded-xl bg-surface-container-low backdrop-blur-md">
+                <div className="flex items-center gap-3 sm:gap-space-md">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0">
+                    <img
+                      alt="Muhammad Aziz Saddique"
+                      className="w-full h-full object-cover"
+                      src={PORTFOLIO_DATA.personalInfo.avatarSmall}
+                      loading="lazy"
+                      decoding="async"
+                      width={56}
+                      height={56}
+                    />
+                    <div className="absolute inset-0 bg-secondary/10 mix-blend-color" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-heading-md text-base sm:text-heading-md text-on-surface truncate">Muhammad Aziz Saddique</span>
+                    <span className="font-mono-code text-[11px] sm:text-mono-code text-on-surface-variant">Full-Stack &amp; Embedded Systems Engineer</span>
+                  </div>
                 </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="font-heading-md text-base sm:text-heading-md text-on-surface truncate">Muhammad Aziz Saddique</span>
-                  <span className="font-mono-code text-[11px] sm:text-mono-code text-on-surface-variant">Full-Stack &amp; Embedded Systems Engineer</span>
+                <div className="flex flex-col items-start sm:items-end gap-0.5 shrink-0">
+                  <div className="flex items-center gap-space-xs">
+                    <span className="w-2 h-2 rounded-full bg-secondary" />
+                    <span className="font-mono-label text-[11px] sm:text-mono-label text-secondary uppercase font-semibold">Active • Available</span>
+                  </div>
+                  <span className="font-mono-label text-[10px] sm:text-mono-label text-outline">Gujrat, Punjab, PK</span>
                 </div>
               </div>
-              <div className="flex flex-col items-start sm:items-end gap-0.5 shrink-0">
-                <div className="flex items-center gap-space-xs">
-                  <span className="w-2 h-2 rounded-full bg-secondary" />
-                  <span className="font-mono-label text-[11px] sm:text-mono-label text-secondary uppercase font-semibold">Active • Available</span>
-                </div>
-                <span className="font-mono-label text-[10px] sm:text-mono-label text-outline">Gujrat, Punjab, PK</span>
-              </div>
-            </div>
+            </ScrollReveal>
 
             {/* Channel Direct Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
-              <a
-                className="group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32"
-                href={PORTFOLIO_DATA.personalInfo.github}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
-                  <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_01</span>
-                  <OpenInNew className="w-4 h-4" />
-                </div>
-                <div>
-                  <span className="block font-mono-label text-mono-label text-outline uppercase">GitHub Source</span>
-                  <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">@AzizSaddique</span>
-                </div>
-              </a>
+              <ScrollReveal delay={0}>
+                <a
+                  className="group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32 card-interactive"
+                  href={PORTFOLIO_DATA.personalInfo.github}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
+                    <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_01</span>
+                    <OpenInNew className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                  <div>
+                    <span className="block font-mono-label text-mono-label text-outline uppercase">GitHub Source</span>
+                    <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">@AzizSaddique</span>
+                  </div>
+                </a>
+              </ScrollReveal>
 
-              <a
-                className="group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32"
-                href={PORTFOLIO_DATA.personalInfo.linkedin}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
-                  <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_02</span>
-                  <NorthEast className="w-4 h-4" />
-                </div>
-                <div>
-                  <span className="block font-mono-label text-mono-label text-outline uppercase">LinkedIn</span>
-                  <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">in/Muhammad Aziz Saddique</span>
-                </div>
-              </a>
+              <ScrollReveal delay={0.08}>
+                <a
+                  className="group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32 card-interactive"
+                  href={PORTFOLIO_DATA.personalInfo.linkedin}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
+                    <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_02</span>
+                    <NorthEast className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                  <div>
+                    <span className="block font-mono-label text-mono-label text-outline uppercase">LinkedIn</span>
+                    <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">in/Muhammad Aziz Saddique</span>
+                  </div>
+                </a>
+              </ScrollReveal>
 
-              <div
-                onClick={() => copyEmailToClipboard(PORTFOLIO_DATA.personalInfo.email, setChannelCopied)}
-                className="cursor-pointer group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32"
-              >
-                <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
-                  <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_03</span>
-                  <ContentCopy className={`w-4 h-4 ${channelCopied ? 'text-secondary' : ''}`} />
+              <ScrollReveal delay={0.16}>
+                <div
+                  onClick={() => copyEmailToClipboard(PORTFOLIO_DATA.personalInfo.email, setChannelCopied)}
+                  className="cursor-pointer group p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-high transition-all flex flex-col justify-between h-32 card-interactive"
+                >
+                  <div className="flex items-center justify-between text-outline group-hover:text-secondary transition-colors">
+                    <span className="font-mono-label text-mono-label tracking-widest">CHANNEL_03</span>
+                    <ContentCopy className={`w-4 h-4 transition-transform duration-200 group-hover:scale-110 ${channelCopied ? 'text-secondary' : ''}`} />
+                  </div>
+                  <div>
+                    <span className="block font-mono-label text-mono-label text-outline uppercase">Direct Mail</span>
+                    <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">
+                      {channelCopied ? 'Copied to Clipboard!' : 'azizsaddique.dev'}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="block font-mono-label text-mono-label text-outline uppercase">Direct Mail</span>
-                  <span className="font-mono-code text-mono-code text-on-surface group-hover:text-secondary truncate block">
-                    {channelCopied ? 'Copied to Clipboard!' : 'azizsaddique.dev'}
-                  </span>
-                </div>
-              </div>
+              </ScrollReveal>
             </div>
 
             {/* 3 Collaboration Scopes */}
             <div className="flex flex-col gap-space-md">
-              <div className="flex items-center justify-between text-outline">
-                <span className="font-mono-label text-[10px] sm:text-mono-label uppercase tracking-wider">COLLABORATION SCOPES &amp; SYSTEM ROLES</span>
-                <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary">[ 03 SPECIFICATIONS ]</span>
-              </div>
+              <ScrollReveal delay={0.08}>
+                <div className="flex items-center justify-between text-outline">
+                  <span className="font-mono-label text-[10px] sm:text-mono-label uppercase tracking-wider">COLLABORATION SCOPES &amp; SYSTEM ROLES</span>
+                  <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary">[ 03 SPECIFICATIONS ]</span>
+                </div>
+              </ScrollReveal>
 
               {/* Scope 1 */}
-              <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
-                <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
-                  <Layers className="w-5 h-5 text-on-surface" />
-                </div>
-                <div className="flex flex-col gap-space-xs w-full">
-                  <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
-                    <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">Full-Stack &amp; Mobile Development</h3>
-                    <span className="font-mono-label text-[10px] sm:text-mono-label text-outline px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">CLOUD / APP</span>
+              <ScrollReveal delay={0}>
+                <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
+                  <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
+                    <Layers className="w-5 h-5 text-on-surface" />
                   </div>
-                  <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-                    Architecting reactive user surfaces, resilient REST/GraphQL microservices, and database layers using React, React Native, Node.js, Express, and distributed PostgreSQL/MongoDB datastores.
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">React / Next</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">React Native</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Node.js</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">REST APIs</span>
+                  <div className="flex flex-col gap-space-xs w-full">
+                    <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
+                      <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">Full-Stack &amp; Mobile Development</h3>
+                      <span className="font-mono-label text-[10px] sm:text-mono-label text-outline px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">CLOUD / APP</span>
+                    </div>
+                    <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                      Architecting reactive user surfaces, resilient REST/GraphQL microservices, and database layers using React, React Native, Node.js, Express, and distributed PostgreSQL/MongoDB datastores.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">React / Next</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">React Native</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Node.js</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">REST APIs</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
 
               {/* Scope 2 */}
-              <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
-                <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
-                  <Memory className="w-5 h-5 text-on-surface" />
-                </div>
-                <div className="flex flex-col gap-space-xs w-full">
-                  <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
-                    <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">IoT &amp; Embedded Systems</h3>
-                    <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">HARDWARE / EDGE</span>
+              <ScrollReveal delay={0.1}>
+                <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
+                  <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
+                    <Memory className="w-5 h-5 text-on-surface" />
                   </div>
-                  <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-                    Bridging physical inputs to the cloud: ESP32/STM32 microcontrollers, edge sensor data telemetry, MQTT/WebSockets low-latency pipelines, and smart automation modules.
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">ESP32 / C++</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">MQTT Broker</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Sensors I2C/SPI</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Telemetry Flow</span>
+                  <div className="flex flex-col gap-space-xs w-full">
+                    <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
+                      <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">IoT &amp; Embedded Systems</h3>
+                      <span className="font-mono-label text-[10px] sm:text-mono-label text-secondary px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">HARDWARE / EDGE</span>
+                    </div>
+                    <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                      Bridging physical inputs to the cloud: ESP32/STM32 microcontrollers, edge sensor data telemetry, MQTT/WebSockets low-latency pipelines, and smart automation modules.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">ESP32 / C++</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">MQTT Broker</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Sensors I2C/SPI</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Telemetry Flow</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
 
               {/* Scope 3 */}
-              <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
-                <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
-                  <PrecisionManufacturing className="w-5 h-5 text-on-surface" />
-                </div>
-                <div className="flex flex-col gap-space-xs w-full">
-                  <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
-                    <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">Robotics &amp; Intelligent Experiments</h3>
-                    <span className="font-mono-label text-[10px] sm:text-mono-label text-outline px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">ROBOTICS / AI</span>
+              <ScrollReveal delay={0.2}>
+                <div className="p-4 sm:p-space-lg rounded-xl bg-surface-container-low transition-all hover:bg-surface-container flex flex-col sm:flex-row gap-space-md items-start">
+                  <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-on-surface">
+                    <PrecisionManufacturing className="w-5 h-5 text-on-surface" />
                   </div>
-                  <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-                    Developing experimental robotic testbeds, autonomous navigation logic, computer vision sensor fusion, and ROS 2 communication nodes coupled with Python edge-inference scripts.
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">ROS 2</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Python</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Kinematics</span>
-                    <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Autonomous Nav</span>
+                  <div className="flex flex-col gap-space-xs w-full">
+                    <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center justify-between gap-1">
+                      <h3 className="font-heading-md text-base sm:text-heading-md text-on-surface">Robotics &amp; Intelligent Experiments</h3>
+                      <span className="font-mono-label text-[10px] sm:text-mono-label text-outline px-space-xs py-0.5 rounded bg-surface-container-high shrink-0">ROBOTICS / AI</span>
+                    </div>
+                    <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                      Developing experimental robotic testbeds, autonomous navigation logic, computer vision sensor fusion, and ROS 2 communication nodes coupled with Python edge-inference scripts.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">ROS 2</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Python</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Kinematics</span>
+                      <span className="px-2 py-0.5 rounded-sm bg-surface-container-highest font-mono-label text-[11px] sm:text-mono-label text-on-surface-variant">Autonomous Nav</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             </div>
 
           </div>
 
           {/* RIGHT COLUMN: Contact Form & Terminal Box */}
           <div className="lg:col-span-6 flex flex-col gap-space-md">
-            <div className="p-4 sm:p-space-lg md:p-space-xl rounded-xl bg-surface-container-low backdrop-blur-xl shadow-xl flex flex-col gap-space-md sm:gap-space-lg">
+            <ScrollReveal delay={0.1}>
+              <div className="p-4 sm:p-space-lg md:p-space-xl rounded-xl bg-surface-container-low backdrop-blur-xl shadow-xl flex flex-col gap-space-md sm:gap-space-lg">
 
               {/* Terminal Header */}
               <div className="flex flex-wrap items-center justify-between gap-2 pb-space-sm border-b border-surface-container-highest">
@@ -545,7 +566,7 @@ export const ContactPage: React.FC = () => {
                   type="submit"
                   disabled={!isFormValid || status === 'submitting'}
                   aria-disabled={!isFormValid || status === 'submitting'}
-                  className={`w-full py-4 rounded-xl font-mono-code text-mono-code font-bold uppercase tracking-wider flex items-center justify-center gap-space-sm transition-all shadow-md active:scale-[0.99] ${!isFormValid || status === 'submitting'
+                  className={`w-full py-4 rounded-xl font-mono-code text-mono-code font-bold uppercase tracking-wider flex items-center justify-center gap-space-sm transition-all shadow-md btn-micro group ${!isFormValid || status === 'submitting'
                     ? 'bg-secondary/40 text-on-secondary/60 cursor-not-allowed'
                     : 'bg-secondary hover:bg-secondary-fixed text-on-secondary cursor-pointer'
                     }`}
@@ -568,7 +589,7 @@ export const ContactPage: React.FC = () => {
                   ) : (
                     <>
                       <span>DISPATCH MESSAGE</span>
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </>
                   )}
                 </button>
@@ -605,26 +626,29 @@ export const ContactPage: React.FC = () => {
                 </span>
               </div>
             </div>
+          </ScrollReveal>
 
             {/* Mean SLA Response Card */}
-            <div className="p-space-md rounded-xl bg-surface-container-low flex items-center justify-between">
-              <div className="flex items-center gap-space-md">
-                <div className="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
-                  <Speed className="w-5 h-5 text-secondary" />
+            <ScrollReveal delay={0.2}>
+              <div className="p-space-md rounded-xl bg-surface-container-low flex items-center justify-between">
+                <div className="flex items-center gap-space-md">
+                  <div className="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+                    <Speed className="w-5 h-5 text-secondary" />
+                  </div>
+                  <div>
+                    <span className="font-mono-label text-mono-label text-outline uppercase block">Mean SLA Response</span>
+                    <span className="font-heading-md text-heading-md text-on-surface font-bold">&lt; 18 Hours</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-mono-label text-mono-label text-outline uppercase block">Mean SLA Response</span>
-                  <span className="font-heading-md text-heading-md text-on-surface font-bold">&lt; 18 Hours</span>
+                <div className="hidden sm:flex items-center gap-space-md">
+                  <svg className="w-32 h-8 text-secondary" fill="none" viewBox="0 0 128 32">
+                    <path d="M0 24L20 18L40 22L60 12L80 16L100 6L128 10" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                    <circle cx="128" cy="10" fill="currentColor" r="3" />
+                  </svg>
+                  <span className="font-mono-label text-mono-label text-secondary">STABLE</span>
                 </div>
               </div>
-              <div className="hidden sm:flex items-center gap-space-md">
-                <svg className="w-32 h-8 text-secondary" fill="none" viewBox="0 0 128 32">
-                  <path d="M0 24L20 18L40 22L60 12L80 16L100 6L128 10" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                  <circle cx="128" cy="10" fill="currentColor" r="3" />
-                </svg>
-                <span className="font-mono-label text-mono-label text-secondary">STABLE</span>
-              </div>
-            </div>
+            </ScrollReveal>
 
           </div>
 
@@ -648,27 +672,27 @@ export const ContactPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-space-sm sm:gap-space-md w-full md:w-auto">
               <button
                 onClick={() => copyEmailToClipboard(PORTFOLIO_DATA.personalInfo.email, setCopiedEmail)}
-                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors btn-micro group cursor-pointer"
               >
-                <MailIcon className="w-4 h-4" />
+                <MailIcon className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
                 <span>{copiedEmail ? 'Copied Email!' : 'Copy Email'}</span>
               </button>
               <a
                 href={PORTFOLIO_DATA.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors cursor-pointer"
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono-code text-xs sm:text-mono-code flex items-center justify-center gap-space-xs transition-colors btn-micro group cursor-pointer"
               >
-                <OpenInNew className="w-4 h-4" />
+                <OpenInNew className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 <span>GitHub</span>
               </a>
               <a
                 href={PORTFOLIO_DATA.personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-xs sm:text-mono-code font-semibold flex items-center justify-center gap-space-xs transition-all shadow-sm cursor-pointer"
+                className="min-h-[44px] px-space-md sm:px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-mono-code text-xs sm:text-mono-code font-semibold flex items-center justify-center gap-space-xs transition-all shadow-sm btn-micro group cursor-pointer"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 <span>LinkedIn InMail</span>
               </a>
             </div>

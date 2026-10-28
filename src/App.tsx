@@ -8,6 +8,9 @@ import { CustomCursor } from './components/CustomCursor';
 import { RouteLoadingFallback } from './components/RouteLoadingFallback';
 import { HomePage } from './pages/HomePage';
 
+import { PageTransition } from './components/PageTransition';
+import { InitialBootLoaderManager } from './components/InitialBootLoader';
+
 // Route-level code-splitting: keep HomePage immediate for instant LCP, defer other routes
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage').then(m => ({ default: m.ProjectsPage })));
@@ -46,6 +49,7 @@ const ScrollToTop = () => {
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
+      <InitialBootLoaderManager />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <ScrollToTop />
         <CustomCursor />
@@ -54,12 +58,12 @@ export const App: React.FC = () => {
           <main className="w-full max-w-[1200px] mx-auto pt-20 sm:pt-24 pb-24 lg:pb-12 px-3 sm:px-space-md lg:px-space-xl bg-background flex-grow">
             <Suspense fallback={<RouteLoadingFallback />}>
               <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/projects" element={<ProjectsPage />} />
-                <Route path="/journey" element={<JourneyPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+                <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+                <Route path="/projects" element={<PageTransition><ProjectsPage /></PageTransition>} />
+                <Route path="/journey" element={<PageTransition><JourneyPage /></PageTransition>} />
+                <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+                <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
               </Routes>
             </Suspense>
           </main>

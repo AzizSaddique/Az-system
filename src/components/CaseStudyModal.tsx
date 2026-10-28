@@ -92,7 +92,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
             <button
               ref={closeButtonRef}
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-surface-container-high text-on-surface hover:text-secondary hover:bg-surface-container-highest transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary/50"
+              className="p-1.5 rounded-lg bg-surface-container-high text-on-surface hover:text-secondary hover:bg-surface-container-highest transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary/50 btn-micro"
               aria-label="Close Case Study"
             >
               <X className="w-5 h-5" />
@@ -117,7 +117,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as EcoPlugifyTab)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-all cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-all cursor-pointer btn-micro ${
                       isActive
                         ? 'bg-secondary text-on-secondary shadow-sm font-bold'
                         : 'bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
@@ -758,15 +758,15 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ project, onClose
                   href={project.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-initial min-h-[40px] px-space-md py-space-xs rounded-lg bg-secondary text-on-secondary font-bold hover:bg-secondary-fixed transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 sm:flex-initial min-h-[40px] px-space-md py-space-xs rounded-lg bg-secondary text-on-secondary font-bold hover:bg-secondary-fixed transition-colors flex items-center justify-center gap-1.5 btn-micro group cursor-pointer"
                 >
                   <span>Launch Live Demo</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               )}
               <button
                 onClick={onClose}
-                className="flex-1 sm:flex-initial min-h-[40px] px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container border border-outline-variant/30 text-on-surface font-bold transition-colors flex items-center justify-center cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[40px] px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container border border-outline-variant/30 text-on-surface font-bold transition-colors flex items-center justify-center btn-micro cursor-pointer"
               >
                 Close
               </button>

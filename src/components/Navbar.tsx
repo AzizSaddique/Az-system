@@ -1,9 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, ExternalLink, Download, User, Mail, ChevronDown } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
 import resumePdf from '../assets/M.AZIZ SADDQIUE CV.pdf';
+
+const NAV_ITEMS = [
+  { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Journey', to: '/journey' },
+  { label: 'Contact', to: '/contact' },
+];
 
 export const Navbar: React.FC = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -54,7 +63,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-space-sm sm:gap-space-md">
           <Link
             to="/"
-            className="flex items-center gap-2 sm:gap-space-sm group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-xl"
+            className="flex items-center gap-2 sm:gap-space-sm group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-xl transition-transform active:scale-95"
             aria-label="Home - AZ / SYSTEMS"
           >
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-surface-container-high flex items-center justify-center border border-outline-variant/40 group-hover:border-secondary transition-colors shrink-0">
@@ -76,58 +85,29 @@ export const Navbar: React.FC = () => {
         {/* Desktop Navigation Bar */}
         <nav
           aria-label="Main Navigation"
-          className="hidden lg:flex items-center gap-space-xs p-space-xs rounded-full bg-surface-container-low/60 border border-outline-variant/20"
+          className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-surface-container-low/60 border border-outline-variant/20"
         >
-          <Link
-            to="/"
-            className={
-              location.pathname === '/'
-                ? 'px-space-md py-space-xs rounded-full transition-all bg-surface-container-highest text-on-surface font-medium border border-secondary/40'
-                : 'px-space-md py-space-xs rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all'
-            }
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className={
-              location.pathname === '/about'
-                ? 'px-space-md py-space-xs rounded-full transition-all bg-surface-container-highest text-on-surface font-medium border border-secondary/40'
-                : 'px-space-md py-space-xs rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all'
-            }
-          >
-            About
-          </Link>
-          <Link
-            to="/projects"
-            className={
-              location.pathname === '/projects'
-                ? 'px-space-md py-space-xs rounded-full transition-all bg-surface-container-highest text-on-surface font-medium border border-secondary/40'
-                : 'px-space-md py-space-xs rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all'
-            }
-          >
-            Projects
-          </Link>
-          <Link
-            to="/journey"
-            className={
-              location.pathname === '/journey'
-                ? 'px-space-md py-space-xs rounded-full transition-all bg-surface-container-highest text-on-surface font-medium border border-secondary/40'
-                : 'px-space-md py-space-xs rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all'
-            }
-          >
-            Journey
-          </Link>
-          <Link
-            to="/contact"
-            className={
-              location.pathname === '/contact'
-                ? 'px-space-md py-space-xs rounded-full transition-all bg-surface-container-highest text-on-surface font-medium border border-secondary/40'
-                : 'px-space-md py-space-xs rounded-full font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all'
-            }
-          >
-            Contact
-          </Link>
+          {NAV_ITEMS.map((item) => {
+            const isActive = location.pathname === item.to;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="relative px-space-md py-1.5 rounded-full text-xs sm:text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="activeDesktopNav"
+                    className="absolute inset-0 rounded-full bg-surface-container-highest border border-secondary/40 shadow-sm"
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                  />
+                )}
+                <span className={`relative z-10 transition-colors ${isActive ? 'text-on-surface font-semibold' : 'text-on-surface-variant hover:text-on-surface'}`}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right Section */}
@@ -145,13 +125,20 @@ export const Navbar: React.FC = () => {
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest border border-outline-variant/40 hover:border-secondary/60 text-on-surface hover:text-secondary flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary shrink-0"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest border border-outline-variant/40 hover:border-secondary/60 text-on-surface hover:text-secondary flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary shrink-0 btn-micro active:scale-95"
           >
-            {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-secondary" />
-            ) : (
-              <Moon className="w-4 h-4 text-secondary" />
-            )}
+            <motion.div
+              key={theme}
+              initial={{ rotate: -30, opacity: 0, scale: 0.8 }}
+              animate={{ rotate: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-secondary" />
+              ) : (
+                <Moon className="w-4 h-4 text-secondary" />
+              )}
+            </motion.div>
           </button>
 
           {/* Primary Resume Preview Button (Desktop/Tablet) */}
@@ -207,102 +194,108 @@ export const Navbar: React.FC = () => {
             </button>
 
             {/* Profile Popover / Dropdown Menu */}
-            {isProfileOpen && (
-              <div
-                ref={profileMenuRef}
-                role="menu"
-                aria-label="Profile actions"
-                className="absolute right-0 top-full mt-3 w-[290px] sm:w-[320px] rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/40 shadow-2xl p-space-md z-50 flex flex-col gap-space-sm animate-in fade-in zoom-in-95 duration-150 origin-top-right"
-              >
-                {/* Profile Identity Card */}
-                <div className="flex items-center gap-space-sm pb-space-sm border-b border-outline-variant/20">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-secondary/40 shadow-sm">
-                    <img
-                      alt="Muhammad Aziz Saddique"
-                      className="w-full h-full object-cover"
-                      src={PORTFOLIO_DATA.personalInfo.avatarSmall}
-                      width={48}
-                      height={48}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="font-heading-md text-sm sm:text-base font-bold text-on-surface truncate">
-                      {PORTFOLIO_DATA.personalInfo.name}
-                    </span>
-                    <span className="font-mono-code text-[11px] text-on-surface-variant truncate">
-                      {PORTFOLIO_DATA.personalInfo.title}
-                    </span>
-                    <div className="flex items-center gap-1.5 mt-1">
-                      <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-                      <span className="font-mono-label text-[10px] text-secondary font-semibold uppercase tracking-wider">
-                        Available for Roles
+            <AnimatePresence>
+              {isProfileOpen && (
+                <motion.div
+                  ref={profileMenuRef}
+                  role="menu"
+                  aria-label="Profile actions"
+                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                  transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute right-0 top-full mt-3 w-[290px] sm:w-[320px] rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/40 shadow-2xl p-space-md z-50 flex flex-col gap-space-sm origin-top-right"
+                >
+                  {/* Profile Identity Card */}
+                  <div className="flex items-center gap-space-sm pb-space-sm border-b border-outline-variant/20">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-secondary/40 shadow-sm">
+                      <img
+                        alt="Muhammad Aziz Saddique"
+                        className="w-full h-full object-cover"
+                        src={PORTFOLIO_DATA.personalInfo.avatarSmall}
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <span className="font-heading-md text-sm sm:text-base font-bold text-on-surface truncate">
+                        {PORTFOLIO_DATA.personalInfo.name}
                       </span>
+                      <span className="font-mono-code text-[11px] text-on-surface-variant truncate">
+                        {PORTFOLIO_DATA.personalInfo.title}
+                      </span>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                        <span className="font-mono-label text-[10px] text-secondary font-semibold uppercase tracking-wider">
+                          Available for Roles
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Resume Actions */}
-                <div className="flex flex-col gap-1 py-1">
-                  <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
-                    RESUME &amp; CREDENTIALS
-                  </span>
+                  {/* Resume Actions */}
+                  <div className="flex flex-col gap-1 py-1">
+                    <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
+                      RESUME &amp; CREDENTIALS
+                    </span>
 
-                  <a
-                    href={resumePdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-mono-code text-on-surface hover:bg-surface-container-high transition-colors group"
-                  >
-                    <span className="group-hover:text-secondary transition-colors">Preview Resume (PDF)</span>
-                    <ExternalLink className="w-4 h-4 text-secondary" />
-                  </a>
+                    <a
+                      href={resumePdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-mono-code text-on-surface hover:bg-surface-container-high transition-colors group btn-micro active:scale-98"
+                    >
+                      <span className="group-hover:text-secondary transition-colors">Preview Resume (PDF)</span>
+                      <ExternalLink className="w-4 h-4 text-secondary" />
+                    </a>
 
-                  <a
-                    href={resumePdf}
-                    download="Muhammad_Aziz_Saddique_Resume.pdf"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-mono-code bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary font-semibold transition-all group"
-                  >
-                    <span>Download CV (.pdf)</span>
-                    <Download className="w-4 h-4" />
-                  </a>
-                </div>
+                    <a
+                      href={resumePdf}
+                      download="Muhammad_Aziz_Saddique_Resume.pdf"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm font-mono-code bg-secondary/10 text-secondary hover:bg-secondary hover:text-on-secondary font-semibold transition-all group btn-micro active:scale-98"
+                    >
+                      <span>Download CV (.pdf)</span>
+                      <Download className="w-4 h-4" />
+                    </a>
+                  </div>
 
-                {/* Navigation Shortcuts */}
-                <div className="flex flex-col gap-1 pt-space-xs border-t border-outline-variant/20">
-                  <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
-                    QUICK NAVIGATION
-                  </span>
+                  {/* Navigation Shortcuts */}
+                  <div className="flex flex-col gap-1 pt-space-xs border-t border-outline-variant/20">
+                    <span className="font-mono-label text-[10px] text-outline uppercase tracking-wider px-2">
+                      QUICK NAVIGATION
+                    </span>
 
-                  <Link
-                    to="/about"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
-                  >
-                    <User className="w-4 h-4 text-outline" />
-                    <span>About &amp; Experience</span>
-                  </Link>
+                    <Link
+                      to="/about"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors btn-micro active:scale-98"
+                    >
+                      <User className="w-4 h-4 text-outline" />
+                      <span>About &amp; Experience</span>
+                    </Link>
 
-                  <Link
-                    to="/contact"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
-                  >
-                    <Mail className="w-4 h-4 text-outline" />
-                    <span>Contact &amp; Dispatch</span>
-                  </Link>
-                </div>
+                    <Link
+                      to="/contact"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors btn-micro active:scale-98"
+                    >
+                      <Mail className="w-4 h-4 text-outline" />
+                      <span>Contact &amp; Dispatch</span>
+                    </Link>
+                  </div>
 
-                {/* Location / Meta Footer */}
-                <div className="pt-2 border-t border-outline-variant/15 flex items-center justify-between text-[10px] font-mono-label text-outline px-1">
-                  <span>LOC: Narowal, Punjab, PK</span>
-                  <span>UTC+5 (PKT)</span>
-                </div>
-              </div>
-            )}
+                  {/* Location / Meta Footer */}
+                  <div className="pt-2 border-t border-outline-variant/15 flex items-center justify-between text-[10px] font-mono-label text-outline px-1">
+                    <span>LOC: Narowal, Punjab, PK</span>
+                    <span>UTC+5 (PKT)</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
         </div>

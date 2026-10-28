@@ -31,8 +31,329 @@
     <!-- Preload critical self-hosted fonts used above the fold -->
     <link rel="preload" href="/assets/fonts/geist-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/geist-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Session Boot Check: Avoid re-showing full-screen boot screen on page refreshes within the same session -->
+    <script>
+      try {
+        if (sessionStorage.getItem('az_app_booted') === '1') {
+          document.documentElement.classList.add('az-boot-instant-hide');
+        }
+      } catch (e) {}
+    </script>
+
+    <!-- Critical Inline Styles for Instant Cyber-Industrial Initial Boot Loader -->
+    <style id="az-boot-styles">
+      .az-boot-instant-hide #initial-boot-loader {
+        display: none !important;
+      }
+
+      .az-boot-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0B141C;
+        color: #DAE4EF;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Geist", monospace, sans-serif;
+        overflow: hidden;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+        user-select: none;
+      }
+
+      .az-boot-loader.az-boot-fade-out {
+        opacity: 0;
+        transform: scale(1.015);
+        filter: blur(2px);
+        pointer-events: none;
+        visibility: hidden;
+      }
+
+      /* Background Technical Grid */
+      .az-boot-grid {
+        position: absolute;
+        inset: 0;
+        background-size: 32px 32px;
+        background-image: 
+          linear-gradient(to right, rgba(143, 145, 148, 0.07) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(143, 145, 148, 0.07) 1px, transparent 1px);
+        pointer-events: none;
+      }
+
+      /* Ambient Radial Glow */
+      .az-boot-glow {
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, rgba(170, 224, 46, 0.12) 0%, rgba(11, 20, 28, 0) 70%);
+        pointer-events: none;
+        border-radius: 50%;
+      }
+
+      /* Central Terminal Card */
+      .az-boot-card {
+        position: relative;
+        z-index: 2;
+        width: 90%;
+        max-width: 440px;
+        padding: 24px;
+        border-radius: 16px;
+        background: rgba(6, 15, 23, 0.92);
+        border: 1px solid rgba(170, 224, 46, 0.22);
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85), 0 0 32px rgba(170, 224, 46, 0.08);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Terminal Header Row */
+      .az-boot-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(69, 71, 74, 0.4);
+        padding-bottom: 12px;
+      }
+
+      .az-boot-dots {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .az-boot-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .az-dot-err { background: #EF4444; }
+      .az-dot-warn { background: #9CA3AF; }
+      .az-dot-lime { background: #AAE02E; }
+
+      .az-boot-sys-tag {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        color: #9CA3AF;
+        text-transform: uppercase;
+      }
+
+      /* Primary Status Row */
+      .az-boot-status-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 2px;
+      }
+
+      .az-boot-pulse-box {
+        position: relative;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .az-boot-ping {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: #AAE02E;
+        opacity: 0.75;
+        animation: azBootPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+
+      .az-boot-core {
+        position: relative;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #AAE02E;
+        box-shadow: 0 0 10px #AAE02E;
+      }
+
+      @keyframes azBootPing {
+        75%, 100% {
+          transform: scale(2.2);
+          opacity: 0;
+        }
+      }
+
+      .az-boot-status-text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: #DAE4EF;
+        text-transform: uppercase;
+      }
+
+      /* Indeterminate Precision Scanning Rail */
+      .az-boot-rail {
+        position: relative;
+        width: 100%;
+        height: 4px;
+        border-radius: 9999px;
+        background: rgba(33, 43, 52, 0.95);
+        overflow: hidden;
+        margin: 4px 0;
+      }
+
+      .az-boot-beam {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 42%;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, transparent, #AAE02E, #BCF543, transparent);
+        box-shadow: 0 0 14px rgba(170, 224, 46, 0.85);
+        animation: azBootBeamScan 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      }
+
+      @keyframes azBootBeamScan {
+        0% {
+          left: -15%;
+          transform: scaleX(0.7);
+        }
+        50% {
+          transform: scaleX(1.15);
+        }
+        100% {
+          left: 75%;
+          transform: scaleX(0.8);
+        }
+      }
+
+      /* Telemetry Specs */
+      .az-boot-specs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        color: #9CA3AF;
+        letter-spacing: 0.05em;
+        padding-top: 2px;
+      }
+
+      .az-boot-specs .az-lime {
+        color: #AAE02E;
+        font-weight: 600;
+      }
+
+      .az-boot-bypass {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+        color: #6B7280;
+        text-align: center;
+        margin-top: 4px;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+
+      .az-boot-bypass:hover {
+        color: #AAE02E;
+      }
+
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .az-boot-ping, .az-boot-beam {
+          animation: none !important;
+        }
+        .az-boot-beam {
+          width: 100% !important;
+          left: 0 !important;
+          background: #AAE02E !important;
+        }
+        .az-boot-loader {
+          transition: none !important;
+        }
+      }
+    </style>
   </head>
   <body class="bg-background text-on-surface font-sans antialiased selection:bg-secondary selection:text-on-secondary min-h-screen">
+    <!-- Initial Full-Screen Cyber-Industrial Boot Screen -->
+    <div id="initial-boot-loader" class="az-boot-loader" role="status" aria-live="polite" aria-label="System Initializing">
+      <div class="az-boot-grid" aria-hidden="true"></div>
+      <div class="az-boot-glow" aria-hidden="true"></div>
+      
+      <div class="az-boot-card">
+        <div class="az-boot-header">
+          <div class="az-boot-dots">
+            <span class="az-boot-dot az-dot-err"></span>
+            <span class="az-boot-dot az-dot-warn"></span>
+            <span class="az-boot-dot az-dot-lime"></span>
+          </div>
+          <span class="az-boot-sys-tag">AZ_SYS // BOOT_SEQUENCE</span>
+        </div>
+
+        <div class="az-boot-status-row">
+          <div class="az-boot-pulse-box">
+            <div class="az-boot-ping"></div>
+            <div class="az-boot-core"></div>
+          </div>
+          <div class="az-boot-status-text">INITIALIZING SYSTEM</div>
+        </div>
+
+        <div class="az-boot-rail">
+          <div class="az-boot-beam"></div>
+        </div>
+
+        <div class="az-boot-specs">
+          <span>NODE: <span class="az-lime">PK_EAST_01</span></span>
+          <span>CORE: <span class="az-lime">REACT 18</span></span>
+          <span>STATUS: <span class="az-lime">READY</span></span>
+        </div>
+
+        <div class="az-boot-bypass" onclick="window.__dismissBootLoader &amp;&amp; window.__dismissBootLoader()">
+          [ CLICK OR ESC TO BYPASS ]
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline Failsafe & Dismissal Logic -->
+    <script>
+      (function() {
+        window.__dismissBootLoader = function() {
+          var el = document.getElementById('initial-boot-loader');
+          if (!el || el.classList.contains('az-boot-fade-out')) return;
+          el.classList.add('az-boot-fade-out');
+          try { sessionStorage.setItem('az_app_booted', '1'); } catch(e) {}
+          setTimeout(function() {
+            if (el && el.parentNode) el.parentNode.removeChild(el);
+          }, 400);
+        };
+
+        // Failsafe timer (3.5s maximum) to guarantee user is never locked out
+        var failsafeTimer = setTimeout(window.__dismissBootLoader, 3500);
+        window.__clearBootFailsafe = function() { clearTimeout(failsafeTimer); };
+
+        // Error safety listener
+        window.addEventListener('error', function() {
+          window.__dismissBootLoader();
+        });
+
+        // Keyboard bypass (Escape)
+        window.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            window.__dismissBootLoader();
+          }
+        }, { once: true });
+      })();
+    </script>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

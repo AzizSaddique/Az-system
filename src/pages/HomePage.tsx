@@ -24,6 +24,7 @@ import {
 import { PORTFOLIO_DATA, Project } from '../data/portfolioData';
 import { EcoplugifyAppAnnouncement } from '../components/EcoplugifyAppAnnouncement';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { LazyImage } from '../components/LazyImage';
 
 // Code-split heavy modal dialog on demand
 const CaseStudyModal = React.lazy(() => import('../components/CaseStudyModal').then(m => ({ default: m.CaseStudyModal })));
@@ -172,9 +173,9 @@ export const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col w-full relative">
       {/* Subtle Ambient Glow */}
-      <div className="absolute top-12 left-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute top-96 right-10 w-80 h-80 rounded-full bg-tertiary-fixed-dim/10 blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute top-[1800px] left-10 w-96 h-96 rounded-full bg-secondary/5 blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute top-12 left-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-[120px] pointer-events-none -z-10 animate-ambient-glow-1" />
+      <div className="absolute top-96 right-10 w-80 h-80 rounded-full bg-tertiary-fixed-dim/10 blur-[140px] pointer-events-none -z-10 animate-ambient-glow-2" />
+      <div className="absolute top-[1800px] left-10 w-96 h-96 rounded-full bg-secondary/5 blur-[160px] pointer-events-none -z-10 animate-ambient-glow-1" />
 
       {/* 1. HERO SECTION */}
       <section className="relative pt-6 pb-20 w-full">
@@ -204,25 +205,25 @@ export const HomePage: React.FC = () => {
             <div className="animate-hero-4 flex flex-wrap items-center gap-2 sm:gap-space-md pt-space-xs">
               <a
                 href="#featured-project"
-                className="w-full sm:w-auto justify-center px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold shadow-md hover:bg-secondary-fixed transition-transform active:scale-95 flex items-center gap-space-xs min-h-[44px]"
+                className="w-full sm:w-auto justify-center px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold shadow-md hover:bg-secondary-fixed transition-all flex items-center gap-space-xs min-h-[44px] btn-micro group"
               >
                 <span>Explore My Work</span>
-                <ArrowDownward className="text-[18px]" />
+                <ArrowDownward className="text-[18px] transition-transform duration-200 group-hover:translate-y-0.5" />
               </a>
               <Link
                 to="/contact"
-                className="w-full sm:w-auto justify-center px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center gap-space-xs min-h-[44px]"
+                className="w-full sm:w-auto justify-center px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center gap-space-xs min-h-[44px] btn-micro group"
               >
                 <span>Let's Connect</span>
-                <NorthEast className="text-[18px]" />
+                <NorthEast className="text-[18px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <a
                 href={PORTFOLIO_DATA.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto justify-center px-space-md py-space-sm rounded-lg bg-surface-container-low text-on-surface-variant hover:text-secondary font-mono-label text-mono-label flex items-center gap-space-xs transition-colors min-h-[44px]"
+                className="w-full sm:w-auto justify-center px-space-md py-space-sm rounded-lg bg-surface-container-low text-on-surface-variant hover:text-secondary font-mono-label text-mono-label flex items-center gap-space-xs transition-colors min-h-[44px] btn-micro group"
               >
-                <Code className="text-[16px]" />
+                <Code className="text-[16px] transition-transform duration-200 group-hover:scale-110" />
                 <span>github.com/AzizSaddique</span>
               </a>
             </div>
@@ -298,11 +299,13 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ECOPLUGIFY MOBILE APP COMING SOON ANNOUNCEMENT */}
-      <EcoplugifyAppAnnouncement />
+      <ScrollReveal>
+        <EcoplugifyAppAnnouncement />
+      </ScrollReveal>
 
       {/* 2. FLAGSHIP PROJECT: ECOPLUGIFY */}
-      <ScrollReveal>
-        <section className="py-space-xl w-full" id="featured-project">
+      <section className="py-space-xl w-full" id="featured-project">
+        <ScrollReveal>
           <div className="flex flex-col gap-space-md mb-space-lg">
             <div className="flex flex-wrap items-center justify-between gap-space-sm">
               <div className="flex items-center gap-space-xs font-mono-label text-mono-label text-secondary uppercase tracking-widest">
@@ -321,17 +324,19 @@ export const HomePage: React.FC = () => {
               An IoT smart plug engineering prototype paired with a React Native mobile application and Node.js backend. Features remote appliance switching, AC electrical telemetry, BLE onboarding, and tariff-based cost calculation.
             </p>
           </div>
+        </ScrollReveal>
 
-          {/* Main Flagship Showcase Card */}
+        {/* Main Flagship Showcase Card */}
+        <ScrollReveal delay={0.1}>
           <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center card-interactive border border-outline-variant/20 hover:border-secondary/30">
             <div className="lg:col-span-6 flex flex-col gap-space-md">
               <div className="rounded-xl overflow-hidden bg-surface-container-lowest shadow-inner relative group border border-outline-variant/20">
-                <img
+                <LazyImage
                   alt="EcoPlugify Physical Hardware Prototype Bench"
                   className="w-full h-64 sm:h-80 object-contain p-space-sm group-hover:scale-105 transition-transform duration-500"
+                  wrapperClassName="w-full h-64 sm:h-80"
                   src="/images/ecoplugify/hardware-prototype-640.webp"
-                  loading="lazy"
-                  decoding="async"
+                  skeletonLabel="ECOPLUGIFY_BENCH"
                   width={640}
                   height={480}
                 />
@@ -355,61 +360,63 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-          <div className="lg:col-span-6 flex flex-col gap-space-md">
-            <div className="space-y-space-xs">
-              <span className="font-mono-label text-mono-label text-outline uppercase">CORE ARCHITECTURAL STACK</span>
-              <div className="flex flex-wrap gap-1.5 sm:gap-space-xs">
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-secondary">ESP32 MCU</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">C++ Firmware</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">React Native CLI</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MQTT Broker</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">Node.js / Express</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MongoDB</span>
-                <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">BLE Provisioning</span>
+            <div className="lg:col-span-6 flex flex-col gap-space-md">
+              <div className="space-y-space-xs">
+                <span className="font-mono-label text-mono-label text-outline uppercase">CORE ARCHITECTURAL STACK</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-space-xs">
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-secondary">ESP32 MCU</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">C++ Firmware</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">React Native CLI</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MQTT Broker</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">Node.js / Express</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">MongoDB</span>
+                  <span className="px-space-sm py-1 rounded bg-surface-container-highest font-mono-code text-xs sm:text-mono-code text-on-surface">BLE Provisioning</span>
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-space-sm text-sm sm:text-body-regular text-on-surface-variant">
-              <div className="flex items-start gap-space-sm">
-                <Bolt className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">AC Electrical Telemetry:</strong> Real-time voltage, current, and active power measurement research on connected loads.</span>
+              <div className="flex flex-col gap-space-sm text-sm sm:text-body-regular text-on-surface-variant">
+                <div className="flex items-start gap-space-sm">
+                  <Bolt className="text-secondary text-[20px] shrink-0 mt-0.5" />
+                  <span><strong className="text-on-surface">AC Electrical Telemetry:</strong> Real-time voltage, current, and active power measurement research on connected loads.</span>
+                </div>
+                <div className="flex items-start gap-space-sm">
+                  <SyncAlt className="text-secondary text-[20px] shrink-0 mt-0.5" />
+                  <span><strong className="text-on-surface">MQTT Telemetry Pipeline:</strong> Standardized pub/sub message pipeline (data, relay, schedule, status) over local Wi-Fi.</span>
+                </div>
+                <div className="flex items-start gap-space-sm">
+                  <ShieldWithHeart className="text-secondary text-[20px] shrink-0 mt-0.5" />
+                  <span><strong className="text-on-surface">Mobile Control &amp; Provisioning:</strong> React Native CLI mobile client with Bluetooth Low Energy setup, live power meter, and PKR cost calculations.</span>
+                </div>
               </div>
-              <div className="flex items-start gap-space-sm">
-                <SyncAlt className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">MQTT Telemetry Pipeline:</strong> Standardized pub/sub message pipeline (data, relay, schedule, status) over local Wi-Fi.</span>
-              </div>
-              <div className="flex items-start gap-space-sm">
-                <ShieldWithHeart className="text-secondary text-[20px] shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">Mobile Control &amp; Provisioning:</strong> React Native CLI mobile client with Bluetooth Low Energy setup, live power meter, and PKR cost calculations.</span>
-              </div>
-            </div>
 
-            <div className="pt-space-xs flex flex-wrap items-center gap-space-md">
-              <button
-                onClick={() => setSelectedProject(PORTFOLIO_DATA.projects[0])}
-                className="w-full sm:w-auto justify-center px-space-md py-space-sm rounded-lg bg-surface-container-highest hover:bg-secondary hover:text-on-secondary font-mono-code text-mono-code font-semibold text-on-surface transition-colors flex items-center gap-space-xs min-h-[44px]"
-              >
-                <span>Explore Case Study</span>
-                <ArrowForward className="text-[16px]" />
-              </button>
-              <span className="font-mono-label text-[11px] sm:text-mono-label text-outline">HONORS // 2ND POSITION UOG FYP 2026</span>
+              <div className="pt-space-xs flex flex-wrap items-center gap-space-md">
+                <button
+                  onClick={() => setSelectedProject(PORTFOLIO_DATA.projects[0])}
+                  className="w-full sm:w-auto justify-center px-space-md py-space-sm rounded-lg bg-surface-container-highest hover:bg-secondary hover:text-on-secondary font-mono-code text-mono-code font-semibold text-on-surface transition-all flex items-center gap-space-xs min-h-[44px] btn-micro group"
+                >
+                  <span>Explore Case Study</span>
+                  <ArrowForward className="text-[16px] transition-transform duration-200 group-hover:translate-x-1" />
+                </button>
+                <span className="font-mono-label text-[11px] sm:text-mono-label text-outline">HONORS // 2ND POSITION UOG FYP 2026</span>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
-      </ScrollReveal>
 
       {/* 3. OTHER NOTABLE PROJECTS */}
-      <ScrollReveal>
-        <section className="py-space-xl w-full">
+      <section className="py-space-xl w-full">
+        <ScrollReveal>
           <div className="flex flex-col gap-space-xs mb-space-lg">
             <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">ECOSYSTEM REPOSITORY</span>
             <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">Engineered Systems &amp; Prototypes</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+        </ScrollReveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
 
-            {/* Project 1 */}
-            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
+          {/* Project 1 */}
+          <ScrollReveal delay={0} className="h-full flex flex-col">
+            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex flex-col gap-space-sm">
                 <div className="flex items-center justify-between">
                   <span className="px-space-xs py-0.5 rounded bg-surface-container-highest font-mono-label text-mono-label text-outline">LOGISTICS TELEMETRY</span>
@@ -434,7 +441,7 @@ export const HomePage: React.FC = () => {
                   <div className="flex items-center gap-space-md">
                     <button
                       onClick={() => setSelectedProject(PORTFOLIO_DATA.projects[1])}
-                      className="hover:text-on-surface hover:underline"
+                      className="hover:text-on-surface hover:underline btn-micro"
                     >
                       DETAILS
                     </button>
@@ -442,17 +449,19 @@ export const HomePage: React.FC = () => {
                       href="https://yexonimpex.store/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-secondary font-bold flex items-center gap-1 hover:underline"
+                      className="text-secondary font-bold flex items-center gap-1 hover:underline btn-micro group/link"
                     >
-                      VIEW DEMO <NorthEast className="text-[14px]" />
+                      VIEW DEMO <NorthEast className="text-[14px] transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                     </a>
                   </div>
                 </div>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Project 2 */}
-            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30">
+          {/* Project 2 */}
+          <ScrollReveal delay={0.12} className="h-full flex flex-col">
+            <div className="bg-surface-container p-4 sm:p-space-lg rounded-2xl flex flex-col justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-colors card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex flex-col gap-space-sm">
                 <div className="flex items-center justify-between">
                   <span className="px-space-xs py-0.5 rounded bg-secondary/15 font-mono-label text-mono-label text-secondary">ACTIVE RESEARCH // ROBOTICS</span>
@@ -476,17 +485,17 @@ export const HomePage: React.FC = () => {
                   <span>R&amp;D LAB BENCH</span>
                   <button
                     onClick={() => setSelectedProject(PORTFOLIO_DATA.projects[2])}
-                    className="text-secondary font-bold flex items-center gap-1 hover:underline"
+                    className="text-secondary font-bold flex items-center gap-1 hover:underline btn-micro group/link"
                   >
-                    DOCS • REPO <NorthEast className="text-[14px]" />
+                    DOCS • REPO <NorthEast className="text-[14px] transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                   </button>
                 </div>
               </div>
             </div>
+          </ScrollReveal>
 
-          </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
       {/* 4. ABOUT & ENGINEERING PHILOSOPHY */}
       <ScrollReveal>
@@ -513,10 +522,10 @@ export const HomePage: React.FC = () => {
               <div className="pt-space-xs">
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-space-xs text-secondary font-mono-code text-mono-code font-bold hover:underline"
+                  className="inline-flex items-center gap-space-xs text-secondary font-mono-code text-mono-code font-bold hover:underline btn-micro group"
                 >
                   <span>Read Complete Background &amp; Philosophy</span>
-                  <ArrowForward className="text-[18px]" />
+                  <ArrowForward className="text-[18px] transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
@@ -525,90 +534,98 @@ export const HomePage: React.FC = () => {
       </ScrollReveal>
 
       {/* 5. TECHNICAL SKILLS: 4 CATEGORIZED GRIDS */}
-      <ScrollReveal>
-        <section className="py-space-xl w-full">
+      <section className="py-space-xl w-full">
+        <ScrollReveal>
           <div className="flex flex-col gap-space-xs mb-space-lg">
             <span className="font-mono-label text-mono-label text-secondary uppercase tracking-widest">SYSTEM CAPABILITIES</span>
             <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">Core Competencies &amp; Toolchain</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+        </ScrollReveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
 
-            {/* Panel 1 */}
-            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md">
+          {/* Panel 1 */}
+          <ScrollReveal delay={0} className="h-full flex flex-col">
+            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex items-center gap-space-xs font-mono-code text-mono-code font-bold text-on-surface">
                 <PhoneAndroid className="text-secondary text-[20px]" />
                 <span>Frontend &amp; Mobile</span>
               </div>
               <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />React • Next.js</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />React Native (Expo / CLI)</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Tailwind CSS &amp; UI Systems</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />TypeScript • JavaScript</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Socket.IO Real-Time Feeds</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />React • Next.js</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />React Native (Expo / CLI)</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Tailwind CSS &amp; UI Systems</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />TypeScript • JavaScript</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Socket.IO Real-Time Feeds</li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Panel 2 */}
-            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md">
+          {/* Panel 2 */}
+          <ScrollReveal delay={0.08} className="h-full flex flex-col">
+            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex items-center gap-space-xs font-mono-code text-mono-code font-bold text-on-surface">
                 <Dns className="text-secondary text-[20px]" />
                 <span>Backend &amp; Data</span>
               </div>
               <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Node.js &amp; Express.js</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />MongoDB • Mongoose</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />PostgreSQL • SQL Queries</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Firebase Ecosystem</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />RESTful APIs &amp; Auth (JWT)</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Node.js &amp; Express.js</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />MongoDB • Mongoose</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />PostgreSQL • SQL Queries</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Firebase Ecosystem</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />RESTful APIs &amp; Auth (JWT)</li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Panel 3 */}
-            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md">
+          {/* Panel 3 */}
+          <ScrollReveal delay={0.16} className="h-full flex flex-col">
+            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex items-center gap-space-xs font-mono-code text-mono-code font-bold text-on-surface">
                 <Memory className="text-secondary text-[20px]" />
                 <span>IoT &amp; Embedded</span>
               </div>
               <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />ESP32 / ESP8266 MCUs</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Embedded C++ • Arduino</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />MQTT Protocol • Brokers</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />HLW8012-004T / Sensor Integration</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Serial Communication (UART)</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />ESP32 / ESP8266 MCUs</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Embedded C++ • Arduino</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />MQTT Protocol • Brokers</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />HLW8012-004T / Sensor Integration</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Serial Communication (UART)</li>
               </ul>
             </div>
+          </ScrollReveal>
 
-            {/* Panel 4 */}
-            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md">
+          {/* Panel 4 */}
+          <ScrollReveal delay={0.24} className="h-full flex flex-col">
+            <div className="bg-surface-container p-space-md rounded-xl flex flex-col gap-space-md shadow-md card-interactive border border-outline-variant/20 hover:border-secondary/30 h-full">
               <div className="flex items-center gap-space-xs font-mono-code text-mono-code font-bold text-on-surface">
                 <SmartToy className="text-secondary text-[20px]" />
                 <span>Robotics (In-Progress)</span>
               </div>
               <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Python for Robotics</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />ROS 2 (Robot Operating System)</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />LiDAR Sensor Mapping / SLAM</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Kinematics • Mobile Rovers</li>
-                <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary" />Gazebo Simulation</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Python for Robotics</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />ROS 2 (Robot Operating System)</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />LiDAR Sensor Mapping / SLAM</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Kinematics • Mobile Rovers</li>
+                <li className="flex items-center gap-2 hover:text-secondary hover:translate-x-1 transition-all duration-200 cursor-default"><span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />Gazebo Simulation</li>
               </ul>
             </div>
+          </ScrollReveal>
 
-          </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
       {/* 6. VERIFIED ACHIEVEMENT & CERTIFICATE */}
-      <ScrollReveal>
-        <section className="py-space-xl w-full">
-          <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg lg:p-space-xl shadow-xl flex flex-col lg:flex-row gap-space-lg lg:gap-space-xl items-center">
-            <div className="lg:w-1/2 w-full flex justify-center">
-              <div className="relative rounded-xl overflow-hidden bg-surface-container-lowest max-w-md w-full shadow-2xl">
-                <img
+      <section className="py-space-xl w-full">
+        <div className="bg-surface-container rounded-2xl overflow-hidden p-4 sm:p-space-lg lg:p-space-xl shadow-xl flex flex-col lg:flex-row gap-space-lg lg:gap-space-xl items-center">
+          <div className="lg:w-1/2 w-full flex justify-center">
+            <ScrollReveal direction="left" className="w-full max-w-md">
+              <div className="relative rounded-xl overflow-hidden bg-surface-container-lowest w-full shadow-2xl">
+                <LazyImage
                   alt="Final Year Project Competition Certificate Award Ceremony with supervisor Dr. Umer Shoaib at University of Gujrat"
                   className="w-full h-auto object-cover"
+                  wrapperClassName="w-full aspect-[500/350]"
                   src={PORTFOLIO_DATA.personalInfo.certificateImage}
-                  loading="lazy"
-                  decoding="async"
+                  skeletonLabel="UOG_CERTIFICATE"
                   width={500}
                   height={350}
                 />
@@ -618,33 +635,37 @@ export const HomePage: React.FC = () => {
                   <span className="font-mono-label text-outline">UOG // 2026</span>
                 </div>
               </div>
-            </div>
-
-            <div className="lg:w-1/2 flex flex-col gap-space-md">
-              <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary/10 w-fit text-secondary font-mono-label text-mono-label font-bold">
-                <MilitaryTech className="text-[16px]" />
-                <span>COMPETITIVE MERIT RECOGNITION</span>
-              </div>
-              <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">
-                2nd Position Award Winner — Final Year Project Competition 2026
-              </h2>
-              <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
-                Recognized by the Department of Computer Science at the University of Gujrat for pioneering the <em>"EcoPlugify — Smart AI Energy Monitoring &amp; Control System"</em>. Awarded both certificate of distinction and cash prize under the supervision and guidance of Dr. Umer Shoaib.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs font-mono-code text-mono-code text-[13px]">
-                <div className="p-space-sm rounded-lg bg-surface-container-high flex flex-col">
-                  <span className="text-outline text-[11px]">SUPERVISION</span>
-                  <span className="text-on-surface font-semibold">Dr. Umer Shoaib</span>
-                </div>
-                <div className="p-space-sm rounded-lg bg-surface-container-high flex flex-col">
-                  <span className="text-outline text-[11px]">PROJECT CLASSIFICATION</span>
-                  <span className="text-secondary font-semibold">Smart Energy &amp; Edge AI</span>
-                </div>
-              </div>
-            </div>
+            </ScrollReveal>
           </div>
-        </section>
-      </ScrollReveal>
+
+          <div className="lg:w-1/2 flex flex-col gap-space-md">
+            <ScrollReveal direction="right" delay={0.1}>
+              <div className="flex flex-col gap-space-md">
+                <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary/10 w-fit text-secondary font-mono-label text-mono-label font-bold">
+                  <MilitaryTech className="text-[16px]" />
+                  <span>COMPETITIVE MERIT RECOGNITION</span>
+                </div>
+                <h2 className="font-heading-xl text-2xl sm:text-3xl lg:text-heading-xl text-on-surface">
+                  2nd Position Award Winner — Final Year Project Competition 2026
+                </h2>
+                <p className="font-body-regular text-sm sm:text-body-regular text-on-surface-variant">
+                  Recognized by the Department of Computer Science at the University of Gujrat for pioneering the <em>"EcoPlugify — Smart AI Energy Monitoring &amp; Control System"</em>. Awarded both certificate of distinction and cash prize under the supervision and guidance of Dr. Umer Shoaib.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs font-mono-code text-mono-code text-[13px]">
+                  <div className="p-space-sm rounded-lg bg-surface-container-high flex flex-col">
+                    <span className="text-outline text-[11px]">SUPERVISION</span>
+                    <span className="text-on-surface font-semibold">Dr. Umer Shoaib</span>
+                  </div>
+                  <div className="p-space-sm rounded-lg bg-surface-container-high flex flex-col">
+                    <span className="text-outline text-[11px]">PROJECT CLASSIFICATION</span>
+                    <span className="text-secondary font-semibold">Smart Energy &amp; Edge AI</span>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
       {/* 7. CONTACT & INVITATION CALL TO ACTION */}
       <ScrollReveal>
@@ -664,18 +685,18 @@ export const HomePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-space-md pt-space-sm w-full">
               <Link
                 to="/contact"
-                className="w-full sm:w-auto px-space-xl py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold hover:bg-secondary-fixed transition-transform active:scale-95 flex items-center justify-center gap-space-xs shadow-md min-h-[44px]"
+                className="w-full sm:w-auto px-space-xl py-space-sm rounded-lg bg-secondary text-on-secondary font-mono-code text-mono-code font-bold hover:bg-secondary-fixed transition-all flex items-center justify-center gap-space-xs shadow-md min-h-[44px] btn-micro group"
               >
-                <Mail className="text-[18px]" />
+                <Mail className="text-[18px] transition-transform duration-200 group-hover:scale-110" />
                 <span>Get In Touch</span>
               </Link>
               <a
                 href={PORTFOLIO_DATA.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center justify-center gap-space-xs min-h-[44px]"
+                className="w-full sm:w-auto px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:text-secondary font-mono-code text-mono-code transition-colors flex items-center justify-center gap-space-xs min-h-[44px] btn-micro group"
               >
-                <Terminal className="text-[18px]" />
+                <Terminal className="text-[18px] transition-transform duration-200 group-hover:scale-110" />
                 <span>View GitHub</span>
               </a>
             </div>
